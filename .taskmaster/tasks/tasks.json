@@ -2454,10 +2454,10 @@
             "description": "System zarządzania historią wyszukiwań dla zalogowanych użytkowników",
             "dependencies": [],
             "details": "Stwórz SearchHistory komponent wyświetlający ostatnie wyszukiwania, implementuj zapisywanie historii w localStorage i backend API. Dodaj możliwość usuwania pojedynczych wpisów i czyszczenia całej historii. Ograniczenie do 20 ostatnich wyszukiwań.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy historia zapisuje się lokalnie i w bazie, można usuwać wpisy, limit 20 wpisów jest przestrzegany",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T19:41:17.533Z"
+            "updatedAt": "2025-11-06T19:44:35.586Z"
           },
           {
             "id": 6,
@@ -2505,7 +2505,7 @@
         "complexity": 6,
         "recommendedSubtasks": 8,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
-        "updatedAt": "2025-11-06T19:41:17.533Z"
+        "updatedAt": "2025-11-06T19:44:35.586Z"
       },
       {
         "id": "32",
@@ -3023,7 +3023,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:41:17.536Z",
+      "lastModified": "2025-11-06T19:44:35.589Z",
       "taskCount": 35,
       "completedCount": 26,
       "tags": [
