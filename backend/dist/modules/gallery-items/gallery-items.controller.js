@@ -72,7 +72,7 @@ __decorate([
                 file: {
                     type: 'string',
                     format: 'binary',
-                    description: 'Image file to upload',
+                    description: 'Image or video file to upload (JPEG, PNG, GIF, WebP, MP4, WebM)',
                 },
                 title: {
                     type: 'string',
@@ -112,11 +112,19 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 409, description: 'Gallery item with this slug already exists' }),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
         limits: {
-            fileSize: 10 * 1024 * 1024,
+            fileSize: 50 * 1024 * 1024,
         },
         fileFilter: (req, file, callback) => {
-            if (!file.mimetype.startsWith('image/')) {
-                return callback(new common_1.BadRequestException('Only image files are allowed'), false);
+            const allowedMimeTypes = [
+                'image/jpeg',
+                'image/png',
+                'image/gif',
+                'image/webp',
+                'video/mp4',
+                'video/webm',
+            ];
+            if (!allowedMimeTypes.includes(file.mimetype)) {
+                return callback(new common_1.BadRequestException('Only image (JPEG, PNG, GIF, WebP) and video (MP4, WebM) files are allowed'), false);
             }
             callback(null, true);
         },

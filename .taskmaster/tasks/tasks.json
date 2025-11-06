@@ -2499,15 +2499,16 @@
               7
             ],
             "details": "Skonfiguruj MeiliSearch indeksy dla wszystkich typów treści, implementuj search API endpoints w NestJS. Dodaj caching strategię, rate limiting dla search API, analytics tracking. Optymalizuj query performance i relevance scoring.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy wszystkie typy treści są wyszukiwalne, performance jest zadowalająca (<200ms), caching działa, analytics zapisują się",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:54:33.173Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 8,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
-        "updatedAt": "2025-11-06T19:52:23.902Z"
+        "updatedAt": "2025-11-06T19:54:33.173Z"
       },
       {
         "id": "32",
@@ -3025,7 +3026,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:52:23.905Z",
+      "lastModified": "2025-11-06T19:54:33.176Z",
       "taskCount": 35,
       "completedCount": 26,
       "tags": [
