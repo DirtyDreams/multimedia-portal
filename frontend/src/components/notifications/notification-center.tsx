@@ -5,6 +5,8 @@ import { Bell, Check, Trash2, Settings, X } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
+import { useSocket } from "@/hooks/use-socket";
+import { useToast } from "@/hooks/use-toast";
 
 interface Notification {
   id: string;
@@ -21,6 +23,69 @@ export function NotificationCenter() {
   const [filter, setFilter] = useState<"all" | "unread">("all");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
+  const { on, off, isConnected } = useSocket();
+  const toast = useToast();
+
+  // Socket.io event listeners for real-time notifications
+  useEffect(() => {
+    if (!isConnected) return;
+
+    const handleNewNotification = (notification: Notification) => {
+      // Add notification to the list
+      queryClient.setQueryData(["notifications"], (old: Notification[] | undefined) => {
+        if (!old) return [notification];
+        return [notification, ...old];
+      });
+
+      // Show toast notification
+      const toastMessage = notification.message.substring(0, 100);
+      switch (notification.type) {
+        case "comment":
+          toast.info(toastMessage, notification.title);
+          break;
+        case "like":
+          toast.success(toastMessage, notification.title);
+          break;
+        case "reply":
+          toast.info(toastMessage, notification.title);
+          break;
+        case "mention":
+          toast.warning(toastMessage, notification.title);
+          break;
+        case "system":
+          toast.info(toastMessage, notification.title);
+          break;
+      }
+    };
+
+    const handleNotificationRead = (notificationId: string) => {
+      queryClient.setQueryData(["notifications"], (old: Notification[] | undefined) => {
+        if (!old) return [];
+        return old.map((n) =>
+          n.id === notificationId ? { ...n, read: true } : n
+        );
+      });
+    };
+
+    const handleNotificationDeleted = (notificationId: string) => {
+      queryClient.setQueryData(["notifications"], (old: Notification[] | undefined) => {
+        if (!old) return [];
+        return old.filter((n) => n.id !== notificationId);
+      });
+    };
+
+    // Register event listeners
+    on("notification:new", handleNewNotification);
+    on("notification:read", handleNotificationRead);
+    on("notification:deleted", handleNotificationDeleted);
+
+    // Cleanup on unmount
+    return () => {
+      off("notification:new", handleNewNotification);
+      off("notification:read", handleNotificationRead);
+      off("notification:deleted", handleNotificationDeleted);
+    };
+  }, [isConnected, on, off, queryClient, toast]);
 
   // Close dropdown when clicking outside
   useEffect(() => {

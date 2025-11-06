@@ -2733,9 +2733,10 @@
               3
             ],
             "details": "Zainstaluj socket.io-client, stwórz socket service/hook. Implementuj połączenie z backend Socket.io server, obsługę eventów 'newNotification', 'notificationRead'. Dodaj reconnection logic i error handling. Integruj z NotificationCenter i toast system.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy socket łączy się z backend, eventy są odbierane, reconnection działa przy utracie połączenia",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:07:06.983Z"
           },
           {
             "id": 5,
@@ -2776,7 +2777,7 @@
         "complexity": 6,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
-        "updatedAt": "2025-11-06T21:05:12.666Z"
+        "updatedAt": "2025-11-06T21:07:06.983Z"
       },
       {
         "id": "34",
@@ -3042,7 +3043,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:05:12.669Z",
+      "lastModified": "2025-11-06T21:07:06.986Z",
       "taskCount": 35,
       "completedCount": 28,
       "tags": [
