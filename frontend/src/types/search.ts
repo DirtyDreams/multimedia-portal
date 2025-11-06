@@ -25,6 +25,15 @@ export interface SearchResult {
   slug: string;
   authorName?: string;
   publishedAt?: string;
+  score?: number;
+  author?: {
+    id: string;
+    name: string;
+  };
+  tags?: Array<{
+    id: string;
+    name: string;
+  }>;
   _formatted?: {
     title?: string;
     content?: string;
