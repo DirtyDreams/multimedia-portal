@@ -13,6 +13,7 @@ import { AuthorsModule } from './modules/authors/authors.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { RatingsModule } from './modules/ratings/ratings.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { SearchModule } from './modules/search/search.module';
 import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 
@@ -35,6 +36,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
     CommentsModule,
     RatingsModule,
     NotificationsModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
