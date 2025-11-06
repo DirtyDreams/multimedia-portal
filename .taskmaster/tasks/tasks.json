@@ -446,9 +446,11 @@
               2
             ],
             "details": "Stw\u00f3rz JwtAuthGuard extends AuthGuard('jwt'), RolesGuard implements CanActivate. Dodaj @Roles() dekorator dla role-based access control. Implementuj logik\u0119 sprawdzania r\u00f3l w RolesGuard. Skonfiguruj guards globalnie lub per-controller.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Testy czy protected endpointy wymagaj\u0105 autoryzacji, role-based access control dzia\u0142a poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T23:31:47.473640Z",
+            "completionNotes": "Task 6.3 - JwtAuthGuard and RolesGuard implementation was complete, added comprehensive tests.\n\nExisting Implementation (All \u2713):\n1. JwtAuthGuard (jwt-auth.guard.ts):\n   - Properly extends AuthGuard('jwt') from @nestjs/passport\n   - Integrates Reflector for metadata checking\n   - Implements canActivate() with @Public decorator support\n   - Bypasses authentication for routes marked with @Public\n   - Delegates to parent AuthGuard for JWT validation\n\n2. RolesGuard (roles.guard.ts):\n   - Implements CanActivate interface\n   - Uses Reflector to read @Roles metadata\n   - Checks user.role against required roles (OR logic)\n   - Returns false if user not authenticated\n   - Returns true if no roles specified (open access)\n\n3. Decorators (common/decorators/):\n   - @Roles(...roles: UserRole[]): Sets required roles metadata\n   - @Public(): Marks routes as public (bypass JWT auth)\n   - @CurrentUser(field?): Injects authenticated user into route handlers\n   - All exported via index.ts\n\n4. Module Configuration:\n   - Both guards registered in AuthModule providers\n   - Both guards exported for use in other modules\n   - Reflector automatically available via DI\n\nTests Added:\n1. JwtAuthGuard Tests (jwt-auth.guard.spec.ts):\n   - Public route bypass verification\n   - JWT delegation to parent AuthGuard\n   - Reflector metadata checking (handler + class)\n   - Integration with @Public decorator\n   - Authentication flow edge cases\n   \n2. RolesGuard Tests (roles.guard.spec.ts):\n   - All role types (USER, ADMIN, MODERATOR)\n   - Multiple roles support (OR logic)\n   - Unauthenticated user handling\n   - Missing/undefined user edge cases\n   - Role hierarchy scenarios\n   - Integration with @Roles decorator\n   - Metadata extraction verification\n\nAll requirements for Task 6.3 met with comprehensive test coverage."
           },
           {
             "id": 4,
