@@ -1171,7 +1171,7 @@
         "dependencies": [
           "15"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1234,7 +1234,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących WebSocket setup, authentication, rooms i monitoring."
+        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących WebSocket setup, authentication, rooms i monitoring.",
+        "updatedAt": "2025-11-06T17:38:22.963Z"
       },
       {
         "id": "17",
@@ -2992,9 +2993,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T17:32:38.721Z",
+      "lastModified": "2025-11-06T17:38:22.966Z",
       "taskCount": 35,
-      "completedCount": 19,
+      "completedCount": 20,
       "tags": [
         "master"
       ]
