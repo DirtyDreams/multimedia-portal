@@ -335,7 +335,7 @@
         "dependencies": [
           "3"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -343,7 +343,7 @@
             "description": "Wykonanie npx prisma init w folderze backend i konfiguracja podstawowych ustawień",
             "dependencies": [],
             "details": "Uruchom `npx prisma init` w folderze backend/. Skonfiguruj DATABASE_URL w .env. Ustaw podstawowe opcje w schema.prisma: generator client, datasource db postgresql. Zainstaluj @prisma/client i prisma jako dependencje.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy folder prisma/ został utworzony, schema.prisma zawiera poprawną konfigurację, connection string jest ustawiony",
             "parentId": "undefined"
           },
@@ -355,7 +355,7 @@
               1
             ],
             "details": "Zdefiniuj model User (id, email, username, password, role, createdAt, updatedAt). Dodaj model Session dla JWT sessions. Utwórz relacje User-Session. Dodaj indeksy na email, username dla optymalizacji.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy modele User i Session są poprawnie zdefiniowane, relacje działają, indeksy są utworzone",
             "parentId": "undefined"
           },
@@ -367,7 +367,7 @@
               2
             ],
             "details": "Zdefiniuj modele treści: Article, BlogPost, WikiPage (z parent-child dla hierarchii), GalleryItem, Story, Author. Ustaw relacje Author-Content (One-to-Many). Dodaj pola: title, content, slug, publishedAt, status. Dodaj indeksy na slug, publishedAt.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie modele treści są zdefiniowane, relacje Author-Content działają, hierarchia WikiPage jest poprawna",
             "parentId": "undefined"
           },
@@ -379,7 +379,7 @@
               3
             ],
             "details": "Zdefiniuj Comment (z polimorficznymi relacjami do wszystkich typów treści), Rating (1-5), Category, Tag. Utwórz tabele łączące dla Many-to-Many: ContentCategories, ContentTags. Dodaj indeksy na contentType, contentId, userId.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy Comment i Rating działają z wszystkimi typami treści, relacje Many-to-Many Category/Tag działają poprawnie",
             "parentId": "undefined"
           },
@@ -391,7 +391,7 @@
               4
             ],
             "details": "Dodaj modele Notification, EmailQueue. Sprawdź wszystkie relacje i indeksy. Uruchom `npx prisma migrate dev --name init` dla utworzenia pierwszej migracji. Wygeneruj Prisma Client z `npx prisma generate`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy migracja wykonuje się bez błędów, wszystkie tabele są utworzone, Prisma Studio pokazuje kompletny schema",
             "parentId": "undefined"
           }
