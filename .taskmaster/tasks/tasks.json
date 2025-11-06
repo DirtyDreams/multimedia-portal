@@ -2745,10 +2745,10 @@
             "description": "Implementacja strony ustawień powiadomień gdzie użytkownicy mogą konfigurować preferencje",
             "dependencies": [],
             "details": "Stwórz NotificationPreferences page w /dashboard/settings/notifications. Implementuj formularz z checkboxami dla różnych typów powiadomień (email, push, in-app). Dodaj integrację z backend API, zapisywanie ustawień do bazy danych. Użyj react-hook-form do walidacji.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy preferencje zapisują się w bazie, formularz waliduje poprawnie, ustawienia ładują się przy odwiedzeniu strony",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:10:12.788Z"
+            "updatedAt": "2025-11-06T21:12:37.104Z"
           },
           {
             "id": 6,
@@ -2758,9 +2758,10 @@
               5
             ],
             "details": "Implementuj Web Push API używając service worker. Stwórz funkcje do requestowania permissions, subskrypcji push notifications. Dodaj integrację z backend dla wysyłania push notifications. Implementuj handling kliknięć w powiadomienia przeglądarki.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy browser permissions działają, push notifications są odbierane, kliknięcia w powiadomienia przekierowują poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:12:47.901Z"
           },
           {
             "id": 7,
@@ -2779,7 +2780,7 @@
         "complexity": 6,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
-        "updatedAt": "2025-11-06T21:10:12.788Z"
+        "updatedAt": "2025-11-06T21:12:47.901Z"
       },
       {
         "id": "34",
@@ -3045,7 +3046,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:10:12.792Z",
+      "lastModified": "2025-11-06T21:12:47.904Z",
       "taskCount": 35,
       "completedCount": 28,
       "tags": [
