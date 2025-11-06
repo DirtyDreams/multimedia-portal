@@ -2861,9 +2861,10 @@
             "description": "Optymalizuj rozmiar bundle i implementuj code splitting w Next.js aplikacji",
             "dependencies": [],
             "details": "Zaimplementuj dynamic imports dla heavy components, route-based code splitting, vendor chunks separation. Użyj webpack-bundle-analyzer do analizy bundle size. Optymalizuj imports (tree shaking), usuń unused dependencies. Cel: main chunk < 200KB, vendor chunk < 500KB.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom npm run build, sprawdź bundle analyzer report, main chunk musi być < 200KB",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T22:32:21.087Z"
           },
           {
             "id": 7,
@@ -2912,7 +2913,7 @@
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T22:22:06.101Z"
+        "updatedAt": "2025-11-06T22:32:21.087Z"
       },
       {
         "id": "35",
@@ -3051,7 +3052,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T22:22:06.105Z",
+      "lastModified": "2025-11-06T22:32:21.090Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
