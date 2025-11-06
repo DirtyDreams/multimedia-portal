@@ -2793,7 +2793,7 @@
         "dependencies": [
           "33"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2801,9 +2801,10 @@
             "description": "Napisz unit testy dla kluczowych serwisów backendu używając Jest framework",
             "dependencies": [],
             "details": "Stwórz unit testy dla AuthService, UserService, ArticleService, BlogService, WikiService, GalleryService, CommentService, RatingService. Użyj Jest i mocking bibliotek. Pokryj edge cases, error handling, business logic validation. Osiągnij coverage > 80% dla critical services.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom npm test w backend/, sprawdź coverage report, wszystkie testy muszą przechodzić",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:33:12.334Z"
           },
           {
             "id": 2,
@@ -2825,7 +2826,8 @@
             "details": "Stwórz testy dla key components: Navigation, Footer, ArticleCard, BlogCard, CommentSection, RatingWidget, AdminPanel components. Testuj user interactions, props rendering, state changes, form submissions. Użyj @testing-library/react i @testing-library/user-event.",
             "status": "pending",
             "testStrategy": "Uruchom npm test w frontend/, sprawdź coverage report dla komponentów",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:37:10.871Z"
           },
           {
             "id": 4,
@@ -2908,7 +2910,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 10,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
+        "updatedAt": "2025-11-06T21:37:10.871Z"
       },
       {
         "id": "35",
@@ -3047,7 +3050,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:15:20.559Z",
+      "lastModified": "2025-11-06T21:37:10.874Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
