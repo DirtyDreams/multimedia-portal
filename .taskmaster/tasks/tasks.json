@@ -2814,10 +2814,10 @@
               1
             ],
             "details": "Stwórz integration testy dla wszystkich REST endpoints: auth, articles, blog, wiki, gallery, comments, ratings. Użyj Supertest do testowania HTTP requests/responses. Testuj authentication, authorization, CRUD operations, error responses, data validation.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Uruchom npm run test:e2e w backend/, wszystkie API endpoints muszą odpowiadać poprawnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:41:22.360Z"
+            "updatedAt": "2025-11-06T23:04:18.807Z"
           },
           {
             "id": 3,
@@ -2851,9 +2851,10 @@
               2
             ],
             "details": "Stwórz k6 scripts dla load testing API endpoints. Testuj scenarios: normal load (10 users), stress load (100 users), spike test. Monitoruj response times, throughput, error rates. Ustaw performance thresholds: avg response < 500ms, 95th percentile < 1s, error rate < 1%.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom k6 testy, sprawdź czy API spełnia performance requirements pod load",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T23:10:49.545Z"
           },
           {
             "id": 6,
@@ -2916,7 +2917,7 @@
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T22:57:19.043Z"
+        "updatedAt": "2025-11-06T23:10:49.545Z"
       },
       {
         "id": "35",
@@ -3055,7 +3056,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T22:57:19.046Z",
+      "lastModified": "2025-11-06T23:10:49.548Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
