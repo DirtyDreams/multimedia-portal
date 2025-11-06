@@ -1,30 +1,38 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { MessageSquare } from "lucide-react";
-import { Comment, CommentableType } from "@/types/comment";
+import { MessageSquare, ChevronDown } from "lucide-react";
+import { Comment, CommentableType, CommentsResponse } from "@/types/comment";
 import { CommentItem } from "./comment-item";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface CommentListProps {
   contentType: CommentableType;
   contentId: string;
+  pageSize?: number;
 }
 
-export function CommentList({ contentType, contentId }: CommentListProps) {
+export function CommentList({ contentType, contentId, pageSize = 10 }: CommentListProps) {
   const queryClient = useQueryClient();
+  const [page, setPage] = useState(1);
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
   const {
-    data: comments,
+    data: commentsData,
     isLoading,
     error,
-  } = useQuery<Comment[]>({
-    queryKey: ["comments", contentType, contentId],
+    isFetching,
+  } = useQuery<CommentsResponse>({
+    queryKey: ["comments", contentType, contentId, page],
     queryFn: async () => {
-      const response = await fetch(
-        `${API_URL}/comments/content/${contentType}/${contentId}`
-      );
+      const params = new URLSearchParams();
+      params.append("contentType", contentType);
+      params.append("contentId", contentId);
+      params.append("page", page.toString());
+      params.append("limit", pageSize.toString());
+
+      const response = await fetch(`${API_URL}/comments?${params.toString()}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch comments");
@@ -33,6 +41,9 @@ export function CommentList({ contentType, contentId }: CommentListProps) {
       return response.json();
     },
   });
+
+  const comments = commentsData?.data || [];
+  const meta = commentsData?.meta;
 
   const handleCommentAdded = (newComment: Comment) => {
     // Invalidate and refetch comments
@@ -84,8 +95,27 @@ export function CommentList({ contentType, contentId }: CommentListProps) {
     );
   }
 
+  const hasMore = meta ? page < meta.totalPages : false;
+  const showingCount = comments.length;
+  const totalCount = meta?.total || 0;
+
   return (
     <div className="space-y-4">
+      {/* Pagination Info */}
+      {meta && totalCount > 0 && (
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <p>
+            Showing {showingCount} of {totalCount} comment{totalCount !== 1 ? "s" : ""}
+          </p>
+          {meta.totalPages > 1 && (
+            <p>
+              Page {page} of {meta.totalPages}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Comments List */}
       <AnimatePresence mode="popLayout">
         {comments.map((comment) => (
           <CommentItem
@@ -99,6 +129,60 @@ export function CommentList({ contentType, contentId }: CommentListProps) {
           />
         ))}
       </AnimatePresence>
+
+      {/* Load More / Pagination Controls */}
+      {meta && meta.totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 pt-4">
+          {/* Previous Button */}
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1 || isFetching}
+            className="px-4 py-2 border border-border rounded-lg hover:bg-muted transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          >
+            Previous
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center gap-1">
+            {Array.from({ length: Math.min(5, meta.totalPages) }, (_, i) => {
+              let pageNum;
+              if (meta.totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (page <= 3) {
+                pageNum = i + 1;
+              } else if (page >= meta.totalPages - 2) {
+                pageNum = meta.totalPages - 4 + i;
+              } else {
+                pageNum = page - 2 + i;
+              }
+
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => setPage(pageNum)}
+                  disabled={isFetching}
+                  className={`px-3 py-2 rounded-lg transition text-sm disabled:cursor-not-allowed ${
+                    page === pageNum
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-muted"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={() => setPage((p) => Math.min(meta.totalPages, p + 1))}
+            disabled={!hasMore || isFetching}
+            className="px-4 py-2 border border-border rounded-lg hover:bg-muted transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          >
+            {isFetching ? "Loading..." : "Next"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
