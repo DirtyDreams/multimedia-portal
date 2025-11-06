@@ -254,7 +254,7 @@
         "dependencies": [
           "2"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -262,9 +262,10 @@
             "description": "Inicjalizacja nowego projektu Next.js 14 z TypeScript, Tailwind CSS, App Router i src directory",
             "dependencies": [],
             "details": "Uruchom `npx create-next-app@latest frontend --typescript --tailwind --app --src-dir --import-alias '@/*'` w głównym folderze projektu. Sprawdź czy wszystkie opcje zostały poprawnie skonfigurowane: TypeScript, Tailwind CSS, App Router, src/ directory i import alias @/*",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy folder frontend został utworzony, package.json zawiera odpowiednie zależności i skrypty, tsconfig.json jest skonfigurowany z import alias",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:37:35.358Z"
           },
           {
             "id": 2,
@@ -274,9 +275,10 @@
               1
             ],
             "details": "W folderze frontend uruchom `npm install @tanstack/react-query zustand socket.io-client react-hook-form zod framer-motion lucide-react`. Sprawdź czy wszystkie pakiety zostały poprawnie zainstalowane i zapisane w package.json",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy package.json zawiera wszystkie wymienione biblioteki w dependencies, node_modules została utworzona poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:38:02.153Z"
           },
           {
             "id": 3,
@@ -286,9 +288,10 @@
               2
             ],
             "details": "Utwórz następującą strukturę folderów w src/: components/, hooks/, lib/, stores/, types/, utils/. W każdym folderze dodaj index.ts eksportujący zawartość. Skonfiguruj aliasy ścieżek w tsconfig.json jeśli potrzeba",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie foldery zostały utworzone, pliki index.ts istnieją w każdym folderze, import aliasy działają poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:38:44.321Z"
           },
           {
             "id": 4,
@@ -298,9 +301,10 @@
               3
             ],
             "details": "Stwórz Dockerfile w folderze frontend z multi-stage build: 1) dependencies stage z npm install, 2) build stage z npm run build, 3) production stage z optimized image. Dodaj .dockerignore z node_modules, .git, .next itp.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy Dockerfile buduje się bez błędów, .dockerignore zawiera odpowiednie wpisy, image ma odpowiedni rozmiar",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:39:09.261Z"
           },
           {
             "id": 5,
@@ -310,14 +314,16 @@
               4
             ],
             "details": "Uruchom `npm run dev` w folderze frontend i sprawdź czy aplikacja startuje na porcie 3000. Sprawdź czy strona główna ładuje się poprawnie, Tailwind CSS działa, import aliasy są rozpoznawane przez TypeScript",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy `npm run dev` uruchamia aplikację bez błędów, strona dostępna na localhost:3000, TypeScript compilation działa poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:39:42.572Z"
           }
         ],
         "complexity": 4,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających setup Next.js, instalację bibliotek UI i state management."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających setup Next.js, instalację bibliotek UI i state management.",
+        "updatedAt": "2025-11-06T02:39:42.572Z"
       },
       {
         "id": "5",
@@ -2975,9 +2981,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T02:35:10.079Z",
+      "lastModified": "2025-11-06T02:39:42.574Z",
       "taskCount": 35,
-      "completedCount": 3,
+      "completedCount": 4,
       "tags": [
         "master"
       ]
