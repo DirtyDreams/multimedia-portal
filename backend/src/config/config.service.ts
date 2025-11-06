@@ -15,7 +15,11 @@ export class ConfigService {
 
   // Database
   get databaseUrl(): string {
-    return this.configService.get<string>('DATABASE_URL');
+    const url = this.configService.get<string>('DATABASE_URL');
+    if (!url) {
+      throw new Error('DATABASE_URL is not defined in environment variables');
+    }
+    return url;
   }
 
   get dbHost(): string {
@@ -27,11 +31,19 @@ export class ConfigService {
   }
 
   get dbUser(): string {
-    return this.configService.get<string>('DB_USER');
+    const user = this.configService.get<string>('DB_USER');
+    if (!user) {
+      throw new Error('DB_USER is not defined in environment variables');
+    }
+    return user;
   }
 
   get dbPassword(): string {
-    return this.configService.get<string>('DB_PASSWORD');
+    const password = this.configService.get<string>('DB_PASSWORD');
+    if (!password) {
+      throw new Error('DB_PASSWORD is not defined in environment variables');
+    }
+    return password;
   }
 
   get dbName(): string {
@@ -40,7 +52,11 @@ export class ConfigService {
 
   // JWT
   get jwtSecret(): string {
-    return this.configService.get<string>('JWT_SECRET');
+    const secret = this.configService.get<string>('JWT_SECRET');
+    if (!secret) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+    return secret;
   }
 
   get jwtExpiration(): string {
