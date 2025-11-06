@@ -2172,10 +2172,10 @@
             "description": "Implementacja podstawowej strony galerii z responsywnym grid layoutem dla wyświetlania zdjęć i filmów",
             "dependencies": [],
             "details": "Stwórz komponent Gallery w /app/gallery/page.tsx z responsywnym CSS Grid lub Tailwind grid classes. Użyj Next.js Image component dla podstawowej optymalizacji obrazów. Implementuj adaptive grid (1-4 kolumny w zależności od screen size). Przygotuj placeholder strukturę dla media items.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy grid jest responsywny na różnych rozmiarach ekranu, obrazy ładują się poprawnie przez Next.js Image",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:34:35.844Z"
+            "updatedAt": "2025-11-06T18:37:11.634Z"
           },
           {
             "id": 2,
@@ -2185,9 +2185,10 @@
               1
             ],
             "details": "Zaimplementuj intersection observer dla lazy loading obrazów. Dodaj infinite scroll używając react-intersection-observer lub własnej implementacji. Stwórz API endpoint dla paginacji galerii (/api/gallery?page=X&limit=Y). Implementuj loading states i skeleton placeholders podczas ładowania.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy obrazy ładują się tylko gdy wchodzą w viewport, infinite scroll działa płynnie, loading states wyświetlają się poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:37:32.977Z"
           },
           {
             "id": 3,
@@ -2229,7 +2230,7 @@
         "complexity": 7,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
-        "updatedAt": "2025-11-06T18:34:35.844Z"
+        "updatedAt": "2025-11-06T18:37:32.977Z"
       },
       {
         "id": "30",
@@ -3004,7 +3005,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:34:35.847Z",
+      "lastModified": "2025-11-06T18:37:32.980Z",
       "taskCount": 35,
       "completedCount": 24,
       "tags": [

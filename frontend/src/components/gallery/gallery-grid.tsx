@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { GalleryItem } from "./gallery-item";
 import { Loader2 } from "lucide-react";
 
@@ -36,14 +35,22 @@ interface GalleryResponse {
 }
 
 export function GalleryGrid() {
-  const [page, setPage] = useState(1);
   const limit = 12;
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const { data, isLoading, error } = useQuery<GalleryResponse>({
-    queryKey: ["gallery", page, limit],
-    queryFn: async () => {
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery<GalleryResponse>({
+    queryKey: ["gallery-infinite"],
+    queryFn: async ({ pageParam = 1 }) => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/gallery-items?page=${page}&limit=${limit}&status=PUBLISHED`
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/gallery-items?page=${pageParam}&limit=${limit}&status=PUBLISHED`
       );
 
       if (!response.ok) {
@@ -52,9 +59,41 @@ export function GalleryGrid() {
 
       return response.json();
     },
+    getNextPageParam: (lastPage) => {
+      const { page, totalPages } = lastPage.meta;
+      return page < totalPages ? page + 1 : undefined;
+    },
+    initialPageParam: 1,
   });
 
-  if (isLoading) {
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (first.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "200px",
+      }
+    );
+
+    const currentRef = loadMoreRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (status === "pending") {
     return (
       <div className="flex justify-center items-center py-20">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -62,15 +101,19 @@ export function GalleryGrid() {
     );
   }
 
-  if (error) {
+  if (status === "error") {
     return (
       <div className="text-center py-20">
-        <p className="text-destructive">Failed to load gallery items</p>
+        <p className="text-destructive">
+          Failed to load gallery items: {error?.message}
+        </p>
       </div>
     );
   }
 
-  if (!data || data.data.length === 0) {
+  const allItems = data?.pages.flatMap((page) => page.data) ?? [];
+
+  if (allItems.length === 0) {
     return (
       <div className="text-center py-20">
         <p className="text-muted-foreground">No gallery items found</p>
@@ -80,33 +123,38 @@ export function GalleryGrid() {
 
   return (
     <div className="space-y-8">
-      {/* Grid Layout */}
+      {/* Grid Layout with Lazy-Loaded Items */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data.data.map((item) => (
-          <GalleryItem key={item.id} item={item} />
+        {allItems.map((item, index) => (
+          <GalleryItem key={`${item.id}-${index}`} item={item} />
         ))}
       </div>
 
-      {/* Pagination */}
-      {data.meta.totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-8">
-          <button
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition"
-          >
-            Previous
-          </button>
-          <span className="px-4 py-2 flex items-center">
-            Page {page} of {data.meta.totalPages}
-          </span>
-          <button
-            onClick={() => setPage((p) => Math.min(data.meta.totalPages, p + 1))}
-            disabled={page === data.meta.totalPages}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition"
-          >
-            Next
-          </button>
+      {/* Infinite Scroll Trigger */}
+      <div ref={loadMoreRef} className="flex justify-center py-4">
+        {isFetchingNextPage ? (
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="h-6 w-6 animate-spin" />
+            <span>Loading more...</span>
+          </div>
+        ) : hasNextPage ? (
+          <div className="text-muted-foreground text-sm">
+            Scroll for more
+          </div>
+        ) : (
+          <div className="text-muted-foreground text-sm">
+            No more items to load
+          </div>
+        )}
+      </div>
+
+      {/* Loading Indicator (initial fetch) */}
+      {isFetching && !isFetchingNextPage && (
+        <div className="fixed bottom-4 right-4 bg-background/80 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-border">
+          <div className="flex items-center gap-2 text-sm">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            <span>Updating gallery...</span>
+          </div>
         </div>
       )}
     </div>
