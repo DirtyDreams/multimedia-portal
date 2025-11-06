@@ -1247,7 +1247,7 @@
         "dependencies": [
           "16"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1310,7 +1310,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających indexowanie, search API i background processing."
+        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających indexowanie, search API i background processing.",
+        "updatedAt": "2025-11-06T17:45:56.941Z"
       },
       {
         "id": "18",
@@ -2993,9 +2994,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T17:38:22.966Z",
+      "lastModified": "2025-11-06T17:45:56.944Z",
       "taskCount": 35,
-      "completedCount": 20,
+      "completedCount": 21,
       "tags": [
         "master"
       ]
