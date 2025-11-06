@@ -563,7 +563,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -626,7 +626,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do modułu Articles ale z mniejszą złożonością."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do modułu Articles ale z mniejszą złożonością.",
+        "updatedAt": "2025-11-06T16:48:11.993Z"
       },
       {
         "id": "9",
@@ -2984,9 +2985,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T16:42:45.865Z",
+      "lastModified": "2025-11-06T16:48:11.997Z",
       "taskCount": 35,
-      "completedCount": 11,
+      "completedCount": 12,
       "tags": [
         "master"
       ]
