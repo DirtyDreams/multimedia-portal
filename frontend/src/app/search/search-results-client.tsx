@@ -10,6 +10,8 @@ import Link from "next/link";
 import { formatDistance } from "date-fns";
 import { FilterPanel, SearchFilters } from "@/components/search/filter-panel";
 import { AdvancedSearchModal } from "@/components/search/advanced-search-modal";
+import { TrendingSearches } from "@/components/search/trending-searches";
+import { SearchSuggestions } from "@/components/search/search-suggestions";
 
 export function SearchResultsClient() {
   const router = useRouter();
@@ -214,11 +216,12 @@ export function SearchResultsClient() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filter Panel - Left Column */}
           <aside className="lg:col-span-1">
-            <div className="lg:sticky lg:top-20">
+            <div className="lg:sticky lg:top-20 space-y-6">
               <FilterPanel
                 onFiltersChange={handleFiltersChange}
                 initialFilters={filters}
               />
+              <TrendingSearches />
             </div>
           </aside>
 
@@ -270,6 +273,11 @@ export function SearchResultsClient() {
             Stories
           </Button>
         </div>
+
+        {/* Search Suggestions (Did you mean?) */}
+        {!isLoading && !error && (
+          <SearchSuggestions query={query} resultsCount={total} />
+        )}
 
         {/* Loading State */}
         {isLoading && (
