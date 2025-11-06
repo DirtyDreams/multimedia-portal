@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { GalleryItem } from "./gallery-item";
 import { Lightbox } from "./lightbox";
@@ -35,11 +35,38 @@ interface GalleryResponse {
   };
 }
 
-export function GalleryGrid() {
+interface GalleryGridProps {
+  filters?: {
+    search: string;
+    categoryId: string | null;
+    tagIds: string[];
+  };
+}
+
+export function GalleryGrid({ filters }: GalleryGridProps) {
   const limit = 12;
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const buildQueryString = useCallback((page: number) => {
+    const params = new URLSearchParams();
+    params.append("page", page.toString());
+    params.append("limit", limit.toString());
+    params.append("status", "PUBLISHED");
+
+    if (filters?.search) {
+      params.append("search", filters.search);
+    }
+    if (filters?.categoryId) {
+      params.append("categoryId", filters.categoryId);
+    }
+    if (filters?.tagIds && filters.tagIds.length > 0) {
+      filters.tagIds.forEach(tagId => params.append("tagIds[]", tagId));
+    }
+
+    return params.toString();
+  }, [filters]);
 
   const {
     data,
@@ -50,10 +77,11 @@ export function GalleryGrid() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery<GalleryResponse>({
-    queryKey: ["gallery-infinite"],
+    queryKey: ["gallery-infinite", filters],
     queryFn: async ({ pageParam = 1 }) => {
+      const queryString = buildQueryString(pageParam as number);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/gallery-items?page=${pageParam}&limit=${limit}&status=PUBLISHED`
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/gallery-items?${queryString}`
       );
 
       if (!response.ok) {
@@ -132,7 +160,11 @@ export function GalleryGrid() {
   if (allItems.length === 0) {
     return (
       <div className="text-center py-20">
-        <p className="text-muted-foreground">No gallery items found</p>
+        <p className="text-muted-foreground">
+          {filters?.search || filters?.categoryId || (filters?.tagIds && filters.tagIds.length > 0)
+            ? "No gallery items found matching your filters"
+            : "No gallery items found"}
+        </p>
       </div>
     );
   }

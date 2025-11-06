@@ -1,28 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Search, Filter, X } from "lucide-react";
 
-export function GalleryFilters() {
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+interface Tag {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+interface GalleryFiltersProps {
+  onFiltersChange: (filters: {
+    search: string;
+    categoryId: string | null;
+    tagIds: string[];
+  }) => void;
+}
+
+export function GalleryFilters({ onFiltersChange }: GalleryFiltersProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
-  // Mock data - will be fetched from API in subtask 29.4
-  const categories = [
-    { id: "1", name: "Nature" },
-    { id: "2", name: "Architecture" },
-    { id: "3", name: "People" },
-    { id: "4", name: "Abstract" },
-  ];
+  // Fetch categories from API
+  const { data: categoriesData } = useQuery<{ data: Category[] }>({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/categories`
+      );
+      if (!response.ok) throw new Error("Failed to fetch categories");
+      return response.json();
+    },
+  });
 
-  const tags = [
-    { id: "1", name: "landscape" },
-    { id: "2", name: "portrait" },
-    { id: "3", name: "urban" },
-    { id: "4", name: "wildlife" },
-  ];
+  // Fetch tags from API
+  const { data: tagsData } = useQuery<{ data: Tag[] }>({
+    queryKey: ["tags"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/tags`
+      );
+      if (!response.ok) throw new Error("Failed to fetch tags");
+      return response.json();
+    },
+  });
+
+  const categories = categoriesData?.data || [];
+  const tags = tagsData?.data || [];
+
+  // Notify parent component when filters change
+  useEffect(() => {
+    onFiltersChange({
+      search: searchQuery,
+      categoryId: selectedCategory,
+      tagIds: selectedTags,
+    });
+  }, [searchQuery, selectedCategory, selectedTags, onFiltersChange]);
 
   const handleTagToggle = (tagId: string) => {
     setSelectedTags((prev) =>
@@ -69,45 +111,53 @@ export function GalleryFilters() {
           {/* Categories */}
           <div>
             <h3 className="font-semibold mb-2 text-sm">Categories</h3>
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() =>
-                    setSelectedCategory(
-                      selectedCategory === category.id ? null : category.id
-                    )
-                  }
-                  className={`px-3 py-1 rounded-full text-sm transition ${
-                    selectedCategory === category.id
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </div>
+            {categories.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() =>
+                      setSelectedCategory(
+                        selectedCategory === category.id ? null : category.id
+                      )
+                    }
+                    className={`px-3 py-1 rounded-full text-sm transition ${
+                      selectedCategory === category.id
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">No categories available</p>
+            )}
           </div>
 
           {/* Tags */}
           <div>
             <h3 className="font-semibold mb-2 text-sm">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <button
-                  key={tag.id}
-                  onClick={() => handleTagToggle(tag.id)}
-                  className={`px-3 py-1 rounded-full text-sm transition ${
-                    selectedTags.includes(tag.id)
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  }`}
-                >
-                  {tag.name}
-                </button>
-              ))}
-            </div>
+            {tags.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <button
+                    key={tag.id}
+                    onClick={() => handleTagToggle(tag.id)}
+                    className={`px-3 py-1 rounded-full text-sm transition ${
+                      selectedTags.includes(tag.id)
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                    }`}
+                  >
+                    {tag.name}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">No tags available</p>
+            )}
           </div>
 
           {/* Clear Filters */}

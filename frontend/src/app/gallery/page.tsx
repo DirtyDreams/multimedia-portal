@@ -1,13 +1,29 @@
+"use client";
+
+import { useState, useCallback } from "react";
 import { Metadata } from "next";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
 import { GalleryFilters } from "@/components/gallery/gallery-filters";
 
-export const metadata: Metadata = {
-  title: "Gallery | Multimedia Portal",
-  description: "Browse our collection of images and videos",
-};
-
 export default function GalleryPage() {
+  const [filters, setFilters] = useState<{
+    search: string;
+    categoryId: string | null;
+    tagIds: string[];
+  }>({
+    search: "",
+    categoryId: null,
+    tagIds: [],
+  });
+
+  const handleFiltersChange = useCallback((newFilters: {
+    search: string;
+    categoryId: string | null;
+    tagIds: string[];
+  }) => {
+    setFilters(newFilters);
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
@@ -18,10 +34,10 @@ export default function GalleryPage() {
       </div>
 
       {/* Filters */}
-      <GalleryFilters />
+      <GalleryFilters onFiltersChange={handleFiltersChange} />
 
       {/* Gallery Grid */}
-      <GalleryGrid />
+      <GalleryGrid filters={filters} />
     </div>
   );
 }

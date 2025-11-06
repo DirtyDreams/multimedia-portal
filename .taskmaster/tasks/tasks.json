@@ -2211,9 +2211,10 @@
               1
             ],
             "details": "Stwórz komponent FilterBar z dropdown/checkbox dla kategorii i tagów. Implementuj search bar dla wyszukiwania po nazwie/opisie. Dodaj sorting options (data, nazwa, popularity). Użyj URL query parameters dla deep linking filtrów. Implementuj clear filters functionality.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy filtering po kategoriach działa, search bar filtruje wyniki, URL zachowuje stan filtrów, clear filters resetuje widok",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:45:08.936Z"
           },
           {
             "id": 5,
@@ -2231,7 +2232,7 @@
         "complexity": 7,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
-        "updatedAt": "2025-11-06T18:42:21.865Z"
+        "updatedAt": "2025-11-06T18:45:08.936Z"
       },
       {
         "id": "30",
@@ -3006,7 +3007,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:42:21.869Z",
+      "lastModified": "2025-11-06T18:45:08.939Z",
       "taskCount": 35,
       "completedCount": 24,
       "tags": [
