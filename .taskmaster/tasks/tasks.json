@@ -2467,9 +2467,10 @@
               4
             ],
             "details": "Stwórz AdvancedSearch modal/page z polami: exact phrase, any/all words, author filter, date range, content type selection. Implementuj query builder generujący MeiliSearch query syntax. Dodaj save search functionality.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy zaawansowane opcje generują właściwe query, można zapisywać wyszukiwania, modal otwiera/zamyka się poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:45:52.505Z"
           },
           {
             "id": 7,
@@ -2505,7 +2506,7 @@
         "complexity": 6,
         "recommendedSubtasks": 8,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
-        "updatedAt": "2025-11-06T19:44:35.586Z"
+        "updatedAt": "2025-11-06T19:45:52.505Z"
       },
       {
         "id": "32",
@@ -3023,7 +3024,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:44:35.589Z",
+      "lastModified": "2025-11-06T19:45:52.509Z",
       "taskCount": 35,
       "completedCount": 26,
       "tags": [

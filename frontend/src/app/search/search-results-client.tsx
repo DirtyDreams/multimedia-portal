@@ -3,12 +3,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Calendar, User, Loader2 } from "lucide-react";
+import { Search, Calendar, User, Loader2, SlidersHorizontal } from "lucide-react";
 import { SearchResponse, SearchResult, ContentTypeFilter } from "@/types/search";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { formatDistance } from "date-fns";
 import { FilterPanel, SearchFilters } from "@/components/search/filter-panel";
+import { AdvancedSearchModal } from "@/components/search/advanced-search-modal";
 
 export function SearchResultsClient() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export function SearchResultsClient() {
   const [page, setPage] = useState(1);
   const [contentTypeFilter, setContentTypeFilter] = useState<ContentTypeFilter | "">("");
   const [showFilters, setShowFilters] = useState(true);
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
   // Initialize filters from URL
   const [filters, setFilters] = useState<SearchFilters>(() => {
@@ -186,16 +188,26 @@ export function SearchResultsClient() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-7xl mx-auto">
         {/* Search Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">
-            Search Results for &quot;{query}&quot;
-          </h1>
-          {!isLoading && (
-            <p className="text-muted-foreground">
-              Found {total.toLocaleString()} result{total !== 1 ? "s" : ""} in{" "}
-              {searchTime.toFixed(2)}s
-            </p>
-          )}
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">
+              Search Results for &quot;{query}&quot;
+            </h1>
+            {!isLoading && (
+              <p className="text-muted-foreground">
+                Found {total.toLocaleString()} result{total !== 1 ? "s" : ""} in{" "}
+                {searchTime.toFixed(2)}s
+              </p>
+            )}
+          </div>
+          <Button
+            variant="outline"
+            onClick={() => setShowAdvancedSearch(true)}
+            className="flex-shrink-0"
+          >
+            <SlidersHorizontal className="h-4 w-4 mr-2" />
+            Advanced Search
+          </Button>
         </div>
 
         {/* Two-column layout */}
@@ -397,6 +409,12 @@ export function SearchResultsClient() {
           </main>
         </div>
       </div>
+
+      {/* Advanced Search Modal */}
+      <AdvancedSearchModal
+        isOpen={showAdvancedSearch}
+        onClose={() => setShowAdvancedSearch(false)}
+      />
     </div>
   );
 }
