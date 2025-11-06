@@ -335,7 +335,7 @@
         "dependencies": [
           "3"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -343,7 +343,7 @@
             "description": "Wykonanie npx prisma init w folderze backend i konfiguracja podstawowych ustawień",
             "dependencies": [],
             "details": "Uruchom `npx prisma init` w folderze backend/. Skonfiguruj DATABASE_URL w .env. Ustaw podstawowe opcje w schema.prisma: generator client, datasource db postgresql. Zainstaluj @prisma/client i prisma jako dependencje.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy folder prisma/ został utworzony, schema.prisma zawiera poprawną konfigurację, connection string jest ustawiony",
             "parentId": "undefined"
           },
@@ -355,7 +355,7 @@
               1
             ],
             "details": "Zdefiniuj model User (id, email, username, password, role, createdAt, updatedAt). Dodaj model Session dla JWT sessions. Utwórz relacje User-Session. Dodaj indeksy na email, username dla optymalizacji.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy modele User i Session są poprawnie zdefiniowane, relacje działają, indeksy są utworzone",
             "parentId": "undefined"
           },
@@ -367,7 +367,7 @@
               2
             ],
             "details": "Zdefiniuj modele treści: Article, BlogPost, WikiPage (z parent-child dla hierarchii), GalleryItem, Story, Author. Ustaw relacje Author-Content (One-to-Many). Dodaj pola: title, content, slug, publishedAt, status. Dodaj indeksy na slug, publishedAt.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie modele treści są zdefiniowane, relacje Author-Content działają, hierarchia WikiPage jest poprawna",
             "parentId": "undefined"
           },
@@ -379,7 +379,7 @@
               3
             ],
             "details": "Zdefiniuj Comment (z polimorficznymi relacjami do wszystkich typów treści), Rating (1-5), Category, Tag. Utwórz tabele łączące dla Many-to-Many: ContentCategories, ContentTags. Dodaj indeksy na contentType, contentId, userId.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy Comment i Rating działają z wszystkimi typami treści, relacje Many-to-Many Category/Tag działają poprawnie",
             "parentId": "undefined"
           },
@@ -391,7 +391,7 @@
               4
             ],
             "details": "Dodaj modele Notification, EmailQueue. Sprawdź wszystkie relacje i indeksy. Uruchom `npx prisma migrate dev --name init` dla utworzenia pierwszej migracji. Wygeneruj Prisma Client z `npx prisma generate`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy migracja wykonuje się bez błędów, wszystkie tabele są utworzone, Prisma Studio pokazuje kompletny schema",
             "parentId": "undefined"
           }
@@ -410,7 +410,7 @@
         "dependencies": [
           "5"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -474,7 +474,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających AuthModule, JWT Strategy, Guards, hashowanie haseł i Redis integration."
+        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających AuthModule, JWT Strategy, Guards, hashowanie haseł i Redis integration.",
+        "updatedAt": "2025-11-06T16:22:25.663Z"
       },
       {
         "id": "7",
@@ -486,7 +487,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -549,7 +550,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących module setup, DTOs, CRUD endpoints i integrację z kategoriami."
+        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących module setup, DTOs, CRUD endpoints i integrację z kategoriami.",
+        "updatedAt": "2025-11-06T16:42:45.862Z"
       },
       {
         "id": "8",
@@ -561,7 +563,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -624,7 +626,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do modułu Articles ale z mniejszą złożonością."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do modułu Articles ale z mniejszą złożonością.",
+        "updatedAt": "2025-11-06T16:48:11.993Z"
       },
       {
         "id": "9",
@@ -636,7 +639,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -699,7 +702,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących hierarchiczną strukturę, recursive queries i tree navigation."
+        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących hierarchiczną strukturę, recursive queries i tree navigation.",
+        "updatedAt": "2025-11-06T16:56:29.607Z"
       },
       {
         "id": "10",
@@ -711,7 +715,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -774,7 +778,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobrą strukturę 5 subtasków pokrywającą upload, processing, MinIO integration i walidację plików."
+        "expansionPrompt": "Zadanie ma już bardzo dobrą strukturę 5 subtasków pokrywającą upload, processing, MinIO integration i walidację plików.",
+        "updatedAt": "2025-11-06T17:07:17.684Z"
       },
       {
         "id": "11",
@@ -786,7 +791,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -850,7 +855,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do poprzednich content modules ale z dodatkowym series grouping."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do poprzednich content modules ale z dodatkowym series grouping.",
+        "updatedAt": "2025-11-06T17:15:40.538Z"
       },
       {
         "id": "12",
@@ -862,7 +868,7 @@
         "dependencies": [
           "10"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -925,7 +931,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących entity, service, controller, upload zdjęć i integrację z modułami."
+        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących entity, service, controller, upload zdjęć i integrację z modułami.",
+        "updatedAt": "2025-11-06T17:20:16.172Z"
       },
       {
         "id": "13",
@@ -937,7 +944,7 @@
         "dependencies": [
           "12"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1000,7 +1007,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających polymorphic design, nested replies i moderację."
+        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających polymorphic design, nested replies i moderację.",
+        "updatedAt": "2025-11-06T17:24:25.446Z"
       },
       {
         "id": "14",
@@ -1012,7 +1020,7 @@
         "dependencies": [
           "13"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1074,7 +1082,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących polymorphic ratings, unique constraints i kalkulację średniej."
+        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących polymorphic ratings, unique constraints i kalkulację średniej.",
+        "updatedAt": "2025-11-06T17:28:10.077Z"
       },
       {
         "id": "15",
@@ -1086,7 +1095,7 @@
         "dependencies": [
           "14"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1149,7 +1158,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już właściwą strukturę 5 subtasków pokrywających Redis setup, cache strategies i TTL configuration."
+        "expansionPrompt": "Zadanie ma już właściwą strukturę 5 subtasków pokrywających Redis setup, cache strategies i TTL configuration.",
+        "updatedAt": "2025-11-06T17:32:38.718Z"
       },
       {
         "id": "16",
@@ -1161,7 +1171,7 @@
         "dependencies": [
           "15"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1224,7 +1234,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących WebSocket setup, authentication, rooms i monitoring."
+        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących WebSocket setup, authentication, rooms i monitoring.",
+        "updatedAt": "2025-11-06T17:38:22.963Z"
       },
       {
         "id": "17",
@@ -1236,7 +1247,7 @@
         "dependencies": [
           "16"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1299,7 +1310,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających indexowanie, search API i background processing."
+        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających indexowanie, search API i background processing.",
+        "updatedAt": "2025-11-06T17:45:56.941Z"
       },
       {
         "id": "18",
@@ -1311,7 +1323,7 @@
         "dependencies": [
           "17"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1374,7 +1386,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących queue setup, procesory i monitoring dashboard."
+        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących queue setup, procesory i monitoring dashboard.",
+        "updatedAt": "2025-11-06T17:54:21.059Z"
       },
       {
         "id": "19",
@@ -1386,7 +1399,7 @@
         "dependencies": [
           "18"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1450,7 +1463,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających email setup, templates i integrację z BullMQ."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających email setup, templates i integrację z BullMQ.",
+        "updatedAt": "2025-11-06T18:12:31.431Z"
       },
       {
         "id": "20",
@@ -1462,7 +1476,7 @@
         "dependencies": [
           "19"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1470,9 +1484,10 @@
             "description": "Dodanie pola status do wszystkich content entities z enum: draft, pending-review, scheduled, published, archived",
             "dependencies": [],
             "details": "Stwórz migration dodający pole 'status' typu enum do tabel: articles, blog_posts, wiki_pages, gallery_items, stories. Dodaj pole 'scheduledPublishAt' typu timestamp. Zaktualizuj wszystkie entity klasy w TypeORM z nowymi polami. Ustaw domyślny status na 'draft' dla nowych rekordów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy migracja wykonuje się bez błędów, nowe pola są dodane do wszystkich tabel, domyślne wartości są ustawione",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:18:22.842Z"
           },
           {
             "id": 2,
@@ -1482,9 +1497,10 @@
               1
             ],
             "details": "Zainstaluj BullMQ i Redis. Stwórz PublishingQueue z job 'publishScheduledContent'. Implementuj PublishingProcessor który zmienia status z 'scheduled' na 'published'. Skonfiguruj cron job sprawdzający co minutę scheduled content. Dodaj endpoint do planowania publikacji.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy scheduled content publikuje się automatycznie w określonym czasie, queue worker przetwarza joby poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:21:08.339Z"
           },
           {
             "id": 3,
@@ -1494,9 +1510,10 @@
               1
             ],
             "details": "Stwórz ContentVersionEntity z polami: contentId, contentType, version, data, createdAt, author. Implementuj ContentVersionService z metodami saveVersion, getVersions, restoreVersion. Dodaj automatyczne zapisywanie wersji przy każdej zmianie content. Stwórz endpoint do przeglądania historii wersji.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy każda zmiana content tworzy nową wersję, można przywrócić poprzednią wersję, historia wersji jest poprawnie wyświetlana",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:25:27.686Z"
           },
           {
             "id": 4,
@@ -1506,9 +1523,10 @@
               3
             ],
             "details": "Stwórz AutoSaveService z metodą saveDraft. Implementuj frontend timer który wywołuje auto-save co 30s. Dodaj endpoint POST /content/:type/:id/autosave. Użyj debouncing dla optymalizacji. Przechowuj drafts w osobnej tabeli lub jako specjalny typ version.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy auto-save uruchamia się co 30s podczas edycji, drafts są zapisywane poprawnie, nie ma konfliktów z manual save",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:28:36.782Z"
           },
           {
             "id": 5,
@@ -1519,14 +1537,16 @@
               4
             ],
             "details": "Dodaj query parameter ?preview=true do content endpoints. Zmodyfikuj content services aby zwracały draft/scheduled content z preview flag. Implementuj PreviewGuard sprawdzający uprawnienia. Stwórz specjalne preview URLs z tokenami. Dodaj preview banner w UI.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy draft content jest dostępne z preview URLs, preview nie jest dostępne bez autoryzacji, preview banner wyświetla się poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:31:34.553Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview."
+        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
+        "updatedAt": "2025-11-06T18:31:34.553Z"
       },
       {
         "id": "21",
@@ -1842,7 +1862,7 @@
         "dependencies": [
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1850,7 +1870,7 @@
             "description": "Stworzenie nowego projektu Next.js 14 z App Router i podstawową konfiguracją",
             "dependencies": [],
             "details": "Wykonaj `npx create-next-app@latest frontend --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\"` w folderze głównym. Skonfiguruj next.config.js z podstawowymi ustawieniami. Skonfiguruj TypeScript i ESLint. Dodaj podstawowe foldery w src/: app, components, lib, types, hooks.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy `npm run dev` uruchamia aplikację na localhost:3000, TypeScript kompiluje się bez błędów, TailwindCSS styles ładują się poprawnie",
             "parentId": "undefined"
           },
@@ -1862,7 +1882,7 @@
               1
             ],
             "details": "Wykonaj `npx shadcn-ui@latest init` w folderze frontend. Skonfiguruj components.json z odpowiednimi ścieżkami. Zainstaluj podstawowe komponenty: `npx shadcn-ui@latest add button card input dialog toast navigation-menu`. Skonfiguruj globals.css z CSS variables dla theme.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy shadcn/ui komponenty importują się bez błędów, styles theme działają poprawnie, komponenty renderują się z odpowiednimi stylami",
             "parentId": "undefined"
           },
@@ -1874,7 +1894,7 @@
               2
             ],
             "details": "Stwórz komponenty w src/components/: Header.tsx (logo, user menu, search), Navigation.tsx (main navigation menu), Footer.tsx (links, copyright), LoadingSpinner.tsx, ErrorBoundary.tsx. Wszystkie komponenty z TypeScript interfaces i responsive design. Użyj shadcn/ui komponentów jako baza.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie komponenty renderują się bez błędów, responsive design działa na mobile/desktop, TypeScript types są poprawne",
             "parentId": "undefined"
           },
@@ -1886,7 +1906,7 @@
               3
             ],
             "details": "Skonfiguruj src/app/layout.tsx z Header, Navigation, main content area i Footer. Stwórz page.tsx jako homepage. Dodaj loading.tsx, error.tsx, not-found.tsx templates. Skonfiguruj metadata i viewport settings. Dodaj podstawowe routing dla /blog, /articles, /wiki, /gallery, /stories.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy layout renderuje się poprawnie na wszystkich stronach, navigation działa, loading states działają, error boundaries catchują błędy",
             "parentId": "undefined"
           },
@@ -1898,7 +1918,7 @@
               4
             ],
             "details": "Zainstaluj @tanstack/react-query i zustand. Stwórz QueryClient provider w layout.tsx. Stwórz Zustand stores w src/lib/store/: authStore.ts (user state), uiStore.ts (sidebar, modals). Stwórz query hooks w src/hooks/ dla API calls. Skonfiguruj devtools dla development.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy TanStack Query devtools działają, Zustand store zapisuje state poprawnie, query hooks wykonują się bez błędów, devtools pokazują state changes",
             "parentId": "undefined"
           }
@@ -1917,7 +1937,7 @@
         "dependencies": [
           "25"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1925,7 +1945,7 @@
             "description": "Implementacja stron /login i /register z React Hook Form i walidacją Zod",
             "dependencies": [],
             "details": "Stwórz komponenty LoginForm i RegisterForm używając React Hook Form. Zaimplementuj schematy walidacji Zod dla email, hasła i potwierdzenia hasła. Dodaj styled components z Tailwind CSS dla responsywnego designu. Implementuj obsługę błędów walidacji i wyświetlanie komunikatów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy formularze walidują poprawnie dane wejściowe, wyświetlają błędy walidacji, submitują dane do API",
             "parentId": "undefined"
           },
@@ -1937,7 +1957,7 @@
               1
             ],
             "details": "Stwórz utility functions do zapisywania/odczytywania JWT z localStorage. Implementuj automatic token refresh przed wygaśnięciem. Dodaj interceptory axios do automatycznego dodawania Authorization header. Obsłuż scenariusze expired/invalid tokens z przekierowaniem do /login.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy token zapisuje się w localStorage, automatic refresh działa, expired tokens powodują logout",
             "parentId": "undefined"
           },
@@ -1949,7 +1969,7 @@
               2
             ],
             "details": "Implementuj AuthContext lub Zustand store dla user state (isAuthenticated, user data, loading states). Stwórz custom hooks useAuth, useLogin, useRegister, useLogout. Dodaj persist middleware dla Zustand jeśli używane. Implementuj automatic user data fetch po successful login.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy auth state persystuje między sesjami, user data ładuje się poprawnie, hooks działają we wszystkich komponentach",
             "parentId": "undefined"
           },
@@ -1961,7 +1981,7 @@
               3
             ],
             "details": "Stwórz ProtectedRoute component wrapper sprawdzający auth status. Implementuj redirect do /login dla nieautentykowanych użytkowników z return URL. Dodaj loading states podczas weryfikacji tokena. Stwórz RoleGuard dla różnych poziomów dostępu (user/admin).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy nieautentykowane żądania przekierowują do /login, authenticated users mają dostęp, role-based access działa",
             "parentId": "undefined"
           },
@@ -1973,7 +1993,7 @@
               4
             ],
             "details": "Stwórz logout function czyszczącą localStorage, auth state i przekierowującą do /login. Dodaj logout button w navigation/header. Implementuj optional server-side token invalidation. Dodaj confirmation dialog dla logout action. Obsłuż cleanup subscriptions/timers.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy logout czyści wszystkie dane auth, przekierowuje do /login, unieważnia token na serwerze",
             "parentId": "undefined"
           }
@@ -1992,7 +2012,7 @@
         "dependencies": [
           "26"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2000,7 +2020,7 @@
             "description": "Implementacja podstawowego layoutu strony głównej z sekcjami hero, features, showcase i CTA",
             "dependencies": [],
             "details": "Stwórz komponent LandingPage w Next.js z podstawową strukturą HTML. Zdefiniuj sekcje: HeroSection, FeaturesSection, ContentShowcaseSection, CallToActionSection. Użyj semantic HTML tags (header, main, section). Przygotuj podstawowy routing dla / endpoint.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy strona renderuje się poprawnie, wszystkie sekcje są widoczne, routing działa",
             "parentId": "undefined"
           },
@@ -2012,7 +2032,7 @@
               1
             ],
             "details": "Implementuj responsive grid layout używając Tailwind CSS classes. Zdefiniuj breakpoints dla mobile (sm), tablet (md), desktop (lg). Stwórz utility classes dla spacing, typography, colors. Zapewnij mobile-first design z progressive enhancement dla większych ekranów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź responsywność na różnych rozmiarach ekranu (320px, 768px, 1024px, 1440px)",
             "parentId": "undefined"
           },
@@ -2024,7 +2044,7 @@
               2
             ],
             "details": "Zainstaluj framer-motion. Dodaj fade-in animations dla sekcji przy scroll, hover effects dla buttons i cards. Implementuj staggered animations dla list elementów. Stwórz custom motion variants dla consistent animation timing.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy animacje działają smoothly, nie powodują lag-u, są dostępne na wszystkich urządzeniach",
             "parentId": "undefined"
           },
@@ -2036,7 +2056,7 @@
               3
             ],
             "details": "HeroSection: headline, subheadline, primary CTA button do rejestracji, hero image/video. FeaturesSection: grid 3-4 features (Articles, Blog, Wiki, Gallery) z ikonami, krótkimi opisami. Dodaj hover effects, responsive images, proper semantic markup.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy CTA button prowadzi do rejestracji, features są czytelne, images ładują się poprawnie",
             "parentId": "undefined"
           },
@@ -2048,7 +2068,7 @@
               4
             ],
             "details": "Implementuj Next.js Metadata API. Dodaj title, description, keywords meta tags. Skonfiguruj Open Graph tags (og:title, og:description, og:image, og:url). Dodaj structured data (JSON-LD). Implementuj robots.txt, sitemap.xml. Optymalizuj Core Web Vitals.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź meta tags w browser dev tools, przetestuj Open Graph w Facebook/Twitter debugger, zmierz PageSpeed Insights score",
             "parentId": "undefined"
           }
@@ -2067,7 +2087,7 @@
         "dependencies": [
           "27"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2131,7 +2151,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących routing, komponenty, TanStack Query i interactive features."
+        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących routing, komponenty, TanStack Query i interactive features.",
+        "updatedAt": "2025-11-06T16:35:17.809Z"
       },
       {
         "id": "29",
@@ -2143,7 +2164,7 @@
         "dependencies": [
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2151,9 +2172,10 @@
             "description": "Implementacja podstawowej strony galerii z responsywnym grid layoutem dla wyświetlania zdjęć i filmów",
             "dependencies": [],
             "details": "Stwórz komponent Gallery w /app/gallery/page.tsx z responsywnym CSS Grid lub Tailwind grid classes. Użyj Next.js Image component dla podstawowej optymalizacji obrazów. Implementuj adaptive grid (1-4 kolumny w zależności od screen size). Przygotuj placeholder strukturę dla media items.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy grid jest responsywny na różnych rozmiarach ekranu, obrazy ładują się poprawnie przez Next.js Image",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:37:11.634Z"
           },
           {
             "id": 2,
@@ -2163,9 +2185,10 @@
               1
             ],
             "details": "Zaimplementuj intersection observer dla lazy loading obrazów. Dodaj infinite scroll używając react-intersection-observer lub własnej implementacji. Stwórz API endpoint dla paginacji galerii (/api/gallery?page=X&limit=Y). Implementuj loading states i skeleton placeholders podczas ładowania.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy obrazy ładują się tylko gdy wchodzą w viewport, infinite scroll działa płynnie, loading states wyświetlają się poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:39:18.793Z"
           },
           {
             "id": 3,
@@ -2175,9 +2198,10 @@
               1
             ],
             "details": "Stwórz komponent Lightbox z nawigacją (poprzedni/następny), zoom, close button. Implementuj keyboard navigation (strzałki, escape). Dodaj overlay z blur background. Użyj Portal dla renderowania modala poza DOM tree. Obsłuż touch gestures dla mobile (swipe).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy lightbox otwiera się po kliknięciu, nawigacja strzałkami działa, escape zamyka modal, touch gestures działają na mobile",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:42:21.865Z"
           },
           {
             "id": 4,
@@ -2187,9 +2211,10 @@
               1
             ],
             "details": "Stwórz komponent FilterBar z dropdown/checkbox dla kategorii i tagów. Implementuj search bar dla wyszukiwania po nazwie/opisie. Dodaj sorting options (data, nazwa, popularity). Użyj URL query parameters dla deep linking filtrów. Implementuj clear filters functionality.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy filtering po kategoriach działa, search bar filtruje wyniki, URL zachowuje stan filtrów, clear filters resetuje widok",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:55:02.579Z"
           },
           {
             "id": 5,
@@ -2199,14 +2224,16 @@
               1
             ],
             "details": "Stwórz komponent UploadZone z drag & drop interface. Implementuj file validation (typ, rozmiar, format). Dodaj progress bar dla upload. Stwórz API endpoint /api/gallery/upload z multer middleware. Implementuj preview uploaded files przed zapisaniem. Dodaj batch upload support.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy drag & drop działa, file validation blokuje niepoprawne pliki, progress bar pokazuje postęp, uploaded files pojawiają się w galerii",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:54:24.744Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality."
+        "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
+        "updatedAt": "2025-11-06T18:55:02.579Z"
       },
       {
         "id": "30",
@@ -2218,7 +2245,7 @@
         "dependencies": [
           "29"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2226,9 +2253,10 @@
             "description": "Implementacja komponentu wyświetlającego komentarze w strukturze hierarchicznej z zagnieżdżonymi odpowiedziami",
             "dependencies": [],
             "details": "Stwórz komponent CommentList.tsx z obsługą zagnieżdżonych komentarzy. Użyj rekurencyjnego renderowania dla hierarchii komentarzy. Implementuj odpowiednie style CSS/Tailwind dla wizualnego oznaczenia poziomów zagnieżdżenia. Dodaj lazy loading dla głębokich wątków.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy komentarze wyświetlają się w hierarchii, style wizualne są poprawne, lazy loading działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:04:57.778Z"
           },
           {
             "id": 2,
@@ -2236,9 +2264,10 @@
             "description": "Stworzenie formularza dodawania komentarzy z walidacją i obsługą błędów",
             "dependencies": [],
             "details": "Stwórz AddCommentForm.tsx z polami: content, parentId (dla replies). Dodaj walidację react-hook-form: required content, max length. Implementuj obsługę błędów API, loading states. Dodaj rich text editor lub prosty textarea z preview.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy walidacja działa, błędy są wyświetlane, loading states działają poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:05:12.221Z"
           },
           {
             "id": 3,
@@ -2249,9 +2278,10 @@
               2
             ],
             "details": "Stwórz CommentItem.tsx wyświetlający autor, content, timestamp. Dodaj przycisk Reply który pokazuje AddCommentForm inline. Implementuj toggle reply form, obsługę nested replies. Dodaj akcje edit/delete dla własnych komentarzy.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy reply form się pojawia, nested replies działają, edit/delete dla własnych komentarzy",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:05:45.178Z"
           },
           {
             "id": 4,
@@ -2274,9 +2304,10 @@
               3
             ],
             "details": "Dodaj moderation przyciski w CommentItem: approve, reject, ban user (tylko admin/moderator). Implementuj ModerationPanel z pending comments queue. Dodaj bulk actions dla moderacji. Implementuj comment reporting system.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy moderation controls są widoczne dla admin/moderator, bulk actions działają",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:12:44.201Z"
           },
           {
             "id": 6,
@@ -2287,9 +2318,10 @@
               4
             ],
             "details": "Implementuj infinite scrolling lub pagination dla głównych komentarzy. Dodaj 'Load more replies' dla zagnieżdżonych komentarzy. Implementuj comment threading z collapse/expand functionality. Dodaj sorting options: newest, oldest, most liked.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy pagination działa, threading collapse/expand funkcjonuje, sorting opcje działają",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:12:58.698Z"
           },
           {
             "id": 7,
@@ -2301,7 +2333,8 @@
             "details": "Dodaj Like/Dislike buttons w CommentItem. Implementuj vote counter, prevent double voting. Dodaj hover effects, vote animations. Integruj z backend API dla vote persistence. Dodaj sorting po popularności.",
             "status": "pending",
             "testStrategy": "Sprawdź czy voting działa, double voting jest blokowane, counting jest poprawny",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:08:40.884Z"
           },
           {
             "id": 8,
@@ -2311,9 +2344,10 @@
               3
             ],
             "details": "Dodaj Edit button w CommentItem (tylko dla autor komentarza). Implementuj inline editing z save/cancel. Dodaj Delete button z confirmation modal. Implementuj edit history tracking. Dodaj 'edited' indicator przy zmodyfikowanych komentarzach.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy editing działa inline, delete confirmation pojawia się, edit history jest śledzona",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:06:23.501Z"
           },
           {
             "id": 9,
@@ -2343,14 +2377,16 @@
               9
             ],
             "details": "Napisz integration testy: dodawanie komentarzy, nested replies, real-time updates, moderation workflow. Testuj cross-browser compatibility, mobile responsiveness. Przeprowadź performance testing z dużą ilością komentarzy. Testuj edge cases i error handling.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy cały workflow komentarzy działa end-to-end, performance jest acceptable, mobile działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:18:34.371Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 10,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy.",
+        "updatedAt": "2025-11-06T19:18:48.575Z"
       },
       {
         "id": "31",
@@ -2362,7 +2398,7 @@
         "dependencies": [
           "30"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2370,9 +2406,10 @@
             "description": "Stworzenie interaktywnego komponentu do oceniania treści w skali 1-5 gwiazdek z animacjami hover i kliknięć",
             "dependencies": [],
             "details": "Stwórz React komponent StarRating z state management dla aktualnej oceny, hover effects, animacje przy kliknięciu, readonly mode dla wyświetlania średniej oceny. Użyj Tailwind CSS do stylowania ikon gwiazdek. Implementuj onRatingChange callback dla zapisywania ocen w bazie danych.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy gwiazdki reagują na hover, kliknięcie zapisuje ocenę, readonly mode wyświetla średnią, animacje działają płynnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:25:29.557Z"
           },
           {
             "id": 2,
@@ -2380,9 +2417,10 @@
             "description": "Stworzenie paska wyszukiwania z funkcjonalnością autocomplete i debounced search",
             "dependencies": [],
             "details": "Stwórz SearchBar komponent z input field, dropdown z sugestiami, debounced search (300ms), keyboard navigation (strzałki, Enter, Escape). Implementuj useDebounce hook, integracja z search API dla autocomplete. Dodaj loading state i error handling.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy autocomplete wyświetla sugestie po wpisaniu 3 znaków, debounce działa, navigation klawiaturą działa, loading state jest widoczny",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:33:25.786Z"
           },
           {
             "id": 3,
@@ -2392,9 +2430,10 @@
               2
             ],
             "details": "Stwórz SearchResults komponent wyświetlający wyniki w grid/list layout, implementuj paginację z infinite scroll lub page numbers. Dodaj search metadata (liczba wyników, czas wyszukiwania). Użyj SWR do cache'owania wyników.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wyniki wyświetlają się poprawnie, paginacja ładuje kolejne strony, metadata jest aktualna, cache działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:36:39.896Z"
           },
           {
             "id": 4,
@@ -2404,9 +2443,10 @@
               3
             ],
             "details": "Stwórz FilterPanel komponent z checkboxami dla kategorii, tagów, date range picker, sortowanie. Implementuj multi-select filters, clear all filters, filter badges. Użyj URLSearchParams do persistencji filtrów w URL.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy filtry ograniczają wyniki, multi-select działa, clear filters resetuje wszystko, URL params są aktualizowane",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:40:10.616Z"
           },
           {
             "id": 5,
@@ -2414,9 +2454,10 @@
             "description": "System zarządzania historią wyszukiwań dla zalogowanych użytkowników",
             "dependencies": [],
             "details": "Stwórz SearchHistory komponent wyświetlający ostatnie wyszukiwania, implementuj zapisywanie historii w localStorage i backend API. Dodaj możliwość usuwania pojedynczych wpisów i czyszczenia całej historii. Ograniczenie do 20 ostatnich wyszukiwań.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy historia zapisuje się lokalnie i w bazie, można usuwać wpisy, limit 20 wpisów jest przestrzegany",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:44:35.586Z"
           },
           {
             "id": 6,
@@ -2426,9 +2467,10 @@
               4
             ],
             "details": "Stwórz AdvancedSearch modal/page z polami: exact phrase, any/all words, author filter, date range, content type selection. Implementuj query builder generujący MeiliSearch query syntax. Dodaj save search functionality.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy zaawansowane opcje generują właściwe query, można zapisywać wyszukiwania, modal otwiera/zamyka się poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:48:52.974Z"
           },
           {
             "id": 7,
@@ -2438,9 +2480,10 @@
               2
             ],
             "details": "Implementuj typo tolerance w MeiliSearch, suggestion engine dla popularnych fraz, did-you-mean functionality. Stwórz SearchSuggestions komponent wyświetlający alternatywne frazy. Dodaj trending searches widget.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy błędy ortograficzne są korygowane, sugestie wyświetlają się, trending searches są aktualne",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:52:23.902Z"
           },
           {
             "id": 8,
@@ -2456,14 +2499,16 @@
               7
             ],
             "details": "Skonfiguruj MeiliSearch indeksy dla wszystkich typów treści, implementuj search API endpoints w NestJS. Dodaj caching strategię, rate limiting dla search API, analytics tracking. Optymalizuj query performance i relevance scoring.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie typy treści są wyszukiwalne, performance jest zadowalająca (<200ms), caching działa, analytics zapisują się",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:00:31.519Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 8,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
+        "updatedAt": "2025-11-06T20:00:31.519Z"
       },
       {
         "id": "32",
@@ -2475,7 +2520,7 @@
         "dependencies": [
           "31"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2483,9 +2528,10 @@
             "description": "Implementacja podstawowego layoutu dla panelu administracyjnego z bocznym menu nawigacyjnym",
             "dependencies": [],
             "details": "Stwórz /dashboard/layout.tsx z responsive sidebar navigation. Implementuj navigation items: Dashboard, Articles, Blog, Wiki, Gallery, Stories, Authors, Users, Settings. Dodaj logo, user dropdown, logout functionality. Użyj Tailwind dla styling, dodaj mobile hamburger menu.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy sidebar navigation działa na desktop i mobile, wszystkie linki prowadzą do właściwych stron, user dropdown wyświetla poprawne informacje",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:06:30.185Z"
           },
           {
             "id": 2,
@@ -2495,9 +2541,10 @@
               1
             ],
             "details": "Stwórz /dashboard/page.tsx z overview cards (total users, articles, blog posts, etc.). Implementuj charts używając Tremor lub Recharts - line chart dla user registrations, bar chart dla content creation. Dodaj API endpoint GET /admin/dashboard dla statystyk.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy dashboard ładuje się dla admin users, charts wyświetlają poprawne dane, overview cards pokazują aktualne statystyki",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:24:06.404Z"
           },
           {
             "id": 3,
@@ -2507,9 +2554,10 @@
               1
             ],
             "details": "Stwórz /dashboard/articles/page.tsx z listą artykułów używając TanStack Table. Implementuj /dashboard/articles/new i /dashboard/articles/[id]/edit z formularzami. Dodaj Rich Text Editor (Tiptap) dla content. Implementuj search, filtering po kategoriach/tagach.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy można tworzyć, edytować, usuwać artykuły, rich text editor działa poprawnie, filtering i search działają",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:32:37.737Z"
           },
           {
             "id": 4,
@@ -2519,9 +2567,10 @@
               1
             ],
             "details": "Stwórz /dashboard/blog/ z podobną strukturą do Articles. Implementuj listing z TanStack Table, forms dla tworzenia/edycji z Tiptap editor. Dodaj preview functionality, scheduling options dla publikacji.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy blog posts można zarządzać przez admin panel, preview działa, scheduling publikacji funkcjonuje",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:35:01.929Z"
           },
           {
             "id": 5,
@@ -2531,9 +2580,10 @@
               1
             ],
             "details": "Stwórz /dashboard/wiki/ z tree view dla hierarchii stron. Implementuj drag-and-drop dla reorganizacji struktury. Dodaj parent-child relationship management, breadcrumbs navigation w editorze.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy hierarchia Wiki jest poprawnie wyświetlana, drag-and-drop działa, parent-child relationships są zachowane",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:37:28.756Z"
           },
           {
             "id": 6,
@@ -2543,9 +2593,10 @@
               1
             ],
             "details": "Stwórz /dashboard/gallery/ z grid view dla mediów. Implementuj drag-and-drop file upload, image preview, bulk operations. Dodaj metadata editing, category/tag assignment, file size optimization.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy upload plików działa, preview obrazów wyświetla się, bulk operations działają, metadata można edytować",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:40:14.293Z"
           },
           {
             "id": 7,
@@ -2555,9 +2606,10 @@
               1
             ],
             "details": "Stwórz /dashboard/stories/ z listing i forms. Implementuj series management - tworzenie, edycja, przypisywanie stories do serii. Dodaj ordering w ramach serii, chapters management.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy stories można grupować w serie, ordering w serii działa, chapters management funkcjonuje poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:43:00.075Z"
           },
           {
             "id": 8,
@@ -2567,9 +2619,10 @@
               1
             ],
             "details": "Stwórz /dashboard/authors/ z CRUD dla author profiles. Implementuj image upload dla avatar, bio editor z Tiptap, social links management. Dodaj content assignment - linking content to authors.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy profile autorów można tworzyć i edytować, image upload działa, content assignment funkcjonuje",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:45:16.454Z"
           },
           {
             "id": 9,
@@ -2579,9 +2632,10 @@
               1
             ],
             "details": "Stwórz /dashboard/users/ z user listing używając TanStack Table. Implementuj role management (user, moderator, admin), user status changes (active, suspended). Dodaj user activity logs, bulk operations.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy można zmieniać role użytkowników, user status changes działają, activity logs są wyświetlane",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:47:32.514Z"
           },
           {
             "id": 10,
@@ -2589,9 +2643,10 @@
             "description": "Konfiguracja i integracja Tiptap editor dla wszystkich content types",
             "dependencies": [],
             "details": "Zainstaluj @tiptap/react i extensions. Stwórz reusable RichTextEditor component z toolbar (bold, italic, lists, links, images). Implementuj image upload handling, HTML sanitization, content validation.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy editor wyświetla się poprawnie, wszystkie toolbar options działają, image upload funkcjonuje, HTML jest sanitized",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:10:11.841Z"
           },
           {
             "id": 11,
@@ -2599,9 +2654,10 @@
             "description": "Implementacja zaawansowanych tabel z sorting, filtering i paginacją",
             "dependencies": [],
             "details": "Zainstaluj @tanstack/react-table. Stwórz reusable DataTable component z sorting, filtering, pagination. Implementuj column visibility, search functionality, bulk actions selection.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy tabele obsługują sorting, filtering działa poprawnie, pagination wyświetla właściwą liczbę rekordów, bulk actions działają",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:12:27.721Z"
           },
           {
             "id": 12,
@@ -2611,14 +2667,16 @@
               1
             ],
             "details": "Stwórz /dashboard/settings/ z sections: General Settings, Site Configuration, Email Settings, SEO Settings. Implementuj forms z validation, settings persistence w database, backup/restore functionality.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy ustawienia można zapisywać i wczytywać, validation działa, backup/restore funkcjonuje poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:50:00.411Z"
           }
         ],
         "complexity": 9,
         "recommendedSubtasks": 12,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface.",
+        "updatedAt": "2025-11-06T20:50:00.411Z"
       },
       {
         "id": "33",
@@ -2630,7 +2688,7 @@
         "dependencies": [
           "32"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2638,9 +2696,10 @@
             "description": "Implementacja głównego komponentu NotificationCenter z dropdown menu i listą powiadomień",
             "dependencies": [],
             "details": "Stwórz NotificationCenter komponent w Next.js z dropdown menu używając Tailwind CSS. Implementuj listę powiadomień z avatar użytkownika, tytułem, treścią i timestampem. Dodaj state management dla otwarcia/zamknięcia dropdown. Zaimplementuj lazy loading dla starszych powiadomień.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy dropdown otwiera się/zamyka poprawnie, lista powiadomień wyświetla się, lazy loading działa przy scrollowaniu",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:02:34.899Z"
           },
           {
             "id": 2,
@@ -2650,9 +2709,10 @@
               1
             ],
             "details": "Dodaj badge counter do NotificationCenter component. Implementuj licznik nieprzeczytanych powiadomień z real-time updates przez Socket.io. Zastosuj czerwony badge z białym tekstem, ukryj gdy brak powiadomień. Dodaj animacje dla nowych powiadomień.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy badge pokazuje poprawną liczbę, aktualizuje się w real-time, animacje działają przy nowych powiadomieniach",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:10:01.300Z"
           },
           {
             "id": 3,
@@ -2660,9 +2720,10 @@
             "description": "Implementacja systemu toast notifications dla powiadomień w czasie rzeczywistym",
             "dependencies": [],
             "details": "Stwórz ToastNotification komponent używając biblioteki react-hot-toast lub react-toastify. Implementuj różne typy toastów (success, info, warning, error). Dodaj customowe styling zgodny z design system. Skonfiguruj auto-dismiss i pozycjonowanie toastów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy toasty wyświetlają się w odpowiednim czasie, różne typy mają odpowiednie style, auto-dismiss działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:05:12.666Z"
           },
           {
             "id": 4,
@@ -2673,9 +2734,10 @@
               3
             ],
             "details": "Zainstaluj socket.io-client, stwórz socket service/hook. Implementuj połączenie z backend Socket.io server, obsługę eventów 'newNotification', 'notificationRead'. Dodaj reconnection logic i error handling. Integruj z NotificationCenter i toast system.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy socket łączy się z backend, eventy są odbierane, reconnection działa przy utracie połączenia",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:09:49.383Z"
           },
           {
             "id": 5,
@@ -2683,9 +2745,10 @@
             "description": "Implementacja strony ustawień powiadomień gdzie użytkownicy mogą konfigurować preferencje",
             "dependencies": [],
             "details": "Stwórz NotificationPreferences page w /dashboard/settings/notifications. Implementuj formularz z checkboxami dla różnych typów powiadomień (email, push, in-app). Dodaj integrację z backend API, zapisywanie ustawień do bazy danych. Użyj react-hook-form do walidacji.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy preferencje zapisują się w bazie, formularz waliduje poprawnie, ustawienia ładują się przy odwiedzeniu strony",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:12:37.104Z"
           },
           {
             "id": 6,
@@ -2695,9 +2758,10 @@
               5
             ],
             "details": "Implementuj Web Push API używając service worker. Stwórz funkcje do requestowania permissions, subskrypcji push notifications. Dodaj integrację z backend dla wysyłania push notifications. Implementuj handling kliknięć w powiadomienia przeglądarki.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy browser permissions działają, push notifications są odbierane, kliknięcia w powiadomienia przekierowują poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:15:09.725Z"
           },
           {
             "id": 7,
@@ -2708,14 +2772,16 @@
               4
             ],
             "details": "Implementuj funkcje markAsRead, markAllAsRead w NotificationCenter. Dodaj persystencję stanu powiadomień w localStorage i synchronizację z backend. Stwórz visual indicators dla przeczytanych/nieprzeczytanych powiadomień. Implementuj bulk actions do zarządzania powiadomieniami.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy oznaczanie jako przeczytane działa, stan synchronizuje się z backend, visual indicators pokazują poprawny status",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:15:20.556Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 7,
-        "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality."
+        "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
+        "updatedAt": "2025-11-06T21:15:20.556Z"
       },
       {
         "id": "34",
@@ -2727,7 +2793,7 @@
         "dependencies": [
           "33"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2735,9 +2801,10 @@
             "description": "Napisz unit testy dla kluczowych serwisów backendu używając Jest framework",
             "dependencies": [],
             "details": "Stwórz unit testy dla AuthService, UserService, ArticleService, BlogService, WikiService, GalleryService, CommentService, RatingService. Użyj Jest i mocking bibliotek. Pokryj edge cases, error handling, business logic validation. Osiągnij coverage > 80% dla critical services.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom npm test w backend/, sprawdź coverage report, wszystkie testy muszą przechodzić",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:33:12.334Z"
           },
           {
             "id": 2,
@@ -2747,9 +2814,10 @@
               1
             ],
             "details": "Stwórz integration testy dla wszystkich REST endpoints: auth, articles, blog, wiki, gallery, comments, ratings. Użyj Supertest do testowania HTTP requests/responses. Testuj authentication, authorization, CRUD operations, error responses, data validation.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Uruchom npm run test:e2e w backend/, wszystkie API endpoints muszą odpowiadać poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:41:22.360Z"
           },
           {
             "id": 3,
@@ -2759,7 +2827,8 @@
             "details": "Stwórz testy dla key components: Navigation, Footer, ArticleCard, BlogCard, CommentSection, RatingWidget, AdminPanel components. Testuj user interactions, props rendering, state changes, form submissions. Użyj @testing-library/react i @testing-library/user-event.",
             "status": "pending",
             "testStrategy": "Uruchom npm test w frontend/, sprawdź coverage report dla komponentów",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:37:10.871Z"
           },
           {
             "id": 4,
@@ -2842,7 +2911,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 10,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
+        "updatedAt": "2025-11-06T21:41:22.360Z"
       },
       {
         "id": "35",
@@ -2981,9 +3051,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T02:39:42.574Z",
+      "lastModified": "2025-11-06T21:41:22.363Z",
       "taskCount": 35,
-      "completedCount": 4,
+      "completedCount": 29,
       "tags": [
         "master"
       ]
