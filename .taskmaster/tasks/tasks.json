@@ -2398,7 +2398,7 @@
         "dependencies": [
           "30"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2406,9 +2406,10 @@
             "description": "Stworzenie interaktywnego komponentu do oceniania treści w skali 1-5 gwiazdek z animacjami hover i kliknięć",
             "dependencies": [],
             "details": "Stwórz React komponent StarRating z state management dla aktualnej oceny, hover effects, animacje przy kliknięciu, readonly mode dla wyświetlania średniej oceny. Użyj Tailwind CSS do stylowania ikon gwiazdek. Implementuj onRatingChange callback dla zapisywania ocen w bazie danych.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy gwiazdki reagują na hover, kliknięcie zapisuje ocenę, readonly mode wyświetla średnią, animacje działają płynnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:21:45.053Z"
           },
           {
             "id": 2,
@@ -2499,7 +2500,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 8,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
+        "updatedAt": "2025-11-06T19:21:45.053Z"
       },
       {
         "id": "32",
@@ -3017,7 +3019,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:18:48.578Z",
+      "lastModified": "2025-11-06T19:21:45.057Z",
       "taskCount": 35,
       "completedCount": 26,
       "tags": [

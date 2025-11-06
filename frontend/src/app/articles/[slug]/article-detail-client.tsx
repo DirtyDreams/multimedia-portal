@@ -4,7 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { Calendar, User, Eye } from "lucide-react";
 import { CommentSection } from "@/components/comments";
+import { RatingWidget } from "@/components/rating";
 import { CommentableType } from "@/types/comment";
+import { RatableType } from "@/types/rating";
 
 interface Article {
   id: string;
@@ -178,6 +180,12 @@ export function ArticleDetailClient({ slug }: ArticleDetailClientProps) {
             <p className="text-sm text-muted-foreground">{article.author.bio}</p>
           </div>
         )}
+
+        {/* Rating Widget */}
+        <RatingWidget
+          contentType={RatableType.ARTICLE}
+          contentId={article.id}
+        />
 
         {/* Comment Section */}
         <CommentSection
