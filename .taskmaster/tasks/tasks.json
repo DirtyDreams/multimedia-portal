@@ -2520,7 +2520,7 @@
         "dependencies": [
           "31"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2528,9 +2528,10 @@
             "description": "Implementacja podstawowego layoutu dla panelu administracyjnego z bocznym menu nawigacyjnym",
             "dependencies": [],
             "details": "Stwórz /dashboard/layout.tsx z responsive sidebar navigation. Implementuj navigation items: Dashboard, Articles, Blog, Wiki, Gallery, Stories, Authors, Users, Settings. Dodaj logo, user dropdown, logout functionality. Użyj Tailwind dla styling, dodaj mobile hamburger menu.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy sidebar navigation działa na desktop i mobile, wszystkie linki prowadzą do właściwych stron, user dropdown wyświetla poprawne informacje",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:03:48.129Z"
           },
           {
             "id": 2,
@@ -2663,7 +2664,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 12,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface.",
+        "updatedAt": "2025-11-06T20:03:48.129Z"
       },
       {
         "id": "33",
@@ -3026,7 +3028,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T20:00:31.522Z",
+      "lastModified": "2025-11-06T20:03:48.132Z",
       "taskCount": 35,
       "completedCount": 27,
       "tags": [
