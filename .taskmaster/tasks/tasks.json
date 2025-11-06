@@ -791,7 +791,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -855,7 +855,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do poprzednich content modules ale z dodatkowym series grouping."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do poprzednich content modules ale z dodatkowym series grouping.",
+        "updatedAt": "2025-11-06T17:15:40.538Z"
       },
       {
         "id": "12",
@@ -867,7 +868,7 @@
         "dependencies": [
           "10"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -930,7 +931,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących entity, service, controller, upload zdjęć i integrację z modułami."
+        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących entity, service, controller, upload zdjęć i integrację z modułami.",
+        "updatedAt": "2025-11-06T17:20:16.172Z"
       },
       {
         "id": "13",
@@ -942,7 +944,7 @@
         "dependencies": [
           "12"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1005,7 +1007,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających polymorphic design, nested replies i moderację."
+        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających polymorphic design, nested replies i moderację.",
+        "updatedAt": "2025-11-06T17:24:25.446Z"
       },
       {
         "id": "14",
@@ -1017,7 +1020,7 @@
         "dependencies": [
           "13"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1079,7 +1082,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących polymorphic ratings, unique constraints i kalkulację średniej."
+        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących polymorphic ratings, unique constraints i kalkulację średniej.",
+        "updatedAt": "2025-11-06T17:28:10.077Z"
       },
       {
         "id": "15",
@@ -1091,7 +1095,7 @@
         "dependencies": [
           "14"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1154,7 +1158,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już właściwą strukturę 5 subtasków pokrywających Redis setup, cache strategies i TTL configuration."
+        "expansionPrompt": "Zadanie ma już właściwą strukturę 5 subtasków pokrywających Redis setup, cache strategies i TTL configuration.",
+        "updatedAt": "2025-11-06T17:32:38.718Z"
       },
       {
         "id": "16",
@@ -2987,9 +2992,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T17:07:17.687Z",
+      "lastModified": "2025-11-06T17:32:38.721Z",
       "taskCount": 35,
-      "completedCount": 14,
+      "completedCount": 19,
       "tags": [
         "master"
       ]
