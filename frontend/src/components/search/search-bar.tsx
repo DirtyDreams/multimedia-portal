@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Search, X, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AutocompleteResult } from "@/types/search";
+import { useSearchHistory } from "@/hooks/use-search-history";
+import { SearchHistory } from "./search-history";
 
 interface SearchBarProps {
   placeholder?: string;
@@ -25,10 +27,12 @@ export function SearchBar({
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [showHistory, setShowHistory] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  const { history, addToHistory, removeFromHistory, clearHistory } = useSearchHistory();
 
   // Debounce query for autocomplete
   useEffect(() => {
@@ -63,7 +67,11 @@ export function SearchBar({
     (searchQuery: string) => {
       if (!searchQuery.trim()) return;
 
+      // Add to search history
+      addToHistory(searchQuery);
+
       setIsOpen(false);
+      setShowHistory(false);
       setQuery("");
 
       if (onSearch) {
@@ -72,7 +80,7 @@ export function SearchBar({
         router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       }
     },
-    [onSearch, router]
+    [onSearch, router, addToHistory]
   );
 
   // Handle form submit
@@ -143,6 +151,7 @@ export function SearchBar({
         !inputRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        setShowHistory(false);
       }
     };
 
@@ -150,14 +159,33 @@ export function SearchBar({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Open dropdown when there are suggestions
+  // Handle input focus - show history if query is empty
+  const handleInputFocus = () => {
+    if (query.length === 0 && history.length > 0) {
+      setShowHistory(true);
+    }
+  };
+
+  // Handle history item selection
+  const handleHistorySelect = (historyQuery: string) => {
+    setQuery(historyQuery);
+    setShowHistory(false);
+    inputRef.current?.focus();
+    // Trigger search immediately
+    handleSearch(historyQuery);
+  };
+
+  // Open dropdown when there are suggestions or show history when empty
   useEffect(() => {
     if (suggestions && suggestions.length > 0 && query.length >= 2) {
+      setIsOpen(true);
+      setShowHistory(false);
+    } else if (showHistory && query.length === 0) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
     }
-  }, [suggestions, query]);
+  }, [suggestions, query, showHistory]);
 
   // Reset selected index when query changes
   useEffect(() => {
@@ -189,6 +217,7 @@ export function SearchBar({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
+            onFocus={handleInputFocus}
             placeholder={placeholder}
             autoFocus={autoFocus}
             className="w-full pl-10 pr-10 py-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring transition"
@@ -214,9 +243,9 @@ export function SearchBar({
         </div>
       </form>
 
-      {/* Autocomplete Dropdown */}
+      {/* Autocomplete Dropdown or History */}
       <AnimatePresence>
-        {isOpen && suggestions && suggestions.length > 0 && (
+        {isOpen && (
           <motion.div
             ref={dropdownRef}
             initial={{ opacity: 0, y: -10 }}
@@ -224,34 +253,49 @@ export function SearchBar({
             exit={{ opacity: 0, y: -10 }}
             className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg overflow-hidden z-50"
           >
-            <div className="py-2">
-              {suggestions.map((suggestion, index) => (
-                <button
-                  key={suggestion.id}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className={`w-full px-4 py-3 text-left hover:bg-muted transition flex items-center justify-between ${
-                    selectedIndex === index ? "bg-muted" : ""
-                  }`}
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{suggestion.title}</p>
+            {/* Show search history when no query */}
+            {showHistory && query.length === 0 ? (
+              <SearchHistory
+                history={history}
+                onSelect={handleHistorySelect}
+                onRemove={removeFromHistory}
+                onClearAll={clearHistory}
+              />
+            ) : (
+              /* Show autocomplete suggestions */
+              suggestions && suggestions.length > 0 && (
+                <>
+                  <div className="py-2">
+                    {suggestions.map((suggestion, index) => (
+                      <button
+                        key={suggestion.id}
+                        onClick={() => handleSuggestionClick(suggestion)}
+                        className={`w-full px-4 py-3 text-left hover:bg-muted transition flex items-center justify-between ${
+                          selectedIndex === index ? "bg-muted" : ""
+                        }`}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium truncate">{suggestion.title}</p>
+                        </div>
+                        <span className="ml-3 px-2 py-1 bg-primary/10 text-primary text-xs rounded flex-shrink-0">
+                          {getContentTypeLabel(suggestion.contentType)}
+                        </span>
+                      </button>
+                    ))}
                   </div>
-                  <span className="ml-3 px-2 py-1 bg-primary/10 text-primary text-xs rounded flex-shrink-0">
-                    {getContentTypeLabel(suggestion.contentType)}
-                  </span>
-                </button>
-              ))}
-            </div>
 
-            {/* View All Results Link */}
-            <div className="border-t border-border px-4 py-3 bg-muted/50">
-              <button
-                onClick={() => handleSearch(query)}
-                className="text-sm text-primary hover:underline"
-              >
-                View all results for "{query}"
-              </button>
-            </div>
+                  {/* View All Results Link */}
+                  <div className="border-t border-border px-4 py-3 bg-muted/50">
+                    <button
+                      onClick={() => handleSearch(query)}
+                      className="text-sm text-primary hover:underline"
+                    >
+                      View all results for &quot;{query}&quot;
+                    </button>
+                  </div>
+                </>
+              )
+            )}
           </motion.div>
         )}
       </AnimatePresence>
