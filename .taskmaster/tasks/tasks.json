@@ -2709,9 +2709,10 @@
               1
             ],
             "details": "Dodaj badge counter do NotificationCenter component. Implementuj licznik nieprzeczytanych powiadomień z real-time updates przez Socket.io. Zastosuj czerwony badge z białym tekstem, ukryj gdy brak powiadomień. Dodaj animacje dla nowych powiadomień.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy badge pokazuje poprawną liczbę, aktualizuje się w real-time, animacje działają przy nowych powiadomieniach",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:10:01.300Z"
           },
           {
             "id": 3,
@@ -2733,10 +2734,10 @@
               3
             ],
             "details": "Zainstaluj socket.io-client, stwórz socket service/hook. Implementuj połączenie z backend Socket.io server, obsługę eventów 'newNotification', 'notificationRead'. Dodaj reconnection logic i error handling. Integruj z NotificationCenter i toast system.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy socket łączy się z backend, eventy są odbierane, reconnection działa przy utracie połączenia",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:07:06.983Z"
+            "updatedAt": "2025-11-06T21:09:49.383Z"
           },
           {
             "id": 5,
@@ -2744,9 +2745,10 @@
             "description": "Implementacja strony ustawień powiadomień gdzie użytkownicy mogą konfigurować preferencje",
             "dependencies": [],
             "details": "Stwórz NotificationPreferences page w /dashboard/settings/notifications. Implementuj formularz z checkboxami dla różnych typów powiadomień (email, push, in-app). Dodaj integrację z backend API, zapisywanie ustawień do bazy danych. Użyj react-hook-form do walidacji.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy preferencje zapisują się w bazie, formularz waliduje poprawnie, ustawienia ładują się przy odwiedzeniu strony",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:10:12.788Z"
           },
           {
             "id": 6,
@@ -2777,7 +2779,7 @@
         "complexity": 6,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
-        "updatedAt": "2025-11-06T21:07:06.983Z"
+        "updatedAt": "2025-11-06T21:10:12.788Z"
       },
       {
         "id": "34",
@@ -3043,7 +3045,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:07:06.986Z",
+      "lastModified": "2025-11-06T21:10:12.792Z",
       "taskCount": 35,
       "completedCount": 28,
       "tags": [
