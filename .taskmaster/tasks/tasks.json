@@ -2245,7 +2245,7 @@
         "dependencies": [
           "29"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2253,9 +2253,10 @@
             "description": "Implementacja komponentu wyświetlającego komentarze w strukturze hierarchicznej z zagnieżdżonymi odpowiedziami",
             "dependencies": [],
             "details": "Stwórz komponent CommentList.tsx z obsługą zagnieżdżonych komentarzy. Użyj rekurencyjnego renderowania dla hierarchii komentarzy. Implementuj odpowiednie style CSS/Tailwind dla wizualnego oznaczenia poziomów zagnieżdżenia. Dodaj lazy loading dla głębokich wątków.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy komentarze wyświetlają się w hierarchii, style wizualne są poprawne, lazy loading działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:00:40.116Z"
           },
           {
             "id": 2,
@@ -2263,9 +2264,10 @@
             "description": "Stworzenie formularza dodawania komentarzy z walidacją i obsługą błędów",
             "dependencies": [],
             "details": "Stwórz AddCommentForm.tsx z polami: content, parentId (dla replies). Dodaj walidację react-hook-form: required content, max length. Implementuj obsługę błędów API, loading states. Dodaj rich text editor lub prosty textarea z preview.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy walidacja działa, błędy są wyświetlane, loading states działają poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:00:54.681Z"
           },
           {
             "id": 3,
@@ -2377,7 +2379,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 10,
-        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy."
+        "expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy.",
+        "updatedAt": "2025-11-06T19:00:54.681Z"
       },
       {
         "id": "31",
@@ -3008,7 +3011,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:55:02.582Z",
+      "lastModified": "2025-11-06T19:00:54.685Z",
       "taskCount": 35,
       "completedCount": 25,
       "tags": [
