@@ -2825,10 +2825,10 @@
             "description": "Napisz testy komponentów React używając React Testing Library i Jest",
             "dependencies": [],
             "details": "Stwórz testy dla key components: Navigation, Footer, ArticleCard, BlogCard, CommentSection, RatingWidget, AdminPanel components. Testuj user interactions, props rendering, state changes, form submissions. Użyj @testing-library/react i @testing-library/user-event.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Uruchom npm test w frontend/, sprawdź coverage report dla komponentów",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:37:10.871Z"
+            "updatedAt": "2025-11-06T22:04:55.628Z"
           },
           {
             "id": 4,
@@ -2912,7 +2912,7 @@
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T21:41:22.360Z"
+        "updatedAt": "2025-11-06T22:04:55.628Z"
       },
       {
         "id": "35",
@@ -3051,7 +3051,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:41:22.363Z",
+      "lastModified": "2025-11-06T22:04:55.632Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
