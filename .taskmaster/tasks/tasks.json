@@ -2185,10 +2185,10 @@
               1
             ],
             "details": "Zaimplementuj intersection observer dla lazy loading obrazów. Dodaj infinite scroll używając react-intersection-observer lub własnej implementacji. Stwórz API endpoint dla paginacji galerii (/api/gallery?page=X&limit=Y). Implementuj loading states i skeleton placeholders podczas ładowania.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy obrazy ładują się tylko gdy wchodzą w viewport, infinite scroll działa płynnie, loading states wyświetlają się poprawnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:37:32.977Z"
+            "updatedAt": "2025-11-06T18:39:18.793Z"
           },
           {
             "id": 3,
@@ -2198,9 +2198,10 @@
               1
             ],
             "details": "Stwórz komponent Lightbox z nawigacją (poprzedni/następny), zoom, close button. Implementuj keyboard navigation (strzałki, escape). Dodaj overlay z blur background. Użyj Portal dla renderowania modala poza DOM tree. Obsłuż touch gestures dla mobile (swipe).",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy lightbox otwiera się po kliknięciu, nawigacja strzałkami działa, escape zamyka modal, touch gestures działają na mobile",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:39:29.285Z"
           },
           {
             "id": 4,
@@ -2230,7 +2231,7 @@
         "complexity": 7,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
-        "updatedAt": "2025-11-06T18:37:32.977Z"
+        "updatedAt": "2025-11-06T18:39:29.285Z"
       },
       {
         "id": "30",
@@ -3005,7 +3006,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:37:32.980Z",
+      "lastModified": "2025-11-06T18:39:29.288Z",
       "taskCount": 35,
       "completedCount": 24,
       "tags": [

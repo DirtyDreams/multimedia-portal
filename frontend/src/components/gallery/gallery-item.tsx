@@ -18,9 +18,10 @@ interface GalleryItemProps {
       name: string;
     };
   };
+  onClick?: () => void;
 }
 
-export function GalleryItem({ item }: GalleryItemProps) {
+export function GalleryItem({ item, onClick }: GalleryItemProps) {
   const isVideo = item.fileType === "video";
   const imageUrl = item.thumbnail || item.fileUrl;
 
@@ -30,10 +31,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       className="group relative overflow-hidden rounded-lg bg-card shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
-      onClick={() => {
-        // TODO: Open lightbox modal (will be implemented in subtask 29.3)
-        console.log("Open lightbox for:", item.id);
-      }}
+      onClick={onClick}
     >
       {/* Image/Video Thumbnail */}
       <div className="relative aspect-square overflow-hidden">

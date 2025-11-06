@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { GalleryItem } from "./gallery-item";
+import { Lightbox } from "./lightbox";
 import { Loader2 } from "lucide-react";
 
 interface GalleryItemData {
@@ -37,6 +38,8 @@ interface GalleryResponse {
 export function GalleryGrid() {
   const limit = 12;
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const {
     data,
@@ -93,6 +96,19 @@ export function GalleryGrid() {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  const handleOpenLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const handleCloseLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const handleNavigateLightbox = (index: number) => {
+    setLightboxIndex(index);
+  };
+
   if (status === "pending") {
     return (
       <div className="flex justify-center items-center py-20">
@@ -122,13 +138,18 @@ export function GalleryGrid() {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Grid Layout with Lazy-Loaded Items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {allItems.map((item, index) => (
-          <GalleryItem key={`${item.id}-${index}`} item={item} />
-        ))}
-      </div>
+    <>
+      <div className="space-y-8">
+        {/* Grid Layout with Lazy-Loaded Items */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {allItems.map((item, index) => (
+            <GalleryItem
+              key={`${item.id}-${index}`}
+              item={item}
+              onClick={() => handleOpenLightbox(index)}
+            />
+          ))}
+        </div>
 
       {/* Infinite Scroll Trigger */}
       <div ref={loadMoreRef} className="flex justify-center py-4">
@@ -157,6 +178,16 @@ export function GalleryGrid() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      <Lightbox
+        isOpen={lightboxOpen}
+        onClose={handleCloseLightbox}
+        items={allItems}
+        currentIndex={lightboxIndex}
+        onNavigate={handleNavigateLightbox}
+      />
+    </>
   );
 }
