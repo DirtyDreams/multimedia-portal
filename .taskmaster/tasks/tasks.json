@@ -173,7 +173,7 @@
         "dependencies": [
           "2"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -181,9 +181,10 @@
             "description": "Inicjalizacja nowej aplikacji NestJS w folderze backend za pomocą CLI",
             "dependencies": [],
             "details": "Użyj komendy `nest new backend` w głównym folderze projektu. Upewnij się, że CLI NestJS jest zainstalowany (`npm i -g @nestjs/cli`). Wybierz npm jako package manager podczas instalacji. Sprawdź czy struktura folderów została utworzona poprawnie.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy folder backend zawiera standardową strukturę NestJS (src/, test/, package.json), uruchom `npm run start:dev` i zweryfikuj czy serwer startuje bez błędów",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:25:42.782Z"
           },
           {
             "id": 2,
@@ -193,9 +194,10 @@
               1
             ],
             "details": "Zainstaluj dependencies: `npm install @nestjs/config @nestjs/jwt @nestjs/passport @nestjs/swagger @prisma/client prisma bcrypt class-validator class-transformer`. Zainstaluj dev dependencies: `npm install -D @types/bcrypt`. Sprawdź czy wszystkie pakiety zostały dodane do package.json.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Zweryfikuj czy wszystkie dependencies są w package.json, uruchom `npm install` i sprawdź czy nie ma błędów podczas instalacji, sprawdź czy można importować główne klasy z każdego pakietu",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:26:47.104Z"
           },
           {
             "id": 3,
@@ -205,9 +207,10 @@
               2
             ],
             "details": "Wygeneruj moduły: `nest generate module config`, `nest generate module auth`. Skonfiguruj ConfigModule w app.module.ts z isGlobal: true. Stwórz podstawową strukturę folderów: src/config/, src/auth/, src/common/. Dodaj podstawowy environment validation schema.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy moduły są poprawnie zaimportowane w app.module.ts, zweryfikuj czy ConfigModule ładuje zmienne środowiskowe, sprawdź czy struktura folderów odpowiada konwencjom NestJS",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:35:02.698Z"
           },
           {
             "id": 4,
@@ -217,9 +220,10 @@
               3
             ],
             "details": "Skonfiguruj CORS middleware, helmet dla bezpieczeństwa, podstawowy JWT strategy w auth module. Stwórz JwtAuthGuard i RolesGuard. Dodaj ValidationPipe globalnie. Skonfiguruj Swagger documentation z @nestjs/swagger.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy CORS działa dla frontend'u, zweryfikuj czy Swagger jest dostępny pod /api, sprawdź czy ValidationPipe odrzuca nieprawidłowe dane, test podstawowej autentykacji JWT",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:35:06.335Z"
           },
           {
             "id": 5,
@@ -229,14 +233,16 @@
               4
             ],
             "details": "Stwórz Dockerfile z Node.js 18+ base image, multi-stage build dla optymalizacji. Dodaj health check endpoint /api/health w app.controller.ts zwracający status 200 i podstawowe informacje o aplikacji. Skonfiguruj .dockerignore file.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Zbuduj Docker image (`docker build -t backend .`), uruchom kontener i sprawdź czy endpoint /api/health odpowiada statusem 200, zweryfikuj czy `npm run start:dev` uruchamia serwer na porcie 3001",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T02:35:10.077Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących setup NestJS, instalację dependencies i podstawową konfigurację."
+        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących setup NestJS, instalację dependencies i podstawową konfigurację.",
+        "updatedAt": "2025-11-06T02:35:10.077Z"
       },
       {
         "id": "4",
@@ -2969,9 +2975,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T02:19:40.868Z",
+      "lastModified": "2025-11-06T02:35:10.079Z",
       "taskCount": 35,
-      "completedCount": 2,
+      "completedCount": 3,
       "tags": [
         "master"
       ]
