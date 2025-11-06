@@ -2688,7 +2688,7 @@
         "dependencies": [
           "32"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2758,10 +2758,10 @@
               5
             ],
             "details": "Implementuj Web Push API używając service worker. Stwórz funkcje do requestowania permissions, subskrypcji push notifications. Dodaj integrację z backend dla wysyłania push notifications. Implementuj handling kliknięć w powiadomienia przeglądarki.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy browser permissions działają, push notifications są odbierane, kliknięcia w powiadomienia przekierowują poprawnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:12:47.901Z"
+            "updatedAt": "2025-11-06T21:15:09.725Z"
           },
           {
             "id": 7,
@@ -2772,15 +2772,16 @@
               4
             ],
             "details": "Implementuj funkcje markAsRead, markAllAsRead w NotificationCenter. Dodaj persystencję stanu powiadomień w localStorage i synchronizację z backend. Stwórz visual indicators dla przeczytanych/nieprzeczytanych powiadomień. Implementuj bulk actions do zarządzania powiadomieniami.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy oznaczanie jako przeczytane działa, stan synchronizuje się z backend, visual indicators pokazują poprawny status",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:15:20.556Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
-        "updatedAt": "2025-11-06T21:12:47.901Z"
+        "updatedAt": "2025-11-06T21:15:20.556Z"
       },
       {
         "id": "34",
@@ -3046,9 +3047,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:12:47.904Z",
+      "lastModified": "2025-11-06T21:15:20.559Z",
       "taskCount": 35,
-      "completedCount": 28,
+      "completedCount": 29,
       "tags": [
         "master"
       ]
