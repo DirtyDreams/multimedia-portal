@@ -410,7 +410,7 @@
         "dependencies": [
           "5"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -474,7 +474,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających AuthModule, JWT Strategy, Guards, hashowanie haseł i Redis integration."
+        "expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających AuthModule, JWT Strategy, Guards, hashowanie haseł i Redis integration.",
+        "updatedAt": "2025-11-06T16:22:25.663Z"
       },
       {
         "id": "7",
@@ -2067,7 +2068,7 @@
         "dependencies": [
           "27"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2131,7 +2132,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących routing, komponenty, TanStack Query i interactive features."
+        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących routing, komponenty, TanStack Query i interactive features.",
+        "updatedAt": "2025-11-06T16:35:17.809Z"
       },
       {
         "id": "29",
@@ -2981,9 +2983,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T02:39:42.574Z",
+      "lastModified": "2025-11-06T16:35:17.812Z",
       "taskCount": 35,
-      "completedCount": 4,
+      "completedCount": 10,
       "tags": [
         "master"
       ]
