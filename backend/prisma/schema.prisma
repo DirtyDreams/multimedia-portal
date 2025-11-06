@@ -1,0 +1,593 @@
+// Prisma Schema for Multimedia Portal
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String?
+  role      UserRole @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  sessions      Session[]
+  articles      Article[]
+  blogPosts     BlogPost[]
+  wikiPages     WikiPage[]
+  galleryItems  GalleryItem[]
+  stories       Story[]
+  comments      Comment[]
+  ratings       Rating[]
+  notifications Notification[]
+
+  @@index([email])
+  @@index([username])
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  token        String   @unique
+  refreshToken String?  @unique
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+// ============================================
+// AUTHORS
+// ============================================
+
+model Author {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  bio         String?  @db.Text
+  email       String?
+  website     String?
+  profileImage String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  articles     Article[]
+  blogPosts    BlogPost[]
+  wikiPages    WikiPage[]
+  galleryItems GalleryItem[]
+  stories      Story[]
+
+  @@index([slug])
+  @@map("authors")
+}
+
+// ============================================
+// CONTENT ENTITIES
+// ============================================
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Article {
+  id          String        @id @default(uuid())
+  title       String
+  slug        String        @unique
+  content     String        @db.Text
+  excerpt     String?
+  featuredImage String?
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Foreign Keys
+  authorId    String
+  userId      String
+
+  // Relations
+  author      Author        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  ratings     Rating[]
+  categories  ArticleCategory[]
+  tags        ArticleTag[]
+
+  @@index([slug])
+  @@index([publishedAt])
+  @@index([status])
+  @@index([authorId])
+  @@index([userId])
+  @@map("articles")
+}
+
+model BlogPost {
+  id          String        @id @default(uuid())
+  title       String
+  slug        String        @unique
+  content     String        @db.Text
+  excerpt     String?
+  featuredImage String?
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Foreign Keys
+  authorId    String
+  userId      String
+
+  // Relations
+  author      Author        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  ratings     Rating[]
+  categories  BlogPostCategory[]
+  tags        BlogPostTag[]
+
+  @@index([slug])
+  @@index([publishedAt])
+  @@index([status])
+  @@index([authorId])
+  @@index([userId])
+  @@map("blog_posts")
+}
+
+model WikiPage {
+  id          String        @id @default(uuid())
+  title       String
+  slug        String        @unique
+  content     String        @db.Text
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  // Hierarchical structure
+  parentId    String?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Foreign Keys
+  authorId    String
+  userId      String
+
+  // Relations
+  author      Author        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent      WikiPage?     @relation("WikiPageHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    WikiPage[]    @relation("WikiPageHierarchy")
+  comments    Comment[]
+  ratings     Rating[]
+  categories  WikiPageCategory[]
+  tags        WikiPageTag[]
+
+  @@index([slug])
+  @@index([publishedAt])
+  @@index([status])
+  @@index([parentId])
+  @@index([authorId])
+  @@index([userId])
+  @@map("wiki_pages")
+}
+
+model GalleryItem {
+  id          String        @id @default(uuid())
+  title       String
+  slug        String        @unique
+  description String?       @db.Text
+  fileUrl     String
+  fileType    String        // image, video
+  thumbnail   String?
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Foreign Keys
+  authorId    String
+  userId      String
+
+  // Relations
+  author      Author        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  ratings     Rating[]
+  categories  GalleryItemCategory[]
+  tags        GalleryItemTag[]
+
+  @@index([slug])
+  @@index([publishedAt])
+  @@index([status])
+  @@index([fileType])
+  @@index([authorId])
+  @@index([userId])
+  @@map("gallery_items")
+}
+
+model Story {
+  id          String        @id @default(uuid())
+  title       String
+  slug        String        @unique
+  content     String        @db.Text
+  excerpt     String?
+  featuredImage String?
+  series      String?       // Story series name
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Foreign Keys
+  authorId    String
+  userId      String
+
+  // Relations
+  author      Author        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  ratings     Rating[]
+  categories  StoryCategory[]
+  tags        StoryTag[]
+
+  @@index([slug])
+  @@index([publishedAt])
+  @@index([status])
+  @@index([series])
+  @@index([authorId])
+  @@index([userId])
+  @@map("stories")
+}
+
+// ============================================
+// COMMENTS SYSTEM (Polymorphic)
+// ============================================
+
+enum CommentableType {
+  ARTICLE
+  BLOG_POST
+  WIKI_PAGE
+  GALLERY_ITEM
+  STORY
+}
+
+model Comment {
+  id        String          @id @default(uuid())
+  content   String          @db.Text
+
+  // Polymorphic relation
+  contentType CommentableType
+  contentId   String
+
+  // Nested comments (replies)
+  parentId  String?
+
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  // Foreign Keys
+  userId    String
+  articleId String?
+  blogPostId String?
+  wikiPageId String?
+  galleryItemId String?
+  storyId   String?
+
+  // Relations
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent    Comment?        @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[]       @relation("CommentReplies")
+
+  // Content relations
+  article   Article?        @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  blogPost  BlogPost?       @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  wikiPage  WikiPage?       @relation(fields: [wikiPageId], references: [id], onDelete: Cascade)
+  galleryItem GalleryItem?  @relation(fields: [galleryItemId], references: [id], onDelete: Cascade)
+  story     Story?          @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@index([contentType, contentId])
+  @@index([userId])
+  @@index([parentId])
+  @@index([articleId])
+  @@index([blogPostId])
+  @@index([wikiPageId])
+  @@index([galleryItemId])
+  @@index([storyId])
+  @@map("comments")
+}
+
+// ============================================
+// RATINGS SYSTEM (Polymorphic)
+// ============================================
+
+enum RatableType {
+  ARTICLE
+  BLOG_POST
+  WIKI_PAGE
+  GALLERY_ITEM
+  STORY
+}
+
+model Rating {
+  id        String      @id @default(uuid())
+  value     Int         // 1-5 stars
+
+  // Polymorphic relation
+  contentType RatableType
+  contentId   String
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  // Foreign Keys
+  userId    String
+  articleId String?
+  blogPostId String?
+  wikiPageId String?
+  galleryItemId String?
+  storyId   String?
+
+  // Relations
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article   Article?    @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  blogPost  BlogPost?   @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  wikiPage  WikiPage?   @relation(fields: [wikiPageId], references: [id], onDelete: Cascade)
+  galleryItem GalleryItem? @relation(fields: [galleryItemId], references: [id], onDelete: Cascade)
+  story     Story?      @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  // Unique constraint: one rating per user per content
+  @@unique([userId, contentType, contentId])
+  @@index([contentType, contentId])
+  @@index([userId])
+  @@index([articleId])
+  @@index([blogPostId])
+  @@index([wikiPageId])
+  @@index([galleryItemId])
+  @@index([storyId])
+  @@map("ratings")
+}
+
+// ============================================
+// CATEGORIES & TAGS
+// ============================================
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  articles    ArticleCategory[]
+  blogPosts   BlogPostCategory[]
+  wikiPages   WikiPageCategory[]
+  galleryItems GalleryItemCategory[]
+  stories     StoryCategory[]
+
+  @@index([slug])
+  @@map("categories")
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  articles  ArticleTag[]
+  blogPosts BlogPostTag[]
+  wikiPages WikiPageTag[]
+  galleryItems GalleryItemTag[]
+  stories   StoryTag[]
+
+  @@index([slug])
+  @@map("tags")
+}
+
+// ============================================
+// JUNCTION TABLES (Many-to-Many)
+// ============================================
+
+model ArticleCategory {
+  articleId  String
+  categoryId String
+
+  article  Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, categoryId])
+  @@map("article_categories")
+}
+
+model ArticleTag {
+  articleId String
+  tagId     String
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@map("article_tags")
+}
+
+model BlogPostCategory {
+  blogPostId String
+  categoryId String
+
+  blogPost BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([blogPostId, categoryId])
+  @@map("blog_post_categories")
+}
+
+model BlogPostTag {
+  blogPostId String
+  tagId      String
+
+  blogPost BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([blogPostId, tagId])
+  @@map("blog_post_tags")
+}
+
+model WikiPageCategory {
+  wikiPageId String
+  categoryId String
+
+  wikiPage WikiPage @relation(fields: [wikiPageId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([wikiPageId, categoryId])
+  @@map("wiki_page_categories")
+}
+
+model WikiPageTag {
+  wikiPageId String
+  tagId      String
+
+  wikiPage WikiPage @relation(fields: [wikiPageId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([wikiPageId, tagId])
+  @@map("wiki_page_tags")
+}
+
+model GalleryItemCategory {
+  galleryItemId String
+  categoryId    String
+
+  galleryItem GalleryItem @relation(fields: [galleryItemId], references: [id], onDelete: Cascade)
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([galleryItemId, categoryId])
+  @@map("gallery_item_categories")
+}
+
+model GalleryItemTag {
+  galleryItemId String
+  tagId         String
+
+  galleryItem GalleryItem @relation(fields: [galleryItemId], references: [id], onDelete: Cascade)
+  tag         Tag         @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([galleryItemId, tagId])
+  @@map("gallery_item_tags")
+}
+
+model StoryCategory {
+  storyId    String
+  categoryId String
+
+  story    Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([storyId, categoryId])
+  @@map("story_categories")
+}
+
+model StoryTag {
+  storyId String
+  tagId   String
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([storyId, tagId])
+  @@map("story_tags")
+}
+
+// ============================================
+// NOTIFICATIONS & EMAIL QUEUE
+// ============================================
+
+enum NotificationType {
+  COMMENT
+  RATING
+  MENTION
+  SYSTEM
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  data      Json?            // Additional data
+
+  createdAt DateTime         @default(now())
+
+  // Foreign Keys
+  userId    String
+
+  // Relations
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+model EmailQueue {
+  id        String      @id @default(uuid())
+  to        String
+  subject   String
+  body      String      @db.Text
+  status    EmailStatus @default(PENDING)
+  attempts  Int         @default(0)
+  error     String?
+
+  createdAt DateTime    @default(now())
+  sentAt    DateTime?
+
+  @@index([status])
+  @@map("email_queue")
+}
