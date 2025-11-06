@@ -2907,15 +2907,16 @@
             "description": "Implementuj comprehensive error handling i error boundary components",
             "dependencies": [],
             "details": "Stwórz ErrorBoundary components dla różnych sekcji aplikacji. Implementuj error logging system (Sentry lub własny). Dodaj user-friendly error pages, fallback UI components, retry mechanisms. Obsługuj network errors, API failures, authentication errors.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Testuj error scenarios, sprawdź czy error boundaries catch errors i pokazują fallback UI",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T22:50:17.841Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T22:47:52.882Z"
+        "updatedAt": "2025-11-06T22:50:17.841Z"
       },
       {
         "id": "35",
@@ -3054,7 +3055,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T22:47:52.885Z",
+      "lastModified": "2025-11-06T22:50:17.844Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
