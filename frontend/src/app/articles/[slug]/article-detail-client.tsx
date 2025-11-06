@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { Calendar, User, Eye } from "lucide-react";
+import Image from "next/image";
 import { CommentSection } from "@/components/comments";
 import { RatingWidget } from "@/components/rating";
 import { CommentableType } from "@/types/comment";
@@ -101,11 +102,16 @@ export function ArticleDetailClient({ slug }: ArticleDetailClientProps) {
       <article className="max-w-4xl mx-auto">
         {/* Featured Image */}
         {article.featuredImage && (
-          <div className="mb-8 rounded-lg overflow-hidden">
-            <img
+          <div className="relative mb-8 rounded-lg overflow-hidden h-[400px]">
+            <Image
               src={article.featuredImage}
               alt={article.title}
-              className="w-full h-[400px] object-cover"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+              placeholder="blur"
+              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
             />
           </div>
         )}
