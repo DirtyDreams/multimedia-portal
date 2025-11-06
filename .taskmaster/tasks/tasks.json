@@ -2164,7 +2164,7 @@
         "dependencies": [
           "28"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2172,9 +2172,10 @@
             "description": "Implementacja podstawowej strony galerii z responsywnym grid layoutem dla wyświetlania zdjęć i filmów",
             "dependencies": [],
             "details": "Stwórz komponent Gallery w /app/gallery/page.tsx z responsywnym CSS Grid lub Tailwind grid classes. Użyj Next.js Image component dla podstawowej optymalizacji obrazów. Implementuj adaptive grid (1-4 kolumny w zależności od screen size). Przygotuj placeholder strukturę dla media items.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy grid jest responsywny na różnych rozmiarach ekranu, obrazy ładują się poprawnie przez Next.js Image",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:34:35.844Z"
           },
           {
             "id": 2,
@@ -2227,7 +2228,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality."
+        "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
+        "updatedAt": "2025-11-06T18:34:35.844Z"
       },
       {
         "id": "30",
@@ -3002,7 +3004,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:31:34.556Z",
+      "lastModified": "2025-11-06T18:34:35.847Z",
       "taskCount": 35,
       "completedCount": 24,
       "tags": [
