@@ -1,0 +1,43 @@
+# Task ID: 24
+# Title: Seed data i przykładowe dane
+# Status: pending
+# Dependencies: 23
+# Priority: medium
+# Description: Skrypt do generowania realistycznych przykładowych danych
+# Details:
+Stwórz seed script w prisma/seed.ts. Wygeneruj: 20 artykułów, 15 blog postów, 10 stron wiki, 25 zdjęć, 10 opowiadań, 5 autorów, 100+ komentarzy, kategorie, tagi, oceny. Użyj faker.js dla realistycznych danych. Dodaj default admin account.
+
+# Test Strategy:
+Sprawdź czy `npx prisma db seed` generuje dane, wszystkie content types mają przykłady, relacje są poprawne, można się zalogować na admin
+
+# Subtasks:
+## 1. Konfiguracja środowiska dla seed script [pending]
+### Dependencies: None
+### Description: Zainstalowanie faker.js i przygotowanie podstawowej struktury seed script
+### Details:
+Zainstaluj faker.js jako dev dependency w backend/. Stwórz plik prisma/seed.ts z podstawową konfiguracją. Dodaj script 'seed' do package.json. Skonfiguruj połączenie z bazą danych w seed script używając PrismaClient.
+
+## 2. Generowanie danych użytkowników i autorów [pending]
+### Dependencies: 24.1
+### Description: Tworzenie realistycznych danych dla kont użytkowników i profili autorów
+### Details:
+Wygeneruj domyślne konto admin (email: admin@portal.com, hasło: admin123) z bcrypt. Stwórz 5 autorów z realistycznymi danymi używając faker.js: imię, nazwisko, bio, kontakt, avatar URL. Dodaj standardowych użytkowników z różnymi rolami.
+
+## 3. Generowanie kategorii, tagów i podstawowych danych [pending]
+### Dependencies: 24.2
+### Description: Tworzenie kategorii i tagów dla wszystkich typów treści
+### Details:
+Stwórz kategorie dla każdego typu treści: Artykuły (Technologia, Nauka, Sztuka), Blog (Osobiste, Tutorial, News), Wiki (Dokumentacja, Guides), Galeria (Zdjęcia, Wideo), Opowiadania (Fantasy, Sci-Fi, Dramat). Dodaj różnorodne tagi. Użyj polskich nazw.
+
+## 4. Generowanie treści głównych (artykuły, blog, wiki, galeria, opowiadania) [pending]
+### Dependencies: 24.3
+### Description: Tworzenie przykładowych treści dla wszystkich typów contentu
+### Details:
+Wygeneruj 20 artykułów, 15 blog postów, 10 stron wiki (z hierarchią parent-child), 25 elementów galerii, 10 opowiadań. Każda treść ma tytuł, zawartość, przypisanego autora, kategorię, tagi, daty utworzenia/modyfikacji. Użyj faker.js dla realistycznych tekstów w języku polskim.
+
+## 5. Generowanie interakcji użytkowników (komentarze, oceny) [pending]
+### Dependencies: 24.4
+### Description: Dodawanie komentarzy i ocen do utworzonych treści
+### Details:
+Wygeneruj 100+ komentarzy dla różnych typów treści z realistycznymi tekstami. Dodaj odpowiedzi do komentarzy (nested comments). Stwórz oceny (1-5 gwiazdek) dla każdej treści. Przypisz komentarze i oceny do różnych użytkowników.
+

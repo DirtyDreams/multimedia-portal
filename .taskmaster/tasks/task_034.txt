@@ -1,0 +1,11 @@
+# Task ID: 34
+# Title: Testowanie i optymalizacja performance
+# Status: pending
+# Dependencies: 33
+# Priority: medium
+# Description: Unit testy, E2E testy i optymalizacja wydajności
+# Details:
+Napisz unit testy dla critical backend services, integration testy dla API endpoints, E2E testy z Playwright dla user workflows. Optymalizuj bundle size, implementuj code splitting, dodaj error boundary components. Osiągnij Lighthouse score > 90.
+
+# Test Strategy:
+Sprawdź czy wszystkie testy przechodzą (npm test), coverage > 70%, Lighthouse score > 90, bundle size < 200KB main chunk

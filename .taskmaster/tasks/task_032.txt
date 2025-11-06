@@ -1,0 +1,11 @@
+# Task ID: 32
+# Title: Implementacja admin panel frontend
+# Status: pending
+# Dependencies: 31
+# Priority: high
+# Description: Pełnofunkcyjny panel administracyjny z dashboard i CRUD
+# Details:
+Stwórz /dashboard layout z sidebar navigation. Implementuj dashboard overview z charts (Tremor/Recharts), CRUD interfaces dla wszystkich content types. Dodaj Rich Text Editor (Tiptap), TanStack Table dla list views, user management interface.
+
+# Test Strategy:
+Sprawdź czy admin dashboard ładuje się dla admin users, wszystkie CRUD operacje działają, rich text editor działa, charts wyświetlają dane

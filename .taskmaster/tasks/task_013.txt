@@ -1,0 +1,43 @@
+# Task ID: 13
+# Title: Implementacja polymorphicznego systemu komentarzy
+# Status: pending
+# Dependencies: 12
+# Priority: medium
+# Description: Stworzenie uniwersalnego systemu komentarzy dla wszystkich typów treści
+# Details:
+Stwórz CommentsModule z polymorphic design. Dodaj pola: contentType, contentId, userId, text, parentId (dla nested comments). Implementuj endpointy: GET /comments?contentType=article&contentId=1, POST /comments, DELETE /comments/:id. Dodaj support dla nested replies i moderacji.
+
+# Test Strategy:
+Sprawdź czy komentarze działają dla Articles, BlogPosts, WikiPages, GalleryItems, Stories, nested replies działają, moderacja dla admin działa
+
+# Subtasks:
+## 1. Stworzenie Comment entity z polymorphic design [pending]
+### Dependencies: None
+### Description: Utworzenie encji Comment z polami contentType, contentId, userId, text, parentId dla obsługi wszystkich typów treści
+### Details:
+Stwórz Comment entity w TypeORM z polami: id (primary), contentType (enum: 'article', 'blog', 'wiki', 'gallery', 'story'), contentId (foreign key), userId (relation do User), text (varchar), parentId (self-reference), createdAt, updatedAt. Dodaj indeksy na contentType+contentId i parentId dla wydajności zapytań.
+
+## 2. Implementacja CommentsModule, Controller i Service [pending]
+### Dependencies: 13.1
+### Description: Stworzenie modułu komentarzy z kontrolerem i serwisem obsługującym logikę biznesową
+### Details:
+Stwórz CommentsModule, CommentsController, CommentsService. Implementuj metody serwisu: findByContent(contentType, contentId), create(createCommentDto), findReplies(parentId), delete(id), moderateComment(id, action). Dodaj CreateCommentDto, UpdateCommentDto z walidacją class-validator.
+
+## 3. Implementacja endpointów API dla komentarzy [pending]
+### Dependencies: 13.2
+### Description: Stworzenie REST API endpointów do zarządzania komentarzami z autoryzacją
+### Details:
+Implementuj endpointy: GET /comments?contentType=X&contentId=Y (publiczny), POST /comments (wymaga auth), DELETE /comments/:id (autor lub admin), GET /comments/:id/replies (publiczny). Dodaj JwtGuard dla operacji wymagających autoryzacji, RolesGuard dla moderacji.
+
+## 4. Implementacja nested replies i hierarchii komentarzy [pending]
+### Dependencies: 13.3
+### Description: Obsługa zagnieżdżonych odpowiedzi na komentarze z limitem głębokości
+### Details:
+Rozszerz CommentsService o obsługę zagnieżdżonych komentarzy: buildCommentTree(comments), validateNestingDepth(parentId, maxDepth=3). Implementuj rekurencyjne ładowanie replies, optymalizuj zapytania z eager loading. Dodaj endpoint GET /comments/:id/tree dla pełnego drzewa.
+
+## 5. System moderacji komentarzy dla adminów [pending]
+### Dependencies: 13.4
+### Description: Implementacja funkcji moderacyjnych - usuwanie, ukrywanie, zatwierdzanie komentarzy
+### Details:
+Dodaj pola do Comment: isHidden, isApproved, moderatedBy, moderatedAt. Implementuj CommentModerationService z metodami: hideComment(), approveComment(), deleteComment(), getModerationQueue(). Dodaj admin endpointy: PUT /admin/comments/:id/moderate, GET /admin/comments/moderation-queue.
+

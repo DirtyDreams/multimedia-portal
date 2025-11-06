@@ -1,0 +1,43 @@
+# Task ID: 25
+# Title: Konfiguracja Next.js frontend z podstawowymi komponentami
+# Status: pending
+# Dependencies: 4
+# Priority: high
+# Description: Setup Next.js z TailwindCSS, basic layout i navigation
+# Details:
+Skonfiguruj src/app layout z navigation, footer, sidebar. Zainstaluj shadcn/ui components. Stwórz podstawowe komponenty: Header, Navigation, Footer, LoadingSpinner, ErrorBoundary. Skonfiguruj TanStack Query i Zustand store.
+
+# Test Strategy:
+Sprawdź czy layout renderuje się poprawnie, navigation działa, responsive design działa na mobile, components ładują się bez błędów
+
+# Subtasks:
+## 1. Inicjalizacja projektu Next.js 14 z TailwindCSS [pending]
+### Dependencies: None
+### Description: Utworzenie nowego projektu Next.js 14 z App Router, instalacja TailwindCSS i konfiguracja podstawowa
+### Details:
+Wykonaj `npx create-next-app@latest frontend --typescript --tailwind --eslint --app --src-dir --import-alias '@/*'`. Skonfiguruj tailwind.config.js i globals.css. Ustaw struktur folderów w src/app. Sprawdź czy projekt uruchamia się poprawnie na porcie 3000.
+
+## 2. Konfiguracja shadcn/ui i instalacja podstawowych komponentów [pending]
+### Dependencies: 25.1
+### Description: Instalacja shadcn/ui component library i dodanie podstawowych komponentów UI
+### Details:
+Wykonaj `npx shadcn-ui@latest init` do inicjalizacji shadcn/ui. Zainstaluj podstawowe komponenty: `npx shadcn-ui@latest add button input card navigation-menu sheet dropdown-menu toast`. Skonfiguruj components.json i ustaw theme provider. Zainstaluj Lucide React icons.
+
+## 3. Stworzenie podstawowego layoutu aplikacji [pending]
+### Dependencies: 25.2
+### Description: Implementacja głównego layoutu z Header, Navigation, Footer i struktura src/app
+### Details:
+Stwórz src/app/layout.tsx z RootLayout zawierającym Header, main content i Footer. Implementuj Header component z logo, navigation menu i user actions. Dodaj Navigation component z linkami do Blog, Articles, Wiki, Gallery, Stories, Authors. Stwórz Footer z informacjami kontaktowymi i linkami. Ustaw responsive design mobile-first z Tailwind.
+
+## 4. Instalacja i konfiguracja TanStack Query i Zustand [pending]
+### Dependencies: 25.1
+### Description: Setup state management i data fetching libraries
+### Details:
+Zainstaluj @tanstack/react-query i zustand. Stwórz QueryClient provider w layout.tsx. Skonfiguruj Zustand store dla globalnego state (user, theme, notifications). Stwórz custom hooks dla API calls i state management. Dodaj DevTools dla development.
+
+## 5. Implementacja utility components (LoadingSpinner, ErrorBoundary) [pending]
+### Dependencies: 25.2
+### Description: Stworzenie podstawowych utility components dla UX
+### Details:
+Implementuj LoadingSpinner component z animacją ładowania używając Tailwind. Stwórz ErrorBoundary component dla handling błędów React. Dodaj ErrorMessage component dla wyświetlania błędów API. Stwórz NotFound component dla 404 stron. Wszystkie komponenty powinny być responsive i zgodne z design system.
+

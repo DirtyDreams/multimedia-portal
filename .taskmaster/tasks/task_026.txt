@@ -1,0 +1,43 @@
+# Task ID: 26
+# Title: Implementacja autentykacji frontend
+# Status: pending
+# Dependencies: 25
+# Priority: high
+# Description: Login/register forms z JWT handling i protected routes
+# Details:
+Stwórz strony /login, /register z React Hook Form + Zod validation. Implementuj JWT storage w localStorage, automatic token refresh, protected route wrapper. Stwórz AuthContext/Zustand store dla user state. Dodaj logout functionality.
+
+# Test Strategy:
+Sprawdź czy login/register formularze działają, JWT token zapisuje się, protected routes przekierowują do /login, logout czyści token
+
+# Subtasks:
+## 1. Stworzenie stron logowania i rejestracji z formularzami [pending]
+### Dependencies: None
+### Description: Implementacja stron /login i /register z React Hook Form i Zod validation
+### Details:
+Utwórz strony src/app/login/page.tsx i src/app/register/page.tsx. Użyj React Hook Form z resolverem Zod dla walidacji. Stwórz schematy walidacji: loginSchema (email, password) i registerSchema (email, password, confirmPassword, name). Implementuj responsywne formularze z Tailwind CSS i error handling.
+
+## 2. Implementacja JWT storage i token management [pending]
+### Dependencies: None
+### Description: System przechowywania i zarządzania JWT tokenami w localStorage z automatic refresh
+### Details:
+Stwórz src/lib/auth.ts z funkcjami: setToken(), getToken(), removeToken(), isTokenValid(). Implementuj automatic token refresh mechanism z axios interceptors. Dodaj funkcje decodeToken() dla odczytu user data z JWT. Stwórz helper validateTokenExpiry() dla sprawdzania czy token nie wygasł.
+
+## 3. Stworzenie AuthContext/Zustand store dla state management [pending]
+### Dependencies: 26.1, 26.2
+### Description: Globalne zarządzanie stanem użytkownika z Zustand store i React Context
+### Details:
+Stwórz src/stores/authStore.ts z Zustand store zawierający: user state, isAuthenticated, login(), logout(), checkAuth(). Implementuj src/providers/AuthProvider.tsx z React Context do wrappowania aplikacji. Dodaj custom hook useAuth() dla łatwego dostępu do auth state. Integruj z JWT token management.
+
+## 4. Implementacja protected routes wrapper [pending]
+### Dependencies: 26.3
+### Description: System ochrony tras wymagających autoryzacji z automatycznym przekierowaniem
+### Details:
+Stwórz src/components/ProtectedRoute.tsx component wrapper sprawdzający auth status. Implementuj przekierowanie do /login dla nieautoryzowanych użytkowników. Dodaj role-based access control (admin, moderator, user). Stwórz withAuth HOC dla stron wymagających autoryzacji. Implementuj loading state podczas sprawdzania autoryzacji.
+
+## 5. Implementacja logout functionality i integracja z API [pending]
+### Dependencies: 26.3, 26.4
+### Description: Funkcjonalność wylogowania z czyszczeniem stanu i integracją z backend API
+### Details:
+Implementuj logout funkcję w auth store - usuń token z localStorage, zresetuj user state, wykonaj redirect do landing page. Stwórz src/lib/api.ts z axios instance i konfiguracją baseURL, request/response interceptors dla JWT. Dodaj API calls: loginUser(), registerUser(), logoutUser(), refreshToken(). Implementuj error handling dla API calls.
+

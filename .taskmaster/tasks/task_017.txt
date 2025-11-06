@@ -1,0 +1,43 @@
+# Task ID: 17
+# Title: Integracja MeiliSearch dla wyszukiwania
+# Status: pending
+# Dependencies: 16
+# Priority: medium
+# Description: Konfiguracja i implementacja zaawansowanego wyszukiwania full-text
+# Details:
+Zainstaluj meilisearch client. Stwórz SearchModule z SearchService. Implementuj indexowanie wszystkich content types, faceted search, autocomplete, typo tolerance. Dodaj endpoint GET /search z parametrami: q, filters, facets, limit, offset. Implementuj background indexing z BullMQ.
+
+# Test Strategy:
+Sprawdź czy wyszukiwanie zwraca wyniki < 50ms, autocomplete działa, faceted filters działają, typo tolerance działa
+
+# Subtasks:
+## 1. Instalacja i konfiguracja MeiliSearch client [pending]
+### Dependencies: None
+### Description: Zainstaluj pakiet meilisearch i skonfiguruj połączenie z instancją MeiliSearch
+### Details:
+Wykonaj `npm install meilisearch` w katalogu backend/. Utwórz konfigurację środowiska dla MEILISEARCH_HOST i MEILISEARCH_API_KEY w .env. Stwórz połączenie testowe aby zweryfikować komunikację z serwerem MeiliSearch.
+
+## 2. Utworzenie SearchModule i SearchService [pending]
+### Dependencies: 17.1
+### Description: Stwórz moduł wyszukiwania z serwisem zawierającym logikę biznesową
+### Details:
+Utwórz SearchModule w backend/src/search/ z SearchService zawierającym metody: createIndex(), updateDocument(), deleteDocument(), search(). Skonfiguruj dependency injection dla MeiliSearch client. Dodaj SearchController z podstawowym endpointem.
+
+## 3. Implementacja indexowania wszystkich content types [pending]
+### Dependencies: 17.2
+### Description: Stwórz mechanizm automatycznego indexowania dla Articles, BlogPosts, WikiPages, GalleryItems, Stories i Authors
+### Details:
+Utwórz interfejs SearchableDocument i implementuj go dla każdego typu treści. Stwórz metody transformData() dla każdego content type. Dodaj hooks w serwisach do automatycznego indexowania przy CREATE/UPDATE/DELETE. Skonfiguruj filtrable attributes i sortable attributes.
+
+## 4. Dodanie endpoint GET /search z parametrami wyszukiwania [pending]
+### Dependencies: 17.3
+### Description: Implementuj REST endpoint z obsługą zaawansowanych parametrów wyszukiwania
+### Details:
+Stwórz endpoint GET /api/search z parametrami: q (query), filters (faceted filtering), facets (requested facets), limit, offset, sort. Implementuj SearchDto dla walidacji parametrów. Dodaj obsługę autocomplete i typo tolerance w konfiguracji MeiliSearch. Dodaj formatowanie wyników z highlighting.
+
+## 5. Implementacja background indexing z BullMQ [pending]
+### Dependencies: 17.4
+### Description: Skonfiguruj system kolejek dla asynchronicznego indexowania i re-indexowania treści
+### Details:
+Stwórz SearchQueue z jobami: index-document, delete-document, reindex-all. Implementuj SearchProcessor do obsługi background jobs. Dodaj retry logic i error handling. Skonfiguruj scheduled job dla periodic reindexing. Dodaj monitoring i metryki dla queue performance.
+

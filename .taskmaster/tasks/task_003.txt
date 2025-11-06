@@ -1,0 +1,43 @@
+# Task ID: 3
+# Title: Inicjalizacja projektu NestJS backend
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Stworzenie aplikacji NestJS z podstawowymi modułami i konfiguracją
+# Details:
+Użyj `nest new backend` w folderze backend/. Zainstaluj wymagane dependencje: @nestjs/config, @nestjs/jwt, @nestjs/passport, @nestjs/swagger, @prisma/client, prisma, bcrypt, class-validator, class-transformer. Skonfiguruj podstawową strukturę modułów: app, auth, config. Dodaj Dockerfile dla backend.
+
+# Test Strategy:
+Sprawdź czy `npm run start:dev` w folderze backend uruchamia serwer na porcie 3001, endpoint /api/health zwraca 200 OK
+
+# Subtasks:
+## 1. Utworzenie nowego projektu NestJS [pending]
+### Dependencies: None
+### Description: Inicjalizacja nowej aplikacji NestJS w folderze backend za pomocą CLI
+### Details:
+Użyj komendy `nest new backend` w głównym folderze projektu. Upewnij się, że CLI NestJS jest zainstalowany (`npm i -g @nestjs/cli`). Wybierz npm jako package manager podczas instalacji. Sprawdź czy struktura folderów została utworzona poprawnie.
+
+## 2. Instalacja wymaganych dependencies [pending]
+### Dependencies: 3.1
+### Description: Instalacja wszystkich niezbędnych pakietów dla funkcjonalności backend'u
+### Details:
+Zainstaluj dependencies: `npm install @nestjs/config @nestjs/jwt @nestjs/passport @nestjs/swagger @prisma/client prisma bcrypt class-validator class-transformer`. Zainstaluj dev dependencies: `npm install -D @types/bcrypt`. Sprawdź czy wszystkie pakiety zostały dodane do package.json.
+
+## 3. Konfiguracja podstawowych modułów aplikacji [pending]
+### Dependencies: 3.2
+### Description: Stworzenie i konfiguracja modułów app, auth i config dla podstawowej architektury
+### Details:
+Wygeneruj moduły: `nest generate module config`, `nest generate module auth`. Skonfiguruj ConfigModule w app.module.ts z isGlobal: true. Stwórz podstawową strukturę folderów: src/config/, src/auth/, src/common/. Dodaj podstawowy environment validation schema.
+
+## 4. Konfiguracja podstawowych middleware i guards [pending]
+### Dependencies: 3.3
+### Description: Setup podstawowych komponentów bezpieczeństwa i middleware dla aplikacji
+### Details:
+Skonfiguruj CORS middleware, helmet dla bezpieczeństwa, podstawowy JWT strategy w auth module. Stwórz JwtAuthGuard i RolesGuard. Dodaj ValidationPipe globalnie. Skonfiguruj Swagger documentation z @nestjs/swagger.
+
+## 5. Dodanie Dockerfile i health check endpoint [pending]
+### Dependencies: 3.4
+### Description: Utworzenie Dockerfile dla konteneryzacji i endpoint zdrowia aplikacji
+### Details:
+Stwórz Dockerfile z Node.js 18+ base image, multi-stage build dla optymalizacji. Dodaj health check endpoint /api/health w app.controller.ts zwracający status 200 i podstawowe informacje o aplikacji. Skonfiguruj .dockerignore file.
+

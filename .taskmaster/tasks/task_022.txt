@@ -1,0 +1,43 @@
+# Task ID: 22
+# Title: Implementacja security middleware
+# Status: pending
+# Dependencies: 21
+# Priority: high
+# Description: Konfiguracja zabezpieczeń - rate limiting, security headers, validation
+# Details:
+Zainstaluj @nestjs/throttler, helmet. Skonfiguruj rate limiting per IP/user, security headers (CSP, HSTS, X-Frame-Options). Implementuj input sanitization, CORS configuration. Dodaj audit logging dla admin actions.
+
+# Test Strategy:
+Sprawdź czy rate limiting blokuje spam requests, security headers są ustawione, CORS działa poprawnie, audit logs zapisują admin actions
+
+# Subtasks:
+## 1. Instalacja i konfiguracja dependencies security middleware [pending]
+### Dependencies: None
+### Description: Zainstaluj @nestjs/throttler, helmet oraz inne biblioteki bezpieczeństwa potrzebne do implementacji middleware
+### Details:
+Zainstaluj następujące packages w backend projekcie: @nestjs/throttler dla rate limiting, helmet dla security headers, @nestjs/common dla interceptorów, class-validator dla input validation. Skonfiguruj podstawowe zależności w package.json. Sprawdź kompatybilność wersji z istniejącym NestJS projektem.
+
+## 2. Implementacja rate limiting z @nestjs/throttler [pending]
+### Dependencies: 22.1
+### Description: Skonfiguruj rate limiting per IP i per user używając @nestjs/throttler middleware
+### Details:
+Utwórz ThrottlerModule configuration w app.module.ts z różnymi limitami dla różnych endpointów. Implementuj custom guards dla rate limiting per user (authenticated) i per IP (anonymous). Skonfiguruj Redis storage dla throttler state. Dodaj custom decorators dla różnych limitów API endpoints (np. @PublicThrottle, @AuthenticatedThrottle).
+
+## 3. Konfiguracja security headers z helmet [pending]
+### Dependencies: 22.1
+### Description: Implementuj helmet middleware dla security headers (CSP, HSTS, X-Frame-Options)
+### Details:
+Skonfiguruj helmet middleware w main.ts z comprehensive security headers: Content Security Policy (CSP) z whitelistą domen, HTTP Strict Transport Security (HSTS), X-Frame-Options dla clickjacking protection, X-Content-Type-Options, Referrer-Policy. Dostosuj CSP dla Next.js frontend i dozwolonych external resources (CDN, fonts, itp.).
+
+## 4. Implementacja input sanitization i CORS configuration [pending]
+### Dependencies: 22.1
+### Description: Dodaj input validation i sanitization oraz skonfiguruj CORS dla bezpiecznej komunikacji frontend-backend
+### Details:
+Implementuj global validation pipe z class-validator dla wszystkich DTOs, dodaj input sanitization middleware dla XSS protection. Skonfiguruj CORS w main.ts z whitelistą dozwolonych origins (frontend URL), credentials support, oraz dozwolone headers i methods. Dodaj custom validation decorators dla common security patterns (email, password strength, etc.).
+
+## 5. Implementacja audit logging dla admin actions [pending]
+### Dependencies: 22.1, 22.2, 22.3, 22.4
+### Description: Stwórz system audit logging który trackuje wszystkie admin actions z metadanymi
+### Details:
+Utwórz AuditLogService który zapisuje admin actions do database lub log files. Implementuj AuditLogInterceptor który automatycznie loguje admin endpoints. Include w logach: user ID, action type, timestamp, IP address, user agent, request payload (bez sensitive data), response status. Stwórz AuditLog entity w Prisma schema. Dodaj admin dashboard endpoint do przeglądania audit logs z filtering i pagination.
+

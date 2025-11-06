@@ -1,0 +1,43 @@
+# Task ID: 27
+# Title: Implementacja landing page
+# Status: pending
+# Dependencies: 26
+# Priority: medium
+# Description: Atrakcyjna strona główna z call-to-action do rejestracji
+# Details:
+Stwórz responsive landing page z sections: hero, features, content showcase, call-to-action. Użyj Framer Motion dla animations, Tailwind dla styling. Dodaj SEO meta tags, Open Graph tags. Implementuj mobile-first design.
+
+# Test Strategy:
+Sprawdź czy landing page ładuje się szybko, animations działają, responsive na wszystkich device sizes, SEO tags są poprawne
+
+# Subtasks:
+## 1. Stworzenie struktury plików dla landing page [pending]
+### Dependencies: None
+### Description: Utwórz podstawową strukturę plików i folderów dla landing page oraz skonfiguruj routing w Next.js
+### Details:
+Stwórz app/page.tsx jako główny landing page, app/components/landing/ folder dla komponentów. Skonfiguruj app/layout.tsx z podstawowymi meta tags. Stwórz pliki: HeroSection.tsx, FeaturesSection.tsx, ContentShowcase.tsx, CallToAction.tsx w folderze components/landing/. Dodaj podstawową strukturę CSS z Tailwind utilities.
+
+## 2. Implementacja sekcji Hero z animacjami [pending]
+### Dependencies: 27.1
+### Description: Stwórz atrakcyjną sekcję hero z gradientowym tłem, tytułem, opisem i przyciskami CTA
+### Details:
+Użyj Framer Motion do animacji fade-in i slide-up dla elementów hero. Implementuj responsive design z różnymi układami dla mobile/tablet/desktop. Dodaj gradient background, typography z Tailwind, primary i secondary CTA buttons. Użyj motion.div z proper transition timing. Dodaj hover effects na buttony.
+
+## 3. Budowa sekcji Features z ikonami i opisami [pending]
+### Dependencies: 27.1
+### Description: Stwórz sekcję prezentującą kluczowe funkcje portalu w postaci grid layout z ikonami
+### Details:
+Stwórz grid layout 3 kolumny desktop, 2 kolumny tablet, 1 kolumna mobile. Dodaj ikony dla każdej funkcji (używaj Heroicons lub Lucide). Implementuj stagger animations z Framer Motion dla kolejnego pojawiania się elementów. Features: zarządzanie treścią, komentarze i oceny, responsywny design, SEO optimization, real-time notifications, analytics dashboard.
+
+## 4. Implementacja Content Showcase z preview treści [pending]
+### Dependencies: 27.1
+### Description: Stwórz sekcję pokazującą przykłady treści portalu - artykuły, blog, galeria, wiki
+### Details:
+Stwórz tabs lub carousel component pokazujący różne typy treści. Użyj mock data dla każdego typu (artykuły, blog posts, galeria, wiki). Implementuj smooth transitions między sekcjami z Framer Motion. Dodaj preview cards z obrazkami, tytułami, opisami. Użyj intersection observer dla trigger animacji gdy sekcja jest widoczna.
+
+## 5. Dodanie SEO meta tags i finalizacja landing page [pending]
+### Dependencies: 27.2, 27.3, 27.4
+### Description: Skonfiguruj wszystkie SEO meta tags, Open Graph tags, finalne stylowanie i optymalizacja performance
+### Details:
+Dodaj do app/layout.tsx lub app/page.tsx: title, description, keywords, Open Graph tags (og:title, og:description, og:image, og:url), Twitter Card tags. Zoptymalizuj obrazy z Next.js Image component. Dodaj structured data (JSON-LD). Implementuj lazy loading dla sekcji poniżej fold. Sprawdź Core Web Vitals i zoptymalizuj ładowanie. Dodaj favicon i app icons.
+

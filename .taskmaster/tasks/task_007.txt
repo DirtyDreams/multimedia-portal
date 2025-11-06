@@ -1,0 +1,43 @@
+# Task ID: 7
+# Title: Implementacja modułu Articles
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Stworzenie pełnego CRUD dla artykułów z paginacją i filtrowaniem
+# Details:
+Stwórz ArticlesModule z ArticlesController, ArticlesService. Implementuj endpointy: GET /articles (lista z paginacją), GET /articles/:id, POST /articles (admin), PUT /articles/:id (admin), DELETE /articles/:id (admin). Dodaj filtering po kategoriach, tagach. Implementuj CreateArticleDto, UpdateArticleDto z validacją.
+
+# Test Strategy:
+Sprawdź czy wszystkie CRUD operacje działają, paginacja zwraca właściwą liczbę rekordów, filtering po kategoriach/tagach działa, autoryzacja admin jest wymagana
+
+# Subtasks:
+## 1. Utworzenie struktury ArticlesModule [pending]
+### Dependencies: None
+### Description: Stworzenie podstawowej struktury modułu Articles z kontrolerem i serwisem
+### Details:
+Utworzenie plików articles.module.ts, articles.controller.ts, articles.service.ts. Zaimportowanie modułu w głównym AppModule. Skonfigurowanie podstawowej struktury z dependency injection.
+
+## 2. Implementacja DTOs z walidacją [pending]
+### Dependencies: 7.1
+### Description: Stworzenie CreateArticleDto i UpdateArticleDto z kompletnymi regułami walidacji
+### Details:
+Utworzenie plików dto/create-article.dto.ts i dto/update-article.dto.ts. Implementacja walidacji z class-validator (@IsString, @IsNotEmpty, @IsOptional, @IsArray). Dodanie transformacji dla kategorii i tagów.
+
+## 3. Implementacja endpointów CRUD [pending]
+### Dependencies: 7.2
+### Description: Stworzenie wszystkich endpointów CRUD dla artykułów z autoryzacją admin
+### Details:
+Implementacja GET /articles/:id, POST /articles, PUT /articles/:id, DELETE /articles/:id w ArticlesController. Dodanie guards dla autoryzacji admin (@UseGuards(JwtAuthGuard, RolesGuard)). Obsługa błędów i response statusów.
+
+## 4. Implementacja listy artykułów z paginacją [pending]
+### Dependencies: 7.3
+### Description: Stworzenie endpoint GET /articles z paginacją i podstawowym sortowaniem
+### Details:
+Implementacja GET /articles z query parameters: page, limit, sortBy, order. Użycie TypeORM pagination (take, skip). Zwracanie metadanych paginacji (total, pages, currentPage). Domyślne sortowanie po dacie utworzenia.
+
+## 5. Implementacja filtrowania po kategoriach i tagach [pending]
+### Dependencies: 7.4
+### Description: Dodanie zaawansowanego filtrowania artykułów po kategoriach, tagach i wyszukiwaniu tekstowym
+### Details:
+Rozszerzenie GET /articles o query parameters: categories, tags, search. Implementacja QueryBuilder z JOIN dla kategorii/tagów. Dodanie full-text search w tytule i treści. Kombinowanie filtrów z operatorem AND/OR.
+

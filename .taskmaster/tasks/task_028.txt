@@ -1,0 +1,43 @@
+# Task ID: 28
+# Title: Implementacja stron content (blog, articles, wiki)
+# Status: pending
+# Dependencies: 27
+# Priority: high
+# Description: Strony listy i szczegółów dla wszystkich typów treści
+# Details:
+Stwórz strony: /blog, /blog/[slug], /articles, /articles/[slug], /wiki, /wiki/[slug]. Implementuj pagination, filtering, search bar. Dodaj components: ContentList, ContentDetail, CommentSection, RatingWidget. Integruj z TanStack Query dla data fetching.
+
+# Test Strategy:
+Sprawdź czy wszystkie content pages ładują dane, pagination działa, filtering po kategoriach działa, search zwraca wyniki
+
+# Subtasks:
+## 1. Stworzenie struktury stron Next.js dla content types [pending]
+### Dependencies: None
+### Description: Implementacja route structure dla blog, articles i wiki zgodnie z App Router Next.js 14
+### Details:
+Stwórz strukturę katalogów w app/: app/blog/page.tsx, app/blog/[slug]/page.tsx, app/articles/page.tsx, app/articles/[slug]/page.tsx, app/wiki/page.tsx, app/wiki/[slug]/page.tsx. Każda strona powinna używać Server Components z dynamic routing. Zaimplementuj basic layout z nawigacją między sekcjami.
+
+## 2. Implementacja komponentu ContentList z paginacją [pending]
+### Dependencies: 28.1
+### Description: Uniwersalny komponent do wyświetlania list treści z paginacją, filtrowaniem i wyszukiwaniem
+### Details:
+Stwórz komponent ContentList w components/content/ z propsami dla content type (blog/articles/wiki). Implementuj pagination z useSearchParams, filtering po kategoriach/tagach przez query parameters. Dodaj search bar z debounced input. Użyj Suspense i loading states.
+
+## 3. Implementacja komponentu ContentDetail [pending]
+### Dependencies: 28.1
+### Description: Komponent do wyświetlania szczegółów pojedynczej treści z metadanymi
+### Details:
+Stwórz komponent ContentDetail w components/content/ obsługujący wszystkie typy treści. Wyświetlaj tytuł, treść, autora, datę publikacji, kategorie, tagi. Dodaj SEO meta tags z generateMetadata. Implementuj structured data (JSON-LD). Obsłuż error states dla nieistniejących treści.
+
+## 4. Implementacja TanStack Query dla data fetching [pending]
+### Dependencies: 28.2, 28.3
+### Description: Konfiguracja TanStack Query z cache management i API integration
+### Details:
+Zainstaluj @tanstack/react-query. Stwórz QueryClient provider w app/providers.tsx. Implementuj custom hooks: useContentList, useContentDetail z proper cache keys. Dodaj prefetching w Server Components. Skonfiguruj error handling i retry logic. Zaimplementuj optimistic updates dla interactions.
+
+## 5. Implementacja CommentSection i RatingWidget [pending]
+### Dependencies: 28.3
+### Description: Interaktywne komponenty do komentarzy i ocen z real-time updates
+### Details:
+Stwórz CommentSection z nested comments, reply functionality, real-time updates przez Server-Sent Events. Implementuj RatingWidget z 5-gwiazdkowym systemem, average rating display, user vote tracking. Dodaj authentication gates, spam protection. Użyj optimistic updates i proper error handling.
+

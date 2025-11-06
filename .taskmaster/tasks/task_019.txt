@@ -1,0 +1,43 @@
+# Task ID: 19
+# Title: Implementacja systemu email z MailerSend
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Konfiguracja wysyłania emaili z templates i queue system
+# Details:
+Zainstaluj @nestjs/mailer, nodemailer. Skonfiguruj MailerSend jako transport. Stwórz EmailModule z EmailService. Implementuj templates: welcome, password-reset, comment-notification, newsletter. Integruj z BullMQ dla reliable delivery.
+
+# Test Strategy:
+Sprawdź czy welcome email wysyła się po rejestracji, password reset działa, notification emails wysyłają się, templates renderują się poprawnie
+
+# Subtasks:
+## 1. Instalacja i konfiguracja pakietów email [pending]
+### Dependencies: None
+### Description: Zainstalowanie @nestjs/mailer, nodemailer oraz dodanie konfiguracji MailerSend jako transport email
+### Details:
+Wykonaj 'npm install @nestjs/mailer nodemailer' w katalogu backend. Dodaj MailerSend API key do pliku .env. Skonfiguruj transport w NestJS używając NodeMailer z MailerSend SMTP settings. Upewnij się, że wszystkie dependencies są poprawnie dodane do package.json.
+
+## 2. Stworzenie EmailModule i EmailService [pending]
+### Dependencies: 19.1
+### Description: Utworzenie modułu email z service zawierającym podstawową logikę wysyłania emaili
+### Details:
+Stwórz EmailModule w backend/src/email/. Implementuj EmailService z metodami sendEmail, sendWelcomeEmail, sendPasswordResetEmail, sendCommentNotification. Skonfiguruj MailerModule w EmailModule z MailerSend transport. Dodaj error handling i logging dla operacji email.
+
+## 3. Implementacja email templates [pending]
+### Dependencies: 19.2
+### Description: Stworzenie templates dla welcome, password-reset, comment-notification i newsletter emails
+### Details:
+Stwórz katalog templates/ w module email. Implementuj HTML/text templates: welcome.hbs, password-reset.hbs, comment-notification.hbs, newsletter.hbs używając Handlebars. Dodaj style CSS inline dla kompatybilności email clients. Zaimplementuj template rendering w EmailService z dynamicznym contentem.
+
+## 4. Integracja z BullMQ dla reliable delivery [pending]
+### Dependencies: 19.3
+### Description: Konfiguracja queue system dla niezawodnego dostarczania emaili w tle
+### Details:
+Zainstaluj @nestjs/bull i bull. Stwórz EmailQueueProcessor do przetwarzania email jobs w tle. Skonfiguruj Redis connection dla BullMQ. Implementuj retry logic z exponential backoff dla failed emails. Dodaj job scheduling dla newsletter i delayed emails. Stwórz monitoring queue dashboard.
+
+## 5. Integracja email system z aplikacją [pending]
+### Dependencies: 19.4
+### Description: Podłączenie email notifications do events w aplikacji (rejestracja, komentarze, etc.)
+### Details:
+Zintegruj EmailService z AuthModule (welcome email po rejestracji), CommentsModule (notification o nowych komentarzach), UserModule (password reset). Stwórz event listeners używając EventEmitter dla automated email triggers. Dodaj user preferences dla email notifications. Implementuj unsubscribe functionality z unique tokens.
+

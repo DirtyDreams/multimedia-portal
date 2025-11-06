@@ -1,0 +1,43 @@
+# Task ID: 23
+# Title: Swagger API documentation
+# Status: pending
+# Dependencies: 22
+# Priority: medium
+# Description: Pełna dokumentacja API z interactive docs
+# Details:
+Skonfiguruj @nestjs/swagger. Dodaj decoratory @ApiOperation, @ApiResponse, @ApiProperty do wszystkich endpoints i DTOs. Implementuj versioning (/api/v1), authentication dla Swagger. Dodaj example responses i error codes.
+
+# Test Strategy:
+Sprawdź czy /api/docs wyświetla kompletną dokumentację, wszystkie endpoints są udokumentowane, examples działają, authentication w Swagger działa
+
+# Subtasks:
+## 1. Instalacja i konfiguracja @nestjs/swagger [pending]
+### Dependencies: None
+### Description: Zainstaluj pakiet @nestjs/swagger i skonfiguruj podstawową dokumentację Swagger w aplikacji NestJS
+### Details:
+Zainstaluj @nestjs/swagger i swagger-ui-express. W main.ts skonfiguruj SwaggerModule.setup() z konfiguracją dokumentu. Dodaj podstawowe metadane jak tytuł, opis, wersja API. Skonfiguruj endpoint /api/docs dla dokumentacji.
+
+## 2. Implementacja API versioning /api/v1 [pending]
+### Dependencies: 23.1
+### Description: Skonfiguruj versioning API z prefiksem /api/v1 dla wszystkich endpointów
+### Details:
+W main.ts dodaj app.setGlobalPrefix('api/v1'). Zaktualizuj konfigurację Swagger aby uwzględnić nowy prefix. Sprawdź czy wszystkie istniejące endpointy działają pod nowym adresem /api/v1/*.
+
+## 3. Dodanie dekoratorów Swagger do kontrolerów [pending]
+### Dependencies: 23.2
+### Description: Dodaj @ApiOperation, @ApiResponse, @ApiTags do wszystkich kontrolerów i metod API
+### Details:
+Przejdź przez wszystkie kontrolery (Articles, BlogPosts, WikiPages, Gallery, Stories, Authors, Comments, Ratings, Auth) i dodaj odpowiednie dekoratory: @ApiTags dla każdego kontrolera, @ApiOperation z opisem dla każdej metody, @ApiResponse z kodami statusu i opisami odpowiedzi.
+
+## 4. Dodanie @ApiProperty do wszystkich DTOs [pending]
+### Dependencies: 23.3
+### Description: Dodaj dekoratory @ApiProperty do wszystkich klas DTO z przykładami i walidacją
+### Details:
+Przejdź przez wszystkie DTO (CreateArticleDto, UpdateArticleDto, CreateBlogPostDto, etc.) i dodaj @ApiProperty z: opisem pola, przykładowymi wartościami, informacją o wymagalności. Dodaj również @ApiPropertyOptional dla opcjonalnych pól.
+
+## 5. Konfiguracja authentication i example responses [pending]
+### Dependencies: 23.4
+### Description: Dodaj autentyfikację JWT do Swagger oraz przykładowe odpowiedzi dla wszystkich endpointów
+### Details:
+Dodaj konfigurację JWT Bearer token w SwaggerModule (addBearerAuth). Dodaj @ApiBearerAuth() do chronionych endpointów. Stwórz przykładowe response objects dla wszystkich endpointów z realistycznymi danymi. Dodaj dokumentację error codes (400, 401, 403, 404, 500).
+

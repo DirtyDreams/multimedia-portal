@@ -1,0 +1,11 @@
+# Task ID: 30
+# Title: Implementacja systemu komentarzy frontend
+# Status: pending
+# Dependencies: 29
+# Priority: medium
+# Description: Interactive comment section z nested replies i real-time updates
+# Details:
+Stwórz CommentSection component z nested comments display, add comment form, reply functionality. Integruj Socket.io dla real-time comment updates. Dodaj moderation controls dla admin/moderator. Implementuj comment pagination.
+
+# Test Strategy:
+Sprawdź czy komentarze wyświetlają się hierarchicznie, można dodawać replies, real-time updates działają, moderacja dla admin działa

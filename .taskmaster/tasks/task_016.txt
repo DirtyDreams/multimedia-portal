@@ -1,0 +1,43 @@
+# Task ID: 16
+# Title: Integracja Socket.io dla real-time funkcjonalności
+# Status: pending
+# Dependencies: 15
+# Priority: medium
+# Description: Implementacja WebSocket połączeń dla live notifications i updates
+# Details:
+Zainstaluj @nestjs/websockets, socket.io. Stwórz NotificationsGateway z eventami: user-connected, user-disconnected, new-comment, new-rating, live-update. Implementuj rooms dla different content pages. Dodaj JWT authentication dla WebSocket connections.
+
+# Test Strategy:
+Sprawdź czy WebSocket connection się nawiązuje, real-time notifications działają, rooms isolation działa, authentication jest wymagane
+
+# Subtasks:
+## 1. Instalacja pakietów WebSocket i konfiguracja podstawowa [pending]
+### Dependencies: None
+### Description: Instalacja @nestjs/websockets, @nestjs/platform-socket.io i socket.io oraz konfiguracja podstawowego WebSocket Gateway w NestJS
+### Details:
+W katalogu backend/ zainstaluj pakiety: npm install @nestjs/websockets @nestjs/platform-socket.io socket.io. Stwórz nowy moduł NotificationsModule i podstawowy NotificationsGateway. Skonfiguruj Gateway z podstawową konfiguracją CORS i adapter dla Socket.io
+
+## 2. Implementacja JWT authentication dla WebSocket [pending]
+### Dependencies: 16.1
+### Description: Dodanie autoryzacji JWT do WebSocket połączeń z custom guard i middleware
+### Details:
+Stwórz WsJwtGuard implementujący CanActivate interface dla WebSocket connections. Dodaj middleware do weryfikacji JWT tokenu z query params lub headers. Integruj z istniejącym JwtService i UserService. Obsłuż błędy autoryzacji i odrzucanie nieprawidłowych połączeń
+
+## 3. Implementacja room system i podstawowych eventów [pending]
+### Dependencies: 16.2
+### Description: System rooms dla różnych typów treści i implementacja podstawowych WebSocket eventów
+### Details:
+Implementuj system rooms oparty na content type i ID (np. article-123, blog-456). Dodaj eventy: user-connected, user-disconnected do zarządzania rooms. Stwórz service do zarządzania user presence i room membership. Implementuj automatyczne joinowanie do rooms na podstawie aktualnie przeglądanej treści
+
+## 4. Implementacja eventów dla komentarzy i ocen [pending]
+### Dependencies: 16.3
+### Description: Real-time events dla new-comment, new-rating i live-update z integracją z istniejącymi services
+### Details:
+Dodaj eventy new-comment i new-rating emitowane do odpowiednich rooms gdy użytkownik dodaje komentarz lub ocenę. Integruj z CommentsService i RatingsService przez event listeners. Implementuj live-update event dla ogólnych aktualizacji treści. Dodaj debouncing dla częstych updates
+
+## 5. Obsługa błędów i monitoring WebSocket connections [pending]
+### Dependencies: 16.4
+### Description: Implementacja error handling, connection recovery i monitoring dla WebSocket gateway
+### Details:
+Dodaj exception filters dla WebSocket errors, logging wszystkich WebSocket events z Winston, metrics dla Prometheus (active connections, messages per second). Implementuj graceful shutdown handling, connection heartbeat/ping-pong mechanism. Dodaj rate limiting per user dla WebSocket messages
+

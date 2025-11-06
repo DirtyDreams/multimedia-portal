@@ -1,0 +1,43 @@
+# Task ID: 15
+# Title: Konfiguracja Redis i cache service
+# Status: pending
+# Dependencies: 14
+# Priority: medium
+# Description: Implementacja systemu cachowania z Redis dla optymalizacji performance
+# Details:
+Stwórz CacheModule z RedisService. Skonfiguruj @nestjs/cache-manager z redis store. Implementuj cache dla często pobieranych danych: popular articles, trending content, search results. Dodaj TTL configuration i cache invalidation strategies.
+
+# Test Strategy:
+Sprawdź czy Redis connection działa, cache zapisuje i odczytuje dane, TTL expiration działa, performance queries poprawia się
+
+# Subtasks:
+## 1. Konfiguracja CacheModule i podstawowa infrastruktura Redis [pending]
+### Dependencies: None
+### Description: Stworzenie modułu cache z konfiguracją @nestjs/cache-manager i redis store dla systemu cachowania
+### Details:
+Zainstaluj wymagane zależności: @nestjs/cache-manager, cache-manager-redis-store, redis. Stwórz CacheModule z konfiguracją Redis connection. Skonfiguruj cache manager z redis store w app.module.ts. Dodaj environment variables dla Redis (REDIS_HOST, REDIS_PORT, REDIS_PASSWORD). Stwórz CacheService wrapper dla bardziej zaawansowanych operacji cache.
+
+## 2. Implementacja cache dla popular articles i trending content [pending]
+### Dependencies: 15.1
+### Description: Dodanie cache logiki dla często pobieranych danych artykułów i treści trending
+### Details:
+Zmodyfikuj ArticlesService aby cache'ować popular articles z TTL 15 minut. Implementuj cache dla trending content na podstawie liczby wyświetleń i ocen z ostatnich 24h. Dodaj cache key strategies (article:popular, content:trending:24h). Stwórz metodę calculateTrendingContent() z algorytmem ranking opartym na views, ratings i komentarzach. Cache wyniki w Redis z odpowiednimi TTL.
+
+## 3. Cache dla search results i implementacja MeiliSearch cache layer [pending]
+### Dependencies: 15.1
+### Description: Dodanie cache warstwy dla wyników wyszukiwania i optymalizacja MeiliSearch queries
+### Details:
+Implementuj cache dla search results w SearchService z cache key opartym na query string i filters. Dodaj TTL 5 minut dla search results. Stwórz cache invalidation przy dodaniu nowej treści. Implementuj cache dla autocomplete suggestions z TTL 1 godzina. Dodaj cache dla faceted search results (categories, tags, authors). Stwórz method generateSearchCacheKey() dla consistent cache keys.
+
+## 4. TTL configuration i zaawansowane cache strategies [pending]
+### Dependencies: 15.2, 15.3
+### Description: Skonfigurowanie różnych TTL dla różnych typów danych i implementacja zaawansowanych strategii cache
+### Details:
+Stwórz CacheConfig enum z różnymi TTL wartościami: POPULAR_CONTENT (15 min), SEARCH_RESULTS (5 min), USER_SESSIONS (30 min), TRENDING_DATA (1 hour), STATISTICS (6 hours). Implementuj cache warming strategy dla popular content. Dodaj cache prefetching dla related articles. Stwórz CacheTTLService dla dynamicznego zarządzania TTL na podstawie aktywności użytkowników.
+
+## 5. Cache invalidation strategies i monitoring [pending]
+### Dependencies: 15.4
+### Description: Implementacja strategii unieważniania cache i systemu monitorowania wydajności cache
+### Details:
+Stwórz CacheInvalidationService z metodami: invalidateByPattern(), invalidateContent(), invalidateUserCache(). Implementuj automatyczne invalidation przy CRUD operacjach na content. Dodaj cache statistics collection (hit rate, miss rate, memory usage). Stwórz cache health check endpoint. Implementuj cache warming scheduler dla popular content. Dodaj Redis memory monitoring i cleanup starych keys.
+

@@ -1,0 +1,43 @@
+# Task ID: 2
+# Title: Utworzenie struktury projektu i Docker Compose
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Skonfigurowanie podstawowej struktury folderów i pliku docker-compose.yml z wszystkimi wymaganymi serwisami
+# Details:
+Stwórz foldery: backend/, frontend/, .docker/. Skonfiguruj docker-compose.yml z serwisami: postgres, redis, meilisearch, minio, backend (NestJS), frontend (Next.js). Dodaj odpowiednie wolumeny, sieci i zmienne środowiskowe. Utwórz pliki .env.example.
+
+# Test Strategy:
+Sprawdź czy `docker-compose up -d` uruchamia wszystkie kontenery, każdy serwis jest dostępny na swoim porcie, health checki przechodzą
+
+# Subtasks:
+## 1. Utworzenie podstawowej struktury folderów projektu [pending]
+### Dependencies: None
+### Description: Stworzenie głównych folderów backend/, frontend/ i .docker/ wraz z podstawową organizacją plików
+### Details:
+Utwórz foldery: backend/ (dla aplikacji NestJS), frontend/ (dla aplikacji Next.js), .docker/ (dla plików konfiguracyjnych Docker). W każdym folderze dodaj plik .gitkeep aby zachować strukturę w Git. Upewnij się że struktura jest zgodna z konwencjami projektów fullstack.
+
+## 2. Konfiguracja docker-compose.yml z serwisami bazy danych [pending]
+### Dependencies: 2.1
+### Description: Skonfigurowanie PostgreSQL, Redis, MeiliSearch i MinIO w docker-compose.yml
+### Details:
+Utwórz docker-compose.yml z serwisami: postgres:15 (port 5432, baza multimedia_portal), redis:7-alpine (port 6379), meilisearch/meilisearch:latest (port 7700), minio/minio:latest (porty 9000, 9001). Skonfiguruj wolumeny dla trwałych danych, sieci backend-network. Dodaj health checki dla wszystkich serwisów.
+
+## 3. Dodanie serwisów backend i frontend do docker-compose.yml [pending]
+### Dependencies: 2.2
+### Description: Konfiguracja kontenerów dla aplikacji NestJS backend i Next.js frontend
+### Details:
+Dodaj do docker-compose.yml serwisy: backend (budowany z ./backend/Dockerfile, port 3001, volumes dla hot reload), frontend (budowany z ./frontend/Dockerfile, port 3000, volumes dla hot reload). Skonfiguruj depends_on dla backend (postgres, redis). Dodaj restart policies.
+
+## 4. Konfiguracja zmiennych środowiskowych [pending]
+### Dependencies: 2.3
+### Description: Utworzenie plików .env.example dla backend, frontend i docker-compose
+### Details:
+Utwórz .env.example w root z zmiennymi dla Docker (POSTGRES_PASSWORD, REDIS_URL, MINIO_ACCESS_KEY). Utwórz backend/.env.example (DATABASE_URL, JWT_SECRET, REDIS_URL). Utwórz frontend/.env.example (NEXT_PUBLIC_API_URL). Dodaj dokumentację dla każdej zmiennej.
+
+## 5. Weryfikacja i testowanie pełnej konfiguracji Docker [pending]
+### Dependencies: 2.4
+### Description: Przetestowanie kompletnej konfiguracji docker-compose i naprawienie problemów
+### Details:
+Wykonaj `docker-compose up -d` i sprawdź czy wszystkie kontenery startują poprawnie. Przetestuj połączenia między serwisami. Sprawdź logi każdego serwisu. Utwórz skrypt setup.sh dla szybkiego uruchamiania środowiska. Dodaj instrukcje w README.md.
+

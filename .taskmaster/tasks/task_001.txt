@@ -1,0 +1,43 @@
+# Task ID: 1
+# Title: Utworzenie i konfiguracja GitHub repository
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Stworzenie głównego repozytorium GitHub, konfiguracja struktury branchy i podstawowych plików
+# Details:
+Użyj `gh repo create multimedia-portal --public --clone` lub stwórz przez GitHub Web UI. Skonfiguruj branche main i develop, dodaj .gitignore dla Node.js, utwórz templates dla Issues i Pull Requestów, skonfiguruj branch protection rules. Pierwszy commit powinien zawierać .gitignore, README.md i podstawową strukturę.
+
+# Test Strategy:
+Sprawdź czy repository jest dostępne na GitHub, branche istnieją, .gitignore zawiera odpowiednie wpisy dla Node.js, templates są dostępne w .github/
+
+# Subtasks:
+## 1. Utworzenie repozytorium GitHub za pomocą gh CLI lub Web UI [pending]
+### Dependencies: None
+### Description: Stworzenie nowego publicznego repozytorium GitHub o nazwie multimedia-portal z podstawową konfiguracją
+### Details:
+Użyj polecenia `gh repo create multimedia-portal --public --clone` lub stwórz repozytorium przez interfejs GitHub Web UI. Upewnij się, że repozytorium jest publiczne i zostało sklonowane lokalnie. Skonfiguruj podstawowe ustawienia repozytorium.
+
+## 2. Konfiguracja struktury branchy main i develop [pending]
+### Dependencies: 1.1
+### Description: Utworzenie i konfiguracja podstawowych branchy oraz ustawienie branch protection rules
+### Details:
+Stwórz branch develop z main: `git checkout -b develop`. Skonfiguruj branch protection rules dla main: wymagaj pull requestów, wymagaj review, wymagaj statusu checks. Ustaw develop jako domyślny branch dla developmentu.
+
+## 3. Dodanie pliku .gitignore dla Node.js [pending]
+### Dependencies: 1.1
+### Description: Utworzenie kompleksowego pliku .gitignore dostosowanego do projektów Node.js i multimedia
+### Details:
+Stwórz .gitignore zawierający standardowe wpisy Node.js: node_modules/, .env*, dist/, build/, .next/, coverage/, .nyc_output/, logs/, *.log. Dodaj wpisy specyficzne dla multimedia: uploads/, temp/, .DS_Store, Thumbs.db.
+
+## 4. Utworzenie templates dla Issues i Pull Requestów [pending]
+### Dependencies: 1.1
+### Description: Stworzenie standardowych szablonów GitHub dla Issues i Pull Requestów w folderze .github
+### Details:
+Stwórz folder .github/ z podfolderami ISSUE_TEMPLATE/ i PULL_REQUEST_TEMPLATE/. Utwórz szablony: bug-report.md, feature-request.md, pull-request-template.md z odpowiednimi sekcjami i checklistami.
+
+## 5. Pierwszy commit z podstawowymi plikami projektu [pending]
+### Dependencies: 1.2, 1.3, 1.4
+### Description: Wykonanie pierwszego commitu zawierającego .gitignore, README.md i podstawową strukturę folderów
+### Details:
+Stwórz README.md z opisem projektu, instrukcjami instalacji i developmentu. Dodaj podstawową strukturę folderów: backend/, frontend/, docs/. Wykonaj commit: 'Initial commit: project structure and configuration'.
+

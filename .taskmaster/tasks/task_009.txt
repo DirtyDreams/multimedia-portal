@@ -1,0 +1,43 @@
+# Task ID: 9
+# Title: Implementacja modułu WikiPages z hierarchią
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Stworzenie systemu wiki z hierarchiczną strukturą parent-child
+# Details:
+Stwórz WikiPagesModule z support dla hierarchicznej struktury. Dodaj pole parentId w WikiPage encji. Implementuj endpointy: GET /wiki (tree structure), GET /wiki/:id, POST /wiki, PUT /wiki/:id, DELETE /wiki/:id. Dodaj recursive queries dla tree navigation.
+
+# Test Strategy:
+Sprawdź czy strony wiki można organizować hierarchicznie, tree navigation działa, parent-child relacje są poprawne
+
+# Subtasks:
+## 1. Stworzenie WikiPage encji z hierarchiczną strukturą [pending]
+### Dependencies: None
+### Description: Utworzenie encji TypeORM dla WikiPage z polem parentId do obsługi relacji parent-child
+### Details:
+Stwórz WikiPage encję z polami: id, title, content, parentId (nullable), createdAt, updatedAt, authorId. Dodaj @ManyToOne relację do parent i @OneToMany do children. Skonfiguruj nullable parentId dla root pages. Dodaj indeksy na parentId dla wydajności.
+
+## 2. Implementacja WikiPagesService z recursive queries [pending]
+### Dependencies: 9.1
+### Description: Stworzenie serwisu z metodami do obsługi hierarchicznych zapytań i budowania drzewa
+### Details:
+Implementuj metody: findTree() - zwraca pełną strukturę drzewa, findById() z children, findByParentId(), createWikiPage(), updateWikiPage(), deleteWikiPage() z cascading children. Użyj TypeORM TreeRepository lub custom recursive queries z CTE.
+
+## 3. Stworzenie WikiPagesController z endpointami [pending]
+### Dependencies: 9.2
+### Description: Implementacja REST API endpointów dla operacji CRUD na wiki pages
+### Details:
+Implementuj endpointy: GET /wiki (tree structure), GET /wiki/:id (z children), POST /wiki (z parentId), PUT /wiki/:id, DELETE /wiki/:id. Dodaj guards dla autoryzacji admin. Implementuj DTOs: CreateWikiPageDto, UpdateWikiPageDto z walidacją.
+
+## 4. Implementacja tree navigation i breadcrumbs [pending]
+### Dependencies: 9.3
+### Description: Dodanie funkcjonalności nawigacji po drzewie i ścieżek breadcrumb
+### Details:
+Implementuj metody: getAncestors() - zwraca ścieżkę do root, getSiblings(), getDescendants(). Dodaj endpoint GET /wiki/:id/breadcrumbs dla frontend navigation. Zoptymalizuj queries używając WITH RECURSIVE lub similar.
+
+## 5. Stworzenie WikiPagesModule i integracja [pending]
+### Dependencies: 9.4
+### Description: Stworzenie modułu NestJS i integracja z aplikacją
+### Details:
+Stwórz WikiPagesModule importując TypeOrmModule.forFeature([WikiPage]). Zarejestruj controller i service. Dodaj do AppModule imports. Skonfiguruj swagger decorators dla API documentation.
+

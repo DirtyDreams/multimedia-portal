@@ -1,0 +1,43 @@
+# Task ID: 10
+# Title: Implementacja modułu GalleryItems z upload plików
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Stworzenie galerii z uploadem i przetwarzaniem plików multimedialnych
+# Details:
+Stwórz GalleryItemsModule z FileUploadService. Zintegruj Multer dla upload, Sharp dla przetwarzania obrazów, MinIO dla storage. Implementuj generowanie multiple rozmiarów (thumbnail, medium, large), konwersję do WebP, EXIF removal. Dodaj endpointy: GET /gallery, GET /gallery/:id, POST /gallery/upload, DELETE /gallery/:id.
+
+# Test Strategy:
+Sprawdź czy upload plików działa, obrazy są przetwarzane do różnych rozmiarów, WebP conversion działa, pliki są zapisywane w MinIO
+
+# Subtasks:
+## 1. Utworzenie GalleryItemsModule i FileUploadService [pending]
+### Dependencies: None
+### Description: Stworzenie podstawowego modułu galerii z serwisem do obsługi uploadów plików
+### Details:
+Stwórz GalleryItemsModule, GalleryItemsController, GalleryItemsService i FileUploadService. Skonfiguruj podstawową strukturę modułu z dependency injection. Dodaj GalleryItem entity z polami: id, filename, originalName, mimetype, size, path, createdAt, updatedAt.
+
+## 2. Integracja Multer dla uploadu plików [pending]
+### Dependencies: 10.1
+### Description: Konfiguracja middleware Multer do obsługi uploadu plików multimedialnych
+### Details:
+Zainstaluj multer i @types/multer. Skonfiguruj MulterModule z opcjami: file size limit (10MB), accepted mimetypes (image/*, video/*), storage configuration. Implementuj POST /gallery/upload endpoint z multer middleware. Dodaj walidację typu pliku i rozmiaru.
+
+## 3. Implementacja przetwarzania obrazów z Sharp [pending]
+### Dependencies: 10.2
+### Description: Dodanie automatycznego przetwarzania uploadowanych obrazów do różnych rozmiarów i formatów
+### Details:
+Zainstaluj sharp. Implementuj ImageProcessingService z metodami: generateThumbnail (150x150), generateMedium (800x600), generateLarge (1920x1080). Dodaj konwersję do WebP, usuwanie EXIF data. Stwórz pipeline przetwarzania po uploadziei zapisywanie wszystkich wersji.
+
+## 4. Integracja MinIO dla storage plików [pending]
+### Dependencies: 10.3
+### Description: Konfiguracja MinIO S3-compatible storage dla przechowywania plików galerii
+### Details:
+Zainstaluj minio client. Skonfiguruj MinioService z connection do MinIO server. Implementuj uploadToMinio(), deleteFromMinio(), getFileUrl() metody. Stwórz bucket structure: /originals, /thumbnails, /medium, /large. Zaktualizuj FileUploadService aby używać MinIO zamiast local storage.
+
+## 5. Implementacja CRUD endpointów galerii [pending]
+### Dependencies: 10.4
+### Description: Stworzenie pełnych endpointów REST API dla zarządzania elementami galerii
+### Details:
+Implementuj GET /gallery (lista z paginacją, filtering), GET /gallery/:id (pojedynczy element), DELETE /gallery/:id (admin only). Dodaj CreateGalleryItemDto, UpdateGalleryItemDto. Implementuj soft delete, metadata extraction. Dodaj search po filename, filtering po mimetype.
+

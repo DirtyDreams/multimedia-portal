@@ -1,0 +1,43 @@
+# Task ID: 29
+# Title: Implementacja galerii i media viewer
+# Status: pending
+# Dependencies: 28
+# Priority: medium
+# Description: Galeria zdjęć/filmów z lightbox i lazy loading
+# Details:
+Stwórz /gallery z grid layout, lazy loading, infinite scroll. Implementuj lightbox/modal dla przeglądania zdjęć. Dodaj filtering po kategoriach, tagach. Integruj z upload functionality (drag & drop). Użyj Next.js Image component dla optymalizacji.
+
+# Test Strategy:
+Sprawdź czy galeria ładuje obrazy lazy loading, lightbox działa, infinite scroll działa, filtering po kategoriach działa
+
+# Subtasks:
+## 1. Stworzenie podstawowego układu galerii z grid layout [pending]
+### Dependencies: None
+### Description: Implementacja strony /gallery z responsywnym grid layoutem dla wyświetlania miniatur zdjęć i filmów
+### Details:
+Utwórz komponent GalleryGrid wykorzystujący CSS Grid lub Flexbox do wyświetlania miniatur w responsywnym układzie. Zaimplementuj różne rozmiary kolumn w zależności od wielkości ekranu (mobile: 2 kolumny, tablet: 3-4 kolumny, desktop: 4-6 kolumn). Użyj Next.js Image component z właściwościami priority i fill dla optymalizacji ładowania miniatur.
+
+## 2. Implementacja lazy loading dla obrazów w galerii [pending]
+### Dependencies: 29.1
+### Description: Dodanie lazy loading functionality do galerii dla lepszej wydajności
+### Details:
+Zaimplementuj lazy loading używając Intersection Observer API lub biblioteki react-lazy-load-image-component. Obrazy powinny ładować się stopniowo podczas przewijania użytkownika. Dodaj placeholder/skeleton podczas ładowania. Konfiguruj Next.js Image component z loading='lazy' i odpowiednimi sizes dla różnych viewport.
+
+## 3. Stworzenie lightbox/modal dla przeglądania zdjęć [pending]
+### Dependencies: 29.1
+### Description: Implementacja modalnego okna do przeglądania zdjęć w pełnym rozmiarze z nawigacją
+### Details:
+Utwórz komponent Lightbox z funkcjonalnościami: wyświetlanie obrazu w pełnym rozmiarze, nawigacja poprzedni/następny (strzałki klawiatury i przyciski), zamykanie na ESC lub kliknięcie tła, zoom funkcjonalność, wyświetlanie metadanych (tytuł, opis, autor). Użyj biblioteki framer-motion dla smooth animations.
+
+## 4. Dodanie infinite scroll dla galerii [pending]
+### Dependencies: 29.2
+### Description: Implementacja nieskończonego przewijania dla ładowania większej ilości obrazów
+### Details:
+Zaimplementuj infinite scroll używając Intersection Observer do wykrywania kiedy użytkownik zbliża się do końca listy. Integruj z TanStack Query do zarządzania stanem i cache'owania danych. Dodaj loading indicator podczas ładowania kolejnych stron. Obsłuż error states i retry mechanism.
+
+## 5. Implementacja filtrowania po kategoriach i tagach z drag & drop upload [pending]
+### Dependencies: 29.3, 29.4
+### Description: Dodanie systemu filtrowania oraz funkcjonalności drag & drop upload dla nowych plików
+### Details:
+Stwórz komponent FilterBar z dropdown'ami dla kategorii i tagów, search input dla wyszukiwania po nazwach. Zaimplementuj react-dropzone dla drag & drop upload functionality z progress bar i preview przed uploadem. Dodaj walidację typu pliku (jpg, png, mp4, etc.) i rozmiaru. Integruj z backend API dla upload i metadata.
+

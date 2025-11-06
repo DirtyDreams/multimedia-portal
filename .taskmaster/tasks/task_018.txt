@@ -1,0 +1,43 @@
+# Task ID: 18
+# Title: Implementacja BullMQ dla background jobs
+# Status: pending
+# Dependencies: 17
+# Priority: medium
+# Description: Konfiguracja systemu kolejek dla zadań w tle
+# Details:
+Zainstaluj @nestjs/bull, bull. Stwórz QueuesModule z processors dla: email-queue, image-processing-queue, search-indexing-queue. Implementuj retry logic, job scheduling, progress tracking. Dodaj dashboard monitoring dla queues.
+
+# Test Strategy:
+Sprawdź czy jobs są dodawane do kolejek, processors wykonują zadania, retry logic działa, dashboard pokazuje status jobs
+
+# Subtasks:
+## 1. Instalacja i konfiguracja BullMQ dependencies [pending]
+### Dependencies: None
+### Description: Zainstalowanie pakietów @nestjs/bull, bull, redis i konfiguracja podstawowych połączeń
+### Details:
+Instalacja pakietów npm: @nestjs/bull, bull, @types/bull, redis. Konfiguracja Redis connection w app.module.ts. Dodanie zmiennych środowiskowych dla Redis URL/config w .env. Sprawdzenie połączenia z Redis w startup hook.
+
+## 2. Implementacja QueuesModule z podstawową konfiguracją [pending]
+### Dependencies: 18.1
+### Description: Stworzenie modułu głównego do zarządzania kolejkami z rejestracją wszystkich queue'ów
+### Details:
+Stworzenie QueuesModule w src/queues/queues.module.ts. Rejestracja trzech kolejek: email-queue, image-processing-queue, search-indexing-queue w BullModule.registerQueue(). Import QueuesModule w AppModule. Dodanie podstawowej konfiguracji retry logic i job options.
+
+## 3. Implementacja processorów dla email-queue i image-processing-queue [pending]
+### Dependencies: 18.2
+### Description: Stworzenie procesorów obsługujących zadania wysyłania emaili i przetwarzania obrazów
+### Details:
+Stworzenie EmailProcessor w src/queues/processors/email.processor.ts z metodami: sendWelcomeEmail, sendNotificationEmail. Stworzenie ImageProcessor w src/queues/processors/image.processor.ts z metodami: resizeImage, optimizeImage, generateThumbnail. Implementacja error handling i progress tracking dla każdego processor'a.
+
+## 4. Implementacja search-indexing-queue processor i job scheduling [pending]
+### Dependencies: 18.2
+### Description: Stworzenie processora dla indeksowania wyszukiwania oraz systemu zaplanowanych zadań
+### Details:
+Stworzenie SearchIndexProcessor w src/queues/processors/search-index.processor.ts z metodami: indexContent, updateIndex, deleteFromIndex. Implementacja job scheduling dla regularnego re-indexowania. Dodanie cron jobs dla maintenance tasks. Konfiguracja delayed jobs i repeat patterns.
+
+## 5. Implementacja Bull Dashboard i monitoring [pending]
+### Dependencies: 18.3, 18.4
+### Description: Dodanie interfejsu webowego do monitorowania statusu kolejek, jobów i statystyk
+### Details:
+Instalacja @bull-board/api, @bull-board/express. Konfiguracja Bull Dashboard pod ścieżką /admin/queues z autoryzacją admin. Dodanie widoków dla każdej kolejki: active jobs, completed, failed, delayed. Implementacja statystyk: job completion rate, average processing time, error rate. Dodanie funkcji retry failed jobs i clean completed jobs.
+

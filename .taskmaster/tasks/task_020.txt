@@ -1,0 +1,43 @@
+# Task ID: 20
+# Title: Implementacja content workflow (draft/published/scheduled)
+# Status: pending
+# Dependencies: 19
+# Priority: medium
+# Description: System zarządzania statusem treści i publikacji zaplanowanej
+# Details:
+Dodaj pole status do wszystkich content entities: draft, pending-review, scheduled, published, archived. Implementuj scheduled publishing z BullMQ cron jobs. Dodaj version history, auto-save drafts co 30s. Implementuj preview mode dla draft content.
+
+# Test Strategy:
+Sprawdź czy draft content nie jest publiczne, scheduled content publikuje się automatycznie, auto-save działa, version history zapisuje się
+
+# Subtasks:
+## 1. Dodanie pola status do wszystkich content entities [pending]
+### Dependencies: None
+### Description: Aktualizacja schema bazy danych - dodanie enum pola status (draft, pending-review, scheduled, published, archived) do wszystkich content entities: Articles, BlogPosts, WikiPages, GalleryItems, Stories
+### Details:
+Stwórz enum ContentStatus z wartościami: draft, pending-review, scheduled, published, archived. Dodaj pole status typu ContentStatus do entities: Article, BlogPost, WikiPage, GalleryItem, Story. Dodaj pole scheduledAt typu DateTime (nullable) dla scheduled content. Wykonaj migrację Prisma. Dodaj default value 'draft' dla nowych treści.
+
+## 2. Implementacja ContentWorkflowService [pending]
+### Dependencies: 20.1
+### Description: Stworzenie serwisu do zarządzania statusami treści i publikacji zaplanowanej
+### Details:
+Stwórz ContentWorkflowService z metodami: updateContentStatus(), scheduleContent(), publishContent(), archiveContent(). Implementuj logikę biznesową dla zmian statusów. Dodaj walidację czy użytkownik może zmieniać status. Dodaj audit log dla zmian statusów. Implementuj automatyczne publikowanie scheduled content.
+
+## 3. Implementacja BullMQ cron jobs dla scheduled publishing [pending]
+### Dependencies: 20.2
+### Description: Konfiguracja queue BullMQ z cron jobs do automatycznej publikacji zaplanowanej treści
+### Details:
+Stwórz ScheduledPublishingProcessor w BullMQ. Dodaj cron job uruchamiany co minutę sprawdzający scheduled content gdzie scheduledAt <= now(). Implementuj automatyczną zmianę statusu z 'scheduled' na 'published'. Dodaj error handling i retry mechanism. Skonfiguruj BullMQ dashboard dla monitorowania.
+
+## 4. Implementacja version history i auto-save drafts [pending]
+### Dependencies: 20.1
+### Description: System wersjonowania treści z automatycznym zapisywaniem szkiców co 30 sekund
+### Details:
+Stwórz ContentVersion entity z polami: contentId, contentType, version, data (JSON), createdAt, userId. Implementuj ContentVersionService z metodami: saveVersion(), getVersionHistory(), restoreVersion(). Dodaj auto-save mechanizm w frontend (co 30s) dla draft content. Implementuj maksymalną liczbę wersji (np. 50) z automatycznym usuwaniem najstarszych.
+
+## 5. Implementacja preview mode dla draft content [pending]
+### Dependencies: 20.2
+### Description: System podglądu treści draft bez publikowania z unikalnym preview URL
+### Details:
+Stwórz PreviewService z metodami: generatePreviewToken(), validatePreviewToken(), getPreviewContent(). Dodaj preview endpoints: GET /api/preview/:token dla bezpiecznego dostępu do draft content. Implementuj preview mode w frontend z banner informującym o trybie podglądu. Dodaj security - preview tokens wygasają po 24h.
+

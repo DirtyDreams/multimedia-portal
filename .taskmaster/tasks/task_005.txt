@@ -1,0 +1,43 @@
+# Task ID: 5
+# Title: Konfiguracja Prisma ORM i bazy danych
+# Status: pending
+# Dependencies: 3
+# Priority: high
+# Description: Utworzenie schematu Prisma dla wszystkich encji i skonfigurowanie połączenia z PostgreSQL
+# Details:
+Wykonaj `npx prisma init` w backend/. Zaprojektuj schema.prisma z encjami: User, Article, BlogPost, WikiPage, GalleryItem, Story, Author, Comment, Rating, Category, Tag, Session, Notification, EmailQueue. Zdefiniuj relacje One-to-Many i Many-to-Many. Dodaj indeksy dla optymalizacji. Utwórz pierwszą migrację.
+
+# Test Strategy:
+Sprawdź czy `npx prisma migrate dev` wykonuje się bez błędów, `npx prisma studio` pokazuje wszystkie tabele, relacje działają poprawnie
+
+# Subtasks:
+## 1. Inicjalizacja Prisma i podstawowa konfiguracja [pending]
+### Dependencies: None
+### Description: Wykonanie npx prisma init w folderze backend i konfiguracja podstawowych ustawień
+### Details:
+Uruchom `npx prisma init` w folderze backend/. Skonfiguruj DATABASE_URL w .env. Ustaw podstawowe opcje w schema.prisma: generator client, datasource db postgresql. Zainstaluj @prisma/client i prisma jako dependencje.
+
+## 2. Projektowanie schema dla encji User i Authentication [pending]
+### Dependencies: 5.1
+### Description: Stworzenie modeli User, Session i związanych z autentyfikacją encji
+### Details:
+Zdefiniuj model User (id, email, username, password, role, createdAt, updatedAt). Dodaj model Session dla JWT sessions. Utwórz relacje User-Session. Dodaj indeksy na email, username dla optymalizacji.
+
+## 3. Projektowanie schema dla encji treści [pending]
+### Dependencies: 5.2
+### Description: Stworzenie modeli Article, BlogPost, WikiPage, GalleryItem, Story, Author
+### Details:
+Zdefiniuj modele treści: Article, BlogPost, WikiPage (z parent-child dla hierarchii), GalleryItem, Story, Author. Ustaw relacje Author-Content (One-to-Many). Dodaj pola: title, content, slug, publishedAt, status. Dodaj indeksy na slug, publishedAt.
+
+## 4. Projektowanie schema dla systemu komentarzy i ocen [pending]
+### Dependencies: 5.3
+### Description: Stworzenie modeli Comment, Rating, Category, Tag z relacjami Many-to-Many
+### Details:
+Zdefiniuj Comment (z polimorficznymi relacjami do wszystkich typów treści), Rating (1-5), Category, Tag. Utwórz tabele łączące dla Many-to-Many: ContentCategories, ContentTags. Dodaj indeksy na contentType, contentId, userId.
+
+## 5. Finalizacja schema i pierwsza migracja [pending]
+### Dependencies: 5.4
+### Description: Dodanie pozostałych modeli i uruchomienie pierwszej migracji Prisma
+### Details:
+Dodaj modele Notification, EmailQueue. Sprawdź wszystkie relacje i indeksy. Uruchom `npx prisma migrate dev --name init` dla utworzenia pierwszej migracji. Wygeneruj Prisma Client z `npx prisma generate`.
+

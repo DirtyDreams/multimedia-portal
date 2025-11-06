@@ -1,0 +1,11 @@
+# Task ID: 35
+# Title: Deployment i dokumentacja
+# Status: pending
+# Dependencies: 34
+# Priority: high
+# Description: Production deployment, monitoring i finalna dokumentacja
+# Details:
+Skonfiguruj production Docker Compose, deploy na VPS (Hetzner/Contabo), skonfiguruj domain i SSL (Let's Encrypt), Cloudflare CDN. Dodaj Prometheus/Grafana monitoring, backup strategy. Napisz kompletny README.md, API docs, deployment guide.
+
+# Test Strategy:
+Sprawdź czy aplikacja działa na produkcji, SSL certificate jest valid, monitoring dashboards działają, backup system skonfigurowany

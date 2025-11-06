@@ -1,0 +1,1864 @@
+PRODUCT REQUIREMENTS DOCUMENT (PRD)
+Portal Multimedialny - NestJS + Next.js 14
+Wersja: 2.0 (Zaktualizowana - Darmowy Stack + Git Workflow + Quick Preview)
+
+================================================================================
+1. OVERVIEW
+================================================================================
+
+Projekt: Portal Multimedialny z Panelem Administracji
+Technologie: NestJS (Backend API), Next.js 14 (Frontend), PostgreSQL (Baza)
+Stack: 100% Open Source z opcjami self-hosted dla ZEROWYCH kosztów na start
+Cel: Budowa nowoczesnego, modularnego portalu internetowego umożliwiającego
+     zarządzanie różnorodną treścią (artykuły, blog, wiki, galeria, opowiadania)
+     z możliwościami komentowania, oceniania, udostępniania, wyszukiwania,
+     real-time notifications i zaawansowanej analityki.
+     Backend bez CMS'u - pełna kontrola nad logiką biznesową.
+     Frontend zawiera pełnofunkcyjny panel administracji dla zarządzania treścią.
+     Aplikacja zaprojektowana z naciskiem na modularność i łatwą rozbudowę.
+
+Kluczowe cechy:
+   ✅ 100% darmowy stack dla fazy startowej (self-hosted)
+   ✅ Modularna architektura z plugin system
+   ✅ Quick preview w < 5 minut (Docker Compose)
+   ✅ Obowiązkowy Git workflow (GitHub)
+   ✅ Real-time features (Socket.io)
+   ✅ Advanced search (MeiliSearch)
+   ✅ Email notifications (MailerSend free tier)
+   ✅ Background jobs (BullMQ + Redis)
+   ✅ CI/CD pipeline (GitHub Actions)
+   ✅ Monitoring (Prometheus + Grafana)
+
+================================================================================
+2. GIT REPOSITORY & VERSION CONTROL (OBOWIĄZKOWE!)
+================================================================================
+
+⚠️  UWAGA: Utworzenie Git repository jest PIERWSZYM KROKIEM przed jakąkolwiek pracą!
+
+2.1 INICJALIZACJA PROJEKTU
+
+   Krok 1: Utwórz GitHub repository
+   ```bash
+   # Opcja A: Przez GitHub CLI (zalecane)
+   gh repo create multimedia-portal --public --clone
+   cd multimedia-portal
+
+   # Opcja B: Przez GitHub Web UI
+   # 1. Idź do github.com
+   # 2. Kliknij "New repository"
+   # 3. Nazwa: "multimedia-portal"
+   # 4. Public/Private (wybierz)
+   # 5. Initialize with README: TAK
+   # 6. .gitignore: Node
+   # 7. License: MIT (opcjonalnie)
+   ```
+
+   Krok 2: Sklonuj i skonfiguruj
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/multimedia-portal.git
+   cd multimedia-portal
+
+   # Konfiguracja Git
+   git config user.name "Your Name"
+   git config user.email "your.email@example.com"
+
+   # Utwórz początkową strukturę branchy
+   git checkout -b develop
+   git push -u origin develop
+   ```
+
+2.2 BRANCH STRATEGY
+
+   Główne branche:
+   - main/master - Produkcja (zawsze stabilny, deployable)
+   - develop - Rozwój (integracja features)
+
+   Feature branches:
+   - feature/nazwa-funkcjonalności
+   - fix/nazwa-poprawki
+   - docs/nazwa-dokumentacji
+   - refactor/nazwa-refactoringu
+
+   Przykład workflow:
+   ```bash
+   # Nowa funkcjonalność
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/user-authentication
+
+   # Praca nad kodem...
+   git add .
+   git commit -m "feat(auth): add JWT authentication system"
+   git push -u origin feature/user-authentication
+
+   # Utwórz Pull Request do develop
+   gh pr create --base develop --title "Add JWT Authentication" \
+                --body "Implements user authentication with JWT tokens"
+
+   # Po review i merge
+   git checkout develop
+   git pull origin develop
+   git branch -d feature/user-authentication
+   ```
+
+2.3 CONVENTIONAL COMMITS (OBOWIĄZKOWE!)
+
+   Format: type(scope): description
+
+   Types:
+   - feat: Nowa funkcjonalność
+   - fix: Poprawka błędu
+   - docs: Dokumentacja
+   - style: Formatowanie, brak zmian logiki
+   - refactor: Refactoring kodu
+   - test: Dodanie/poprawka testów
+   - chore: Maintenance (dependencies, config)
+   - perf: Optymalizacja performance
+
+   Przykłady:
+   ```
+   feat(articles): add article creation endpoint
+   fix(auth): resolve JWT token expiration issue
+   docs(api): update Swagger documentation
+   refactor(db): optimize database queries
+   test(comments): add unit tests for comment service
+   chore(deps): update NestJS to v10
+   perf(images): implement lazy loading
+   ```
+
+2.4 PULL REQUEST WORKFLOW
+
+   Wszystkie zmiany MUSZĄ przejść przez Pull Request:
+
+   1. Utwórz feature branch
+   2. Commit z conventional commits
+   3. Push do GitHub
+   4. Utwórz PR z opisem zmian
+   5. Request review (jeśli team)
+   6. Adresuj komentarze z review
+   7. Merge po aprobacie
+   8. Usuń feature branch
+
+   Pull Request Template (.github/pull_request_template.md):
+   ```markdown
+   ## Description
+   Brief description of changes
+
+   ## Type of Change
+   - [ ] New feature
+   - [ ] Bug fix
+   - [ ] Documentation
+   - [ ] Refactoring
+
+   ## Testing
+   - [ ] Unit tests pass
+   - [ ] Manual testing completed
+   - [ ] No breaking changes
+
+   ## Checklist
+   - [ ] Code follows style guidelines
+   - [ ] Self-review completed
+   - [ ] Documentation updated
+   - [ ] No console errors
+   ```
+
+2.5 GITHUB ISSUES & PROJECT MANAGEMENT
+
+   - Każda funkcjonalność = GitHub Issue
+   - Labels: bug, enhancement, documentation, good-first-issue
+   - Milestones dla faz rozwoju
+   - Link commits do issues: "feat(auth): add login #123"
+   - GitHub Projects dla Kanban board
+
+2.6 .gitignore CONFIGURATION
+
+   ```gitignore
+   # Dependencies
+   node_modules/
+   .pnp
+   .pnp.js
+
+   # Testing
+   coverage/
+
+   # Production
+   build/
+   dist/
+   .next/
+   out/
+
+   # Environment
+   .env
+   .env.local
+   .env.*.local
+
+   # IDE
+   .vscode/
+   .idea/
+   *.swp
+   *.swo
+
+   # OS
+   .DS_Store
+   Thumbs.db
+
+   # Logs
+   logs/
+   *.log
+   npm-debug.log*
+
+   # Database
+   *.sqlite
+   *.db
+
+   # Docker
+   docker-compose.override.yml
+
+   # Uploads (w development)
+   uploads/
+   public/uploads/
+   ```
+
+================================================================================
+3. QUICK PREVIEW SETUP - Uruchom aplikację w < 5 minut!
+================================================================================
+
+Cel: Możliwie najszybszy podgląd działającej aplikacji z przykładowymi danymi.
+
+3.1 WYMAGANIA WSTĘPNE
+   - Docker & Docker Compose zainstalowane
+   - Git zainstalowany
+   - Node.js 18+ (opcjonalnie, dla local development)
+   - Port 3000, 3001, 5432, 6379 wolne
+
+3.2 QUICK START (One Command Deploy)
+
+   ```bash
+   # 1. Sklonuj repozytorium
+   git clone https://github.com/YOUR_USERNAME/multimedia-portal.git
+   cd multimedia-portal
+
+   # 2. Uruchom Docker Compose
+   docker-compose up -d
+
+   # 3. Poczekaj ~2 minuty na inicjalizację
+
+   # 4. Otwórz w przeglądarce
+   # Frontend: http://localhost:3000
+   # Backend API: http://localhost:3001
+   # API Docs: http://localhost:3001/api/docs
+   # Admin Panel: http://localhost:3000/dashboard
+   ```
+
+3.3 DOMYŚLNE CREDENTIALS (ZMIEŃ PO PIERWSZYM LOGOWANIU!)
+
+   ```
+   Admin Account:
+   Email: admin@multimedia-portal.local
+   Password: Admin123!@#
+
+   Test User:
+   Email: user@multimedia-portal.local
+   Password: User123!@#
+
+   Moderator:
+   Email: moderator@multimedia-portal.local
+   Password: Moderator123!@#
+   ```
+
+3.4 PRZYKŁADOWE DANE (SEED DATA)
+
+   Automatycznie załadowane dane:
+   - 20 artykułów (różne kategorie)
+   - 15 blog postów
+   - 10 stron wiki (hierarchia)
+   - 25 zdjęć w galerii
+   - 10 opowiadań
+   - 5 autorów
+   - 100+ komentarzy
+   - Kategorie i tagi
+   - Oceny (ratings)
+
+3.5 DOSTĘPNE ENDPOINTS (Quick Reference)
+
+   Frontend:
+   - http://localhost:3000 - Landing page
+   - http://localhost:3000/login - Logowanie
+   - http://localhost:3000/blog - Blog
+   - http://localhost:3000/articles - Artykuły
+   - http://localhost:3000/wiki - Wiki
+   - http://localhost:3000/gallery - Galeria
+   - http://localhost:3000/stories - Opowiadania
+   - http://localhost:3000/dashboard - Panel Admin (wymaga logowania)
+
+   Backend API:
+   - http://localhost:3001/api/health - Health check
+   - http://localhost:3001/api/docs - Swagger Documentation
+   - http://localhost:3001/api/articles - REST API
+   - http://localhost:3001/api/auth/login - Authentication
+
+3.6 WERYFIKACJA INSTALACJI
+
+   ```bash
+   # Sprawdź status kontenerów
+   docker-compose ps
+
+   # Powinny być running:
+   # - multimedia-portal-backend
+   # - multimedia-portal-frontend
+   # - multimedia-portal-postgres
+   # - multimedia-portal-redis
+   # - multimedia-portal-meilisearch
+
+   # Sprawdź logi
+   docker-compose logs -f backend
+   docker-compose logs -f frontend
+
+   # Test API
+   curl http://localhost:3001/api/health
+   # Powinno zwrócić: {"status":"ok"}
+
+   # Test Frontend
+   curl http://localhost:3000
+   # Powinno zwrócić HTML
+   ```
+
+3.7 TROUBLESHOOTING
+
+   Problem: Port zajęty
+   ```bash
+   # Windows
+   netstat -ano | findstr :3000
+   taskkill /PID <PID> /F
+
+   # Linux/Mac
+   lsof -i :3000
+   kill -9 <PID>
+   ```
+
+   Problem: Kontenery nie startują
+   ```bash
+   docker-compose down -v  # Usuń volumes
+   docker-compose up -d --build  # Rebuild
+   ```
+
+   Problem: Database connection error
+   ```bash
+   # Sprawdź czy PostgreSQL działa
+   docker-compose logs postgres
+
+   # Sprawdź env variables
+   docker-compose exec backend env | grep DATABASE
+   ```
+
+================================================================================
+4. GŁÓWNE FUNKCJONALNOŚCI
+================================================================================
+
+4.1 LANDING PAGE / STRONA GŁÓWNA
+   - Atrakcyjna, nowoczesna strona powitalna
+   - Wymaga logowania dla dostępu do pełnej zawartości portalu
+   - Showcase głównych sekcji portalu
+   - Call-to-action do rejestracji/zalogowania
+   - Responsive design mobile-first
+
+2.2 BLOG
+   - Publikacja artykułów/postów
+   - Paginacja listy artykułów
+   - Widok szczegółów artykułu
+   - System komentarzy (zalogowani użytkownicy)
+   - Ocenianie artykułów (gwiazdki 1-5)
+   - Udostępnianie na social media
+   - Kategorie artykułów
+   - Tagi
+   - Wyszukiwanie i filtrowanie
+
+2.3 WIKI / ENCYKLOPEDIA
+   - Hierarchiczna struktura stron (parent-child)
+   - System nawigacji treeview
+   - Edycja w Markdownie/Rich Text
+   - Historia zmian
+   - Wersjonowanie treści
+   - Linki do powiązanych stron wiki
+   - Wyszukiwanie pełnotekstowe
+
+2.4 SEKCJA ARTYKUŁÓW
+   - Oddzielne artykuły od bloga
+   - Zawartość multimedialna (tekst, zdjęcia, wideo)
+   - Kategorie artykułów
+   - System komentarzy
+   - System ocen (1-5 gwiazdek)
+   - Udostępnianie
+   - Data publikacji i autorstwo
+
+2.5 GALERIA MULTIMEDIALNA
+   - Przechowywanie zdjęć i filmów
+   - Organizacja w kategorie
+   - Lightbox/modal do przeglądania zdjęć
+   - Opis każdego pliku multimedialnego
+   - System ocen dla multimediów
+   - Komentarze dla multimediów
+   - Możliwość udostępnienia
+   - Tagi dla mediów
+   - Paginacja
+
+2.6 OPOWIADANIA
+   - Publikacja opowiadań/historii
+   - Wsparcie dla tekstu, zdjęć i filmów
+   - Kategorie opowiadań
+   - Seria opowiadań (powiązane)
+   - System komentarzy
+   - System ocen
+   - Udostępnianie
+   - Zakładki/ulubione (zalogowani użytkownicy)
+
+2.7 SEKCJA BIO / O AUTORACH
+   - Profile autorów
+   - Zdjęcie profilowe
+   - Biografia
+   - Lista artykułów/opowiadań autora
+   - Linki do profili społecznych
+   - Informacje kontaktowe (opcjonalnie)
+
+2.8 SYSTEM KOMENTARZY (CROSS-CONTENT)
+   - Jednolity system dla artykułów, blog postów, multimediów, opowiadań
+   - Zagnieżdżone komentarze (replies)
+   - Moderacja komentarzy (admin)
+   - Blokowanie/usuwanie komentarzy
+   - Notyfikacje dla autora
+
+2.9 SYSTEM OCEN (CROSS-CONTENT)
+   - Oceny 1-5 gwiazdek
+   - Średnia ocena i liczba głosów
+   - Histogram rozkładu ocen
+   - Każdy użytkownik może ocenić raz
+
+2.10 SYSTEM AUTENTYKACJI
+   - Rejestracja nowych użytkowników
+   - Logowanie z JWT
+   - Profile użytkowników
+   - Rola użytkownika (user, moderator, admin)
+   - Bezpieczeństwo: hasło hashowane, CSRF protection
+
+4.11 PANEL ADMINISTRACYJNY
+   - Zarządzanie artykułami (CRUD)
+   - Zarządzanie blog postami
+   - Zarządzanie stronami wiki
+   - Zarządzanie galerią
+   - Zarządzanie opowiadaniami
+   - Zarządzanie autorami
+   - Zarządzanie użytkownikami
+   - Zarządzanie komentarzami (moderacja)
+   - Zarządzanie kategoriami
+   - Analityka (liczba odwiedzin, popularne treści)
+   - Ustawienia portalu
+
+4.12 REAL-TIME NOTIFICATIONS ⭐ NOWE!
+   - Live powiadomienia o nowych komentarzach
+   - Powiadomienia o odpowiedziach na komentarze
+   - Admin alerts (nowa treść, spam detection)
+   - Browser push notifications
+   - Email notifications (opcjonalne)
+   - In-app notification center z historią
+   - Notification preferences (użytkownik wybiera co chce otrzymywać)
+   - Badge z liczbą nieprzeczytanych
+   - Sound alerts (opcjonalne, wyłączalne)
+   - Desktop notifications (jeśli przeglądarka wspiera)
+
+4.13 ADVANCED SEARCH ⭐ NOWE!
+   - Full-text search z typo-tolerance (MeiliSearch)
+   - Faceted search (filtry po kategoriach, tagach, autorach, datach)
+   - Search suggestions i autocomplete
+   - Search history dla zalogowanych użytkowników
+   - Advanced filters:
+     * Data publikacji (od-do)
+     * Rating (min/max gwiazdki)
+     * Popularność (liczba wyświetleń, komentarzy)
+     * Typ treści (artykuł, blog, wiki, galeria, opowiadanie)
+   - Highlighting wyszukanych fraz
+   - Sort by: relevance, date, rating, popularity
+   - Search w konkretnych sekcjach lub globalnie
+   - Saved searches (zalogowani użytkownicy)
+
+4.14 CONTENT WORKFLOW ⭐ NOWE!
+   - Status treści:
+     * Draft - Szkic (zapisywany automatycznie co 30s)
+     * Pending Review - Oczekuje na moderację
+     * Scheduled - Zaplanowana publikacja
+     * Published - Opublikowana
+     * Archived - Zarchiwizowana
+   - Content scheduling - publikacja w przyszłości (wybór daty i godziny)
+   - Version history - historia zmian z możliwością rollback
+   - Content approval workflow dla moderatorów
+   - Auto-save drafts (co 30 sekund)
+   - Preview przed publikacją
+   - Bulk actions (publikacja/archiwizacja wielu naraz)
+   - Content expiration (opcjonalne auto-archiwizowanie po dacie)
+
+4.15 EMAIL SYSTEM ⭐ NOWE!
+   - Welcome emails po rejestracji
+   - Password reset emails
+   - Email verification (opcjonalne)
+   - Comment notification emails
+   - Newsletter system:
+     * Subskrypcja/unsubskrypcja
+     * Weekly digest z najlepszymi treściami
+     * Powiadomienia o nowych treściach od ulubionych autorów
+   - Email templates (customizable)
+   - Email preferences (użytkownik wybiera co otrzymywać)
+   - Unsubscribe link w każdym emailu
+   - Email queue (BullMQ) dla niezawodności
+   - Email delivery tracking (opcjonalnie)
+
+4.16 MEDIA PROCESSING ⭐ NOWE!
+   - Automatic image optimization:
+     * Konwersja do WebP
+     * Generowanie różnych rozmiarów (thumbnail, medium, large, original)
+     * Lazy loading optimization
+     * EXIF data removal (prywatność)
+   - Video processing:
+     * Generowanie thumbnails z video
+     * Opcjonalna konwersja do web-friendly formats
+     * Adaptive bitrate streaming (HLS) - opcjonalnie dla przyszłości
+   - File validation:
+     * Sprawdzanie typu pliku (nie tylko extension)
+     * Max file size limits
+     * Malware scanning (opcjonalnie)
+   - CDN integration ready (Cloudflare/BunnyCDN)
+   - Storage optimization:
+     * Automatic cleanup starych wersji
+     * Compression
+     * Deduplication (hash-based)
+
+4.17 ANALYTICS & INSIGHTS ⭐ NOWE!
+   - Page views tracking (bez cookies, privacy-friendly)
+   - User engagement metrics:
+     * Time on page
+     * Scroll depth
+     * Click tracking
+   - Popular content dashboard:
+     * Most viewed (today, week, month, all-time)
+     * Most commented
+     * Highest rated
+     * Trending (velocity-based)
+   - Traffic sources tracking
+   - User behavior analytics:
+     * New vs returning users
+     * User paths (navigation flow)
+     * Bounce rate
+   - Content performance:
+     * Które kategorie są najpopularniejsze
+     * Którzy autorzy mają najwięcej wyświetleń
+     * Optymalne czasy publikacji
+   - Admin dashboard z wizualizacjami (charts)
+   - Export reports (CSV, PDF)
+   - Privacy-focused (bez third-party trackers)
+
+4.18 ENHANCED SECURITY ⭐ NOWE!
+   - Rate limiting:
+     * Per IP (zapobieganie brute force)
+     * Per User (zapobieganie spam)
+     * Per Endpoint (różne limity dla różnych API)
+   - 2FA - Two-Factor Authentication (opcjonalne):
+     * TOTP (Google Authenticator, Authy)
+     * Email-based 2FA
+     * Backup codes
+   - Security headers (Helmet.js):
+     * Content Security Policy (CSP)
+     * X-Frame-Options
+     * HSTS
+   - OAuth integration (opcjonalne):
+     * Login przez Google
+     * Login przez GitHub
+     * Login przez Facebook
+   - IP whitelisting dla admin panel (opcjonalne)
+   - Audit logs - wszystkie admin actions tracked:
+     * Kto, co, kiedy zrobił
+     * IP address
+     * User agent
+   - Automated security scanning:
+     * Dependency vulnerability scanning (npm audit)
+     * OWASP ZAP integration (opcjonalnie)
+   - Secrets management ready (dla produkcji)
+   - Session management:
+     * Session timeout
+     * Concurrent session limits
+     * Force logout na wszystkich urządzeniach
+
+================================================================================
+5. FEATURE BREAKDOWN - SZCZEGÓŁOWY OPIS
+================================================================================
+
+3.1 ARCHITEKTURA BAZY DANYCH
+Content Types (Collections):
+   - Articles (artykuły z komentarzami, ocenami)
+   - BlogPosts (posty na blogu)
+   - WikiPages (strony wiki, hierarchia)
+   - GalleryItems (zdjęcia/filmy)
+   - Stories (opowiadania)
+   - Authors (profil autora)
+   - Users (użytkownicy systemu - built-in Strapi)
+   - Comments (ogólny system komentarzy)
+   - Ratings (ogólny system ocen)
+   - Categories (kategorie dla treści)
+   - Tags (tagi dla treści)
+   - Settings (globalne ustawienia portalu)
+
+Relations:
+   - Article has many Comments
+   - Article has many Ratings
+   - BlogPost has many Comments
+   - BlogPost has many Ratings
+   - GalleryItem has many Comments
+   - GalleryItem has many Ratings
+   - Story has many Comments
+   - Story has many Ratings
+   - Author has many Articles
+   - Author has many BlogPosts
+   - Author has many Stories
+   - User has many Comments
+   - User has many Ratings
+   - Article has many Tags
+   - Article has Category (many-to-one)
+
+3.2 FRONTEND - ROUTING (NEXT.JS APP ROUTER)
+/ - Landing page
+/login - Strona logowania
+/register - Rejestracja
+/profile - Profil użytkownika (zalogowani)
+/dashboard (admin panel)
+  /dashboard - Overview
+  /dashboard/articles - Zarządzanie artykułami
+  /dashboard/blog - Zarządzanie blogiem
+  /dashboard/wiki - Zarządzanie wiki
+  /dashboard/gallery - Zarządzanie galerią
+  /dashboard/stories - Zarządzanie opowiadaniami
+  /dashboard/authors - Zarządzanie autorami
+  /dashboard/users - Zarządzanie użytkownikami
+  /dashboard/comments - Moderacja komentarzy
+  /dashboard/settings - Ustawienia
+/blog - Lista blog postów
+/blog/[slug] - Szczegóły blog posta
+/articles - Lista artykułów
+/articles/[slug] - Szczegóły artykułu
+/wiki - Wiki homepage
+/wiki/[slug] - Strona wiki
+/gallery - Galeria mediów
+/gallery/[id] - Szczegóły media
+/stories - Lista opowiadań
+/stories/[slug] - Szczegóły opowiadania
+/authors - Lista autorów
+/authors/[slug] - Profil autora
+/about - O nas / Info o portalu
+
+3.3 KOMPONENTY REACT
+Shared Components:
+   - Navigation / Header
+   - Footer
+   - Sidebar
+   - CommentsSection
+   - RatingWidget
+   - ShareButtons
+   - CategoryFilter
+   - SearchBar
+   - Pagination
+   - LoadingSpinner
+   - ErrorBoundary
+
+Page-Specific Components:
+   - BlogPostList
+   - BlogPostDetail
+   - ArticleList
+   - ArticleDetail
+   - WikiPage
+   - WikiTree
+   - GalleryGrid
+   - GalleryLightbox
+   - StoryList
+   - StoryDetail
+   - AuthorCard
+   - AdminDashboard
+   - AdminPanel
+
+3.4 NESTJS API ENDPOINTS
+REST Endpoints (NestJS Controllers):
+
+Articles Module:
+   GET  /api/articles - Lista artykułów (publiczne)
+   GET  /api/articles/:id - Szczegóły artykułu
+   POST /api/articles - Tworzenie (admin)
+   PUT  /api/articles/:id - Edycja (admin)
+   DELETE /api/articles/:id - Usunięcie (admin)
+
+BlogPosts Module:
+   GET  /api/blog - Lista postów na blogu
+   GET  /api/blog/:id - Szczegóły postu
+   POST /api/blog - Tworzenie (admin)
+   PUT  /api/blog/:id - Edycja (admin)
+   DELETE /api/blog/:id - Usunięcie (admin)
+
+WikiPages Module:
+   GET  /api/wiki - Lista stron wiki (z hierarchią)
+   GET  /api/wiki/:id - Szczegóły strony wiki
+   POST /api/wiki - Tworzenie (admin)
+   PUT  /api/wiki/:id - Edycja (admin)
+   DELETE /api/wiki/:id - Usunięcie (admin)
+
+GalleryItems Module:
+   GET  /api/gallery - Lista multimediów
+   GET  /api/gallery/:id - Szczegóły media
+   POST /api/gallery - Upload (admin)
+   DELETE /api/gallery/:id - Usunięcie (admin)
+
+Stories Module:
+   GET  /api/stories - Lista opowiadań
+   GET  /api/stories/:id - Szczegóły opowiadania
+   POST /api/stories - Tworzenie (admin)
+   PUT  /api/stories/:id - Edycja (admin)
+   DELETE /api/stories/:id - Usunięcie (admin)
+
+Authors Module:
+   GET  /api/authors - Lista autorów
+   GET  /api/authors/:id - Profil autora
+   POST /api/authors - Tworzenie (admin)
+   PUT  /api/authors/:id - Edycja (admin)
+   DELETE /api/authors/:id - Usunięcie (admin)
+
+Comments Module:
+   GET  /api/comments - Komentarze (z filtrowaniem po content type)
+   POST /api/comments - Dodanie komentarza (zalogowani)
+   DELETE /api/comments/:id - Usunięcie (admin/właściciel)
+
+Ratings Module:
+   GET  /api/ratings - Oceny (z filtrowaniem)
+   POST /api/ratings - Dodanie oceny (zalogowani)
+   PUT  /api/ratings/:id - Aktualizacja oceny
+
+Authentication Module:
+   POST /api/auth/register - Rejestracja
+   POST /api/auth/login - Logowanie (zwraca JWT)
+   POST /api/auth/logout - Wylogowanie
+   GET  /api/auth/me - Aktualny użytkownik
+   POST /api/auth/refresh - Odświeżenie tokenu
+
+Admin Module (Content Management):
+   GET  /api/admin/dashboard - Statistyki i overview
+   GET  /api/admin/users - Zarządzanie użytkownikami
+   POST /api/admin/users/:id/role - Zmiana roli użytkownika
+   DELETE /api/admin/users/:id - Usunięcie użytkownika
+   GET  /api/admin/comments - Moderacja komentarzy
+   DELETE /api/admin/comments/:id - Usunięcie komentarza
+   GET  /api/admin/settings - Ustawienia portalu
+   PUT  /api/admin/settings - Edycja ustawień
+
+File Upload Module:
+   POST /api/upload - Upload pliku (admin)
+   DELETE /api/files/:id - Usunięcie pliku (admin)
+
+3.5 BEZPIECZEŃSTWO
+   - JWT tokens dla autentykacji
+   - CORS configuration
+   - Role-based access control (RBAC)
+   - API rate limiting
+   - Input validation
+   - SQL injection prevention (ORM)
+   - XSS prevention
+   - CSRF tokens
+
+3.6 PERFORMANCE
+   - Caching (Redis opcjonalnie)
+   - Image optimization w Next.js
+   - Lazy loading dla mediów
+   - Pagination (nie pobieranie wszystkiego naraz)
+   - Indeksowanie bazy danych
+   - CDN dla statycznych assets
+
+3.7 SEO
+   - Meta tags dla każdej strony
+   - Open Graph tags
+   - XML sitemap
+   - Robots.txt
+   - Canonical URLs
+   - Structured data (JSON-LD)
+
+================================================================================
+6. TECHNICAL REQUIREMENTS (100% DARMOWY STACK)
+================================================================================
+
+6.1 BACKEND (NESTJS + PRISMA) ⭐ ZMIANA: Prisma zamiast TypeORM
+
+Core Framework:
+- Node.js 18+ ✅ Darmowy
+- NestJS framework (TypeScript) ✅ Darmowy (open source)
+- PostgreSQL 14+ ✅ Darmowy (open source)
+- Prisma ORM ⭐ Darmowy (open source, lepszy DX niż TypeORM)
+- Class Validator ✅ Darmowy (validation)
+- Class Transformer ✅ Darmowy (transformation)
+
+Authentication & Security:
+- JWT (jsonwebtoken) ✅ Darmowy
+- bcrypt ✅ Darmowy (password hashing)
+- Passport.js ✅ Darmowy (authentication middleware)
+- Helmet ✅ Darmowy (security headers)
+- @nestjs/throttler ⭐ Darmowy (rate limiting)
+
+File Handling:
+- Multer ✅ Darmowy (file upload)
+- Sharp ⭐ Darmowy (image processing, resize, optimize)
+- MinIO SDK ⭐ Darmowy (S3-compatible storage client)
+
+Infrastructure Services:
+- Redis ⭐ MUST-HAVE Darmowy (cache, sessions, pub/sub)
+- BullMQ ⭐ Darmowy (job queue, background tasks)
+- Socket.io ⭐ Darmowy (real-time WebSockets)
+- MeiliSearch ⭐ Darmowy (search engine, self-hosted)
+- NodeMailer + MailerSend ⭐ Darmowy (email, 12k/miesiąc free)
+
+Monitoring & Logging:
+- Winston ⭐ Darmowy (structured logging)
+- Prometheus client ⭐ Darmowy (metrics)
+- @nestjs/terminus ✅ Darmowy (health checks)
+
+API & Documentation:
+- Swagger/OpenAPI (@nestjs/swagger) ✅ Darmowy
+- class-validator decorators ✅ Darmowy
+- Custom guards (JwtAuthGuard, RolesGuard) ✅ Darmowy
+- Custom interceptors (logging, caching) ✅ Darmowy
+- Custom pipes (validation, transformation) ✅ Darmowy
+
+6.2 FRONTEND (NEXT.JS 14 + MODERN UI STACK)
+
+Core Framework:
+- React 18+ ✅ Darmowy
+- Next.js 14 (App Router) ✅ Darmowy
+- TypeScript ✅ Darmowy
+- Tailwind CSS ✅ Darmowy
+
+Data Fetching & State:
+- TanStack Query (React Query) ⭐ Darmowy (lepszy niż SWR)
+- Zustand ⭐ Darmowy (lightweight state management)
+- Socket.io-client ⭐ Darmowy (real-time)
+
+UI Components:
+- Shadcn/ui ⭐ Darmowy (component library, copy-paste)
+- Radix UI ⭐ Darmowy (headless primitives)
+- Lucide React ⭐ Darmowy (icons)
+- Framer Motion ⭐ Darmowy (animations)
+
+Forms & Validation:
+- React Hook Form ⭐ Darmowy (performant forms)
+- Zod ⭐ Darmowy (schema validation)
+
+Rich Text Editors:
+- Tiptap ⭐ Darmowy (basic version, extensible)
+- lub Lexical ⭐ Darmowy (Meta's editor)
+
+File Uploads:
+- React-Dropzone ⭐ Darmowy (drag & drop uploads)
+
+Charts & Data Viz:
+- Tremor ⭐ Darmowy (analytics UI components)
+- Recharts ⭐ Darmowy (charts library)
+
+Tables:
+- TanStack Table (React Table) ⭐ Darmowy (powerful tables)
+
+Image Optimization:
+- Next.js Image component ✅ Darmowy (built-in)
+- Sharp (backend) ✅ Darmowy
+
+6.3 DATABASE (POSTGRESQL + PRISMA)
+
+Database:
+- PostgreSQL 14+ ✅ Darmowy (open source)
+- Prisma ORM ⭐ Darmowy (schema, migrations, type-safe queries)
+- Prisma Studio ⭐ Darmowy (database GUI)
+
+Features:
+- Prisma Schema dla wszystkich entities
+- Prisma Migrate dla schema changes
+- Relationships (One-to-Many, Many-to-Many)
+- Indexes dla performance
+- Constraints i validacja
+- Seed scripts dla example data
+- Full type safety (TypeScript)
+
+6.4 INFRASTRUCTURE (100% SELF-HOSTED = DARMOWY)
+
+Development Environment:
+- Docker ✅ Darmowy
+- Docker Compose ✅ Darmowy
+- pnpm ⭐ Darmowy (szybszy package manager)
+
+Containers (Docker Compose):
+- PostgreSQL container ✅
+- Redis container ⭐
+- MeiliSearch container ⭐
+- MinIO container ⭐ (S3-compatible storage)
+- Backend container ✅
+- Frontend container ✅
+
+CI/CD:
+- GitHub Actions ⭐ Darmowy (2000 min/miesiąc public, 500 min private)
+- Husky ⭐ Darmowy (git hooks)
+- ESLint + Prettier ✅ Darmowy (linting, formatting)
+
+Monitoring Stack (Self-Hosted):
+- Prometheus ⭐ Darmowy (metrics collection)
+- Grafana ⭐ Darmowy (visualization dashboards)
+- Loki ⭐ Darmowy (log aggregation)
+
+Version Control:
+- Git ✅ Darmowy
+- GitHub ✅ Darmowy (unlimited public/private repos)
+- Conventional Commits ✅ Darmowy (commit standard)
+
+6.5 HOSTING OPTIONS
+
+Opcja 1: VPS Self-Hosted (NAJTAŃSZE - €4-20/miesiąc)
+```
+Hetzner VPS:
+- CPX11: €4.15/miesiąc (2vCPU, 2GB RAM, 40GB SSD) - dla startu
+- CPX21: €8.21/miesiąc (3vCPU, 4GB RAM, 80GB SSD) - dla growth
+- CPX31: €14.17/miesiąc (4vCPU, 8GB RAM, 160GB SSD) - dla scale
+
+Contabo VPS:
+- VPS S: €5/miesiąc (4vCPU, 8GB RAM, 200GB SSD) - MEGA WARTOŚĆ!
+- VPS M: €10/miesiąc (6vCPU, 16GB RAM, 400GB SSD)
+
+Wszystkie kontenery na jednym VPS:
+- Backend + Frontend + PostgreSQL + Redis + MeiliSearch + MinIO
+```
+
+Opcja 2: Hybrid Free (CAŁKOWICIE ZA DARMO dla startu)
+```
+Backend: Railway.app (free tier: $5 credit/miesiąc)
+Frontend: Vercel (hobby tier: unlimited, free)
+Database: Supabase (free tier: 500MB DB, wystarczy na start)
+Storage: Cloudflare R2 (10GB free)
+CDN: Cloudflare (free tier)
+Email: MailerSend (12,000 emails/miesiąc free)
+Search: MeiliSearch Cloud (100k docs free) lub self-hosted
+```
+
+Opcja 3: Full Self-Hosted na darmowych tierach
+```
+Backend + DB: Render (free tier z sleep)
+Frontend: Vercel/Netlify (free unlimited)
+Redis: Railway free tier lub Upstash (10k commands/day free)
+Search: Self-hosted MeiliSearch (Railway free tier)
+Storage: MinIO self-hosted
+Email: MailerSend (12k/miesiąc free)
+```
+
+6.6 EXTERNAL SERVICES (DARMOWE TIERY)
+
+Email Delivery (wybierz jeden):
+- MailerSend: 12,000 emails/miesiąc FREE ⭐ REKOMENDOWANE
+- SendGrid: 100 emails/dzień FREE
+- Amazon SES: $0.10/1000 emails (bardzo tanie)
+- Resend: 3,000 emails/miesiąc FREE
+
+CDN & Assets:
+- Cloudflare CDN: FREE (unlimited bandwidth!) ⭐
+- Cloudflare R2: 10GB storage FREE
+- BunnyCDN: $1/miesiąc + $0.01/GB (opcjonalne, ultra tanie)
+
+SSL Certificates:
+- Let's Encrypt: FREE ✅
+- Cloudflare SSL: FREE ✅
+
+Domain (opcjonalnie):
+- Freenom: FREE (.tk, .ml, .ga, .cf, .gq domeny)
+- Namecheap: ~$1/rok (.xyz, .site)
+- Cloudflare: At cost (~$10/rok .com)
+
+================================================================================
+7. COST ANALYSIS & BREAKDOWN
+================================================================================
+
+7.1 KOSZT CAŁKOWITY - PODSUMOWANIE
+
+Startup Phase (0-1000 użytkowników):
+```
+Opcja 1 - VPS Self-Hosted:        €4-8/miesiąc   (REKOMENDOWANE)
+Opcja 2 - Hybrid Free:             €0/miesiąc     (dla testów)
+Opcja 3 - Full Free Tiers:         €0/miesiąc     (z limitami)
+
++ Domain (opcjonalnie):            €1-10/rok
++ Email (MailerSend):              €0/miesiąc     (12k emails free)
++ CDN (Cloudflare):                €0/miesiąc     (unlimited free)
++ SSL:                             €0/miesiąc     (Let's Encrypt free)
++ Git/GitHub:                      €0/miesiąc     (unlimited repos)
++ CI/CD:                           €0/miesiąc     (GitHub Actions free)
++ Monitoring:                      €0/miesiąc     (self-hosted)
+
+TOTAL MINIMUM: €0-8/miesiąc (wszystko oprócz VPS jest DARMOWE!)
+```
+
+Growth Phase (1,000-10,000 użytkowników):
+```
+VPS (większy):                     €14-20/miesiąc (Hetzner CPX31)
+lub Contabo VPS M:                 €10/miesiąc    (6vCPU, 16GB RAM)
+Email:                             €0-20/miesiąc  (jeśli > 12k emails)
+Wszystko inne:                     €0/miesiąc     (nadal free!)
+
+TOTAL: €10-40/miesiąc
+```
+
+Scale Phase (10,000+ użytkowników):
+```
+VPS/Dedicated:                     €50-100/miesiąc
+lub Managed Services:              €100-300/miesiąc
+CDN (opcjonalne upgrade):          €10-50/miesiąc
+Email service upgrade:             €20-50/miesiąc
+Monitoring (opcjonalnie managed):  €0-50/miesiąc
+Backups:                           €5-20/miesiąc
+
+TOTAL: €50-500/miesiąc (zależnie od wyboru managed vs self-hosted)
+```
+
+7.2 BREAKDOWN KOSZTÓW - SZCZEGÓŁY
+
+A) INFRASTRUKTURA
+
+VPS Hosting (jeśli self-hosted):
+  Hetzner CPX11 (start):      €4.15/miesiąc    ⭐ NAJLEPSZY STOSUNEK CENY DO JAKOŚCI
+  Hetzner CPX21 (growth):     €8.21/miesiąc
+  Hetzner CPX31 (scale):      €14.17/miesiąc
+  Contabo VPS S:              €5/miesiąc       ⭐ MEGA WARTOŚĆ (4 vCPU, 8GB RAM!)
+  Contabo VPS M:              €10/miesiąc
+
+Lub darmowe opcje:
+  Railway:                    €0-5/miesiąc     ($5 credit free)
+  Render:                     €0/miesiąc       (free tier, sleep po 15 min)
+  Vercel (frontend only):     €0/miesiąc       (unlimited free dla hobby)
+
+B) DATABASE
+
+PostgreSQL:
+  Self-hosted (VPS):          €0 (wliczone w VPS)
+  Supabase:                   €0/miesiąc       (500MB free, wystarczy na start)
+  Neon:                       €0/miesiąc       (512MB free)
+  Railway:                    €0-5/miesiąc
+
+C) STORAGE
+
+File Storage:
+  MinIO (self-hosted):        €0 (wliczone w VPS)
+  Cloudflare R2:              €0/miesiąc       (10GB free) + €0.015/GB potem
+  Backblaze B2:               €0/miesiąc       (10GB free) + €0.005/GB potem
+  AWS S3:                     ~€0.023/GB       (bez free tier)
+
+D) EMAIL
+
+MailerSend:                   €0/miesiąc       (12,000 emails free) ⭐
+SendGrid:                     €0/miesiąc       (100 emails/dzień free)
+Resend:                       €0/miesiąc       (3,000 emails free)
+Amazon SES:                   ~€0.10/1000      (bardzo tanie)
+
+Przy 12k emails/miesiąc free = ~400 emails/dzień, wystarczy dla małego portalu!
+
+E) CDN
+
+Cloudflare:                   €0/miesiąc       (UNLIMITED bandwidth!) ⭐
+BunnyCDN:                     €1 + €0.01/GB    (opcjonalnie, ultra szybkie)
+CloudFront:                   Pay-per-use      (droższe)
+
+F) SEARCH ENGINE
+
+MeiliSearch (self-hosted):    €0 (wliczone w VPS)
+MeiliSearch Cloud:            €0/miesiąc       (100k docs free)
+Typesense Cloud:              €0/miesiąc       (4M search ops free)
+
+G) MONITORING & LOGGING
+
+Self-Hosted (Prometheus/Grafana/Loki):  €0 (wliczone w VPS)
+Sentry (error tracking):                €0/miesiąc (5k errors free)
+Better Stack:                           €0/miesiąc (10k events free)
+
+H) CI/CD
+
+GitHub Actions:               €0/miesiąc       (2000 min public, 500 min private)
+GitLab CI:                    €0/miesiąc       (400 min free)
+
+I) DOMAIN & SSL
+
+Domain:
+  Freenom (.tk, .ml):         €0/rok           (darmowe domeny)
+  Namecheap (.xyz):           ~€1/rok
+  .com domain:                ~€10/rok
+
+SSL Certificate:
+  Let's Encrypt:              €0/rok           ⭐
+  Cloudflare SSL:             €0/rok           ⭐
+
+7.3 REKOMENDOWANY SETUP NA START
+
+```yaml
+TOTAL COST: €4.15/miesiąc (tylko VPS!)
+
+Hosting: Hetzner CPX11 VPS (€4.15/miesiąc)
+  - 2 vCPU, 2GB RAM, 40GB SSD
+  - Wystarczy dla 1000+ użytkowników
+  - Wszystkie kontenery na jednym VPS
+
+Database: PostgreSQL (self-hosted)
+Storage: MinIO (self-hosted)
+Cache: Redis (self-hosted)
+Search: MeiliSearch (self-hosted)
+Queue: BullMQ + Redis (self-hosted)
+Monitoring: Prometheus + Grafana (self-hosted)
+
+Email: MailerSend (€0 - 12k/miesiąc free)
+CDN: Cloudflare (€0 - unlimited)
+SSL: Let's Encrypt (€0)
+CI/CD: GitHub Actions (€0)
+Domain: Freenom (€0) lub Namecheap .xyz (€1/rok)
+```
+
+7.4 ALTERNATYWA - CAŁKOWICIE ZA DARMO
+
+```yaml
+TOTAL COST: €0/miesiąc (100% FREE!)
+
+Frontend: Vercel (hobby tier, unlimited)
+Backend: Railway (€5 credit/miesiąc, wystarczy na start)
+Database: Supabase (500MB free)
+Storage: Cloudflare R2 (10GB free)
+Cache: Upstash Redis (10k commands/day free)
+Search: MeiliSearch Cloud (100k docs free)
+Email: MailerSend (12k emails/miesiąc free)
+CDN: Cloudflare (unlimited free)
+SSL: Cloudflare (free)
+CI/CD: GitHub Actions (free)
+Domain: Freenom (free)
+
+Limitacje:
+- Railway backend może 'zasypać' gdy nieaktywny
+- Supabase 500MB DB (wystarczy na start, potem upgrade)
+- Upstash Redis limit 10k commands/day (wystarczy dla małego ruchu)
+```
+
+7.5 KALKULATOR KOSZTÓW W CZASIE
+
+Miesiąc 1-3 (Development):
+  - VPS €4.15/miesiąc
+  - Wszystko inne: FREE
+  TOTAL: €4.15/miesiąc
+
+Miesiąc 4-6 (Soft Launch, 100-500 users):
+  - VPS €4.15/miesiąc
+  - Domain €1/rok = €0.08/miesiąc
+  - Wszystko inne: FREE
+  TOTAL: €4.23/miesiąc
+
+Miesiąc 7-12 (Growth, 500-2000 users):
+  - VPS €8.21/miesiąc (upgrade do CPX21)
+  - Domain €1/rok = €0.08/miesiąc
+  - Email: nadal FREE (jeśli < 12k/miesiąc)
+  - Wszystko inne: FREE
+  TOTAL: €8.29/miesiąc
+
+Rok 2 (Scale, 2000-10000 users):
+  - VPS €14.17/miesiąc (upgrade do CPX31)
+  lub Contabo €10/miesiąc (jeszcze lepsze!)
+  - Domain €10/rok = €0.83/miesiąc (.com)
+  - Email: €0-20/miesiąc (zależy od wolumenu)
+  - Wszystko inne: nadal FREE!
+  TOTAL: €10-35/miesiąc
+
+7.6 OSZCZĘDNOŚCI VS MANAGED SERVICES
+
+Porównanie z pełnymi managed services:
+```
+Nasz stack (self-hosted):     €4-20/miesiąc
+vs
+Full Managed (Heroku/AWS):    €100-500/miesiąc
+
+Oszczędność: ~€1,000-5,000/rok! 💰
+```
+
+Co otrzymujesz za FREE w naszym stacku:
+- PostgreSQL (managed: €25-100/miesiąc)
+- Redis (managed: €10-50/miesiąc)
+- MeiliSearch (managed: €29-99/miesiąc)
+- Object Storage (managed: €20-50/miesiąc)
+- Monitoring (managed: €20-100/miesiąc)
+- Email (managed: €15-50/miesiąc dla 12k)
+
+7.7 UPGRADE PATH (gdy rośniesz)
+
+Start → Growth → Scale:
+
+€4/m → €8/m → €14/m (VPS path)
+lub
+€0/m → €10/m → €50/m (Hybrid path)
+lub
+€0/m → €50/m → €200/m (Full Managed path)
+
+Kiedy upgrade:
+- VPS CPU > 80% przez > 1 dzień
+- RAM > 85% wykorzystania
+- Database > 80% storage
+- > 10k emails/miesiąc (rozważ płatny tier)
+- > 100k requests/dzień (rozważ CDN upgrade)
+
+================================================================================
+8. IMPLEMENTACJA PHASES (ZREORGANIZOWANE)
+================================================================================
+
+⚠️  UWAGA: Phase 0 jest OBOWIĄZKOWA i musi być wykonana PRZED jakąkolwiek pracą!
+
+Phase 0: Git Repository Setup (OBOWIĄZKOWE - PRZED KODEM!) ⭐
+   Duration: 30 minut
+   - Utworzenie GitHub repository
+   - Inicjalizacja Git w projekcie
+   - Setup branch strategy (main, develop)
+   - Konfiguracja .gitignore
+   - Pierwszy commit: "chore: initial commit"
+   - Push do GitHub
+   - Setup GitHub Issues template
+   - Setup Pull Request template
+   - Konfiguracja branch protection rules
+   - README.md z podstawowym opisem projektu
+
+   Success Criteria:
+   - ✅ Repository utworzone na GitHub
+   - ✅ Branch main i develop istnieją
+   - ✅ .gitignore skonfigurowany
+   - ✅ Templates dla Issues i PR dodane
+   - ✅ Pierwszy commit spushowany
+
+Phase 1: Quick Preview Setup (PRIORYTET - Działająca aplikacja!) ⭐
+   Duration: 2-4 godziny
+   - Docker Compose configuration (wszystkie services)
+   - Basic NestJS backend setup (Prisma ORM)
+   - Basic Next.js frontend setup
+   - PostgreSQL + Redis + MeiliSearch containers
+   - Environment variables (.env files)
+   - Health check endpoints
+   - Seed data script (przykładowe dane)
+   - Basic landing page
+   - README z instrukcjami quick start
+
+   Services w Docker Compose:
+   - postgres (PostgreSQL 14)
+   - redis (Redis 7)
+   - meilisearch (MeiliSearch latest)
+   - minio (MinIO dla S3-compatible storage)
+   - backend (NestJS)
+   - frontend (Next.js)
+
+   Success Criteria:
+   - ✅ docker-compose up działa
+   - ✅ Frontend dostępny na localhost:3000
+   - ✅ Backend API dostępny na localhost:3001
+   - ✅ Health check endpoints zwracają OK
+   - ✅ Seed data załadowane
+   - ✅ Można zalogować się z default credentials
+
+   GIT: Commit "feat: add docker compose quick preview setup"
+
+Phase 2: Database Schema & Entities (Prisma)
+   Duration: 1-2 dni
+   - Prisma schema design dla wszystkich entities:
+     * User (z rolami: user, moderator, admin)
+     * Article, BlogPost, WikiPage, GalleryItem, Story
+     * Author
+     * Comment (polymorphic - dla wszystkich content types)
+     * Rating (polymorphic - dla wszystkich content types)
+     * Category, Tag
+     * Session (dla JWT)
+     * Notification (dla real-time)
+     * EmailQueue (dla BullMQ)
+   - Relationships (One-to-Many, Many-to-Many)
+   - Indexes dla performance
+   - Prisma migrations
+   - Enhanced seed data script
+   - Prisma Studio test
+
+   Success Criteria:
+   - ✅ npx prisma migrate dev działa
+   - ✅ Wszystkie relacje działają poprawnie
+   - ✅ Seed data generuje realistyczne przykłady
+   - ✅ Prisma Studio pokazuje wszystkie tabele
+
+   GIT: Commit "feat(db): add prisma schema and migrations"
+
+Phase 3: Backend Core - Authentication & Infrastructure
+   Duration: 2-3 dni
+   - Authentication module:
+     * JWT strategy z Passport
+     * Register/Login/Logout endpoints
+     * Password hashing (bcrypt)
+     * Refresh token mechanism
+   - Guards & Decorators:
+     * JwtAuthGuard
+     * RolesGuard (@Roles decorator)
+     * Public decorator
+   - Redis integration:
+     * Session storage
+     * Cache service
+   - Configuration module (ConfigService)
+   - Validation pipes
+   - Exception filters
+   - Logging interceptor (Winston)
+   - Health checks (@nestjs/terminus)
+
+   Success Criteria:
+   - ✅ POST /api/auth/register działa
+   - ✅ POST /api/auth/login zwraca JWT token
+   - ✅ Protected routes wymagają tokenu
+   - ✅ Role-based access control działa
+   - ✅ Redis cache działa
+
+   GIT: Commit "feat(auth): add authentication with JWT and Redis"
+
+Phase 4: Backend Core - Content Modules (CRUD)
+   Duration: 3-4 dni
+   - Articles module (pełny CRUD)
+   - BlogPosts module (pełny CRUD)
+   - WikiPages module (pełny CRUD + hierarchia)
+   - GalleryItems module (CRUD + file upload)
+   - Stories module (pełny CRUD)
+   - Authors module (pełny CRUD)
+   - Categories & Tags modules
+   - Pagination helper
+   - Filtering & sorting
+   - Swagger documentation dla API
+
+   Każdy moduł zawiera:
+   - Controller (REST endpoints)
+   - Service (business logic)
+   - DTOs (CreateDto, UpdateDto)
+   - Response entities
+   - Authorization guards
+
+   Success Criteria:
+   - ✅ Wszystkie CRUD endpoints działają
+   - ✅ Swagger docs dostępne na /api/docs
+   - ✅ Pagination działa (limit, offset)
+   - ✅ Filtering po kategoriach/tagach działa
+
+   GIT: Commit "feat(content): add all content modules with CRUD"
+
+Phase 5: Backend Advanced - Comments, Ratings, File Upload
+   Duration: 2-3 dni
+   - Comments module:
+     * Polymorphic comments (dla wszystkich content types)
+     * Nested comments (replies)
+     * Moderation endpoints
+   - Ratings module:
+     * Polymorphic ratings
+     * Average calculation
+     * One rating per user constraint
+   - File Upload service:
+     * MinIO integration
+     * Image processing (Sharp)
+     * Multiple sizes generation (thumbnail, medium, large)
+     * WebP conversion
+   - Admin module:
+     * Dashboard statistics
+     * User management
+     * Content moderation
+
+   Success Criteria:
+   - ✅ Komentarze działają dla wszystkich content types
+   - ✅ Nested comments (replies) działają
+   - ✅ Ratings zapisują się poprawnie
+   - ✅ Upload plików działa (images, videos)
+   - ✅ Admin dashboard pokazuje statystyki
+
+   GIT: Commit "feat: add comments, ratings, and file upload"
+
+Phase 6: Backend Advanced - Real-time, Search, Queue
+   Duration: 2-3 dni
+   - Socket.io integration:
+     * Real-time notifications
+     * Live comments
+     * Online users counter
+   - MeiliSearch integration:
+     * Index wszystkich content types
+     * Search endpoint z facets
+     * Auto-complete suggestions
+   - BullMQ integration:
+     * Email queue
+     * Image processing queue
+     * Search indexing queue
+   - Email service (NodeMailer + MailerSend):
+     * Email templates
+     * Welcome emails
+     * Password reset
+     * Notification emails
+
+   Success Criteria:
+   - ✅ Socket.io real-time notifications działają
+   - ✅ Search zwraca wyniki w < 50ms
+   - ✅ BullMQ queue przetwarza joby
+   - ✅ Emails są wysyłane poprawnie
+
+   GIT: Commit "feat: add real-time, search, and background jobs"
+
+Phase 7: Frontend - Core UI & Layout
+   Duration: 2-3 dni
+   - Layout components (Shadcn/ui):
+     * Navigation header
+     * Footer
+     * Sidebar
+   - Authentication pages:
+     * Login (React Hook Form + Zod)
+     * Register
+     * Password reset
+   - Landing page (responsive, mobile-first)
+   - TanStack Query setup
+   - Zustand store setup
+   - Socket.io client integration
+   - Toast notifications (Shadcn)
+   - Loading states & error handling
+
+   Success Criteria:
+   - ✅ Login/Register działają
+   - ✅ JWT token zapisywany w localStorage
+   - ✅ Protected routes przekierowują do /login
+   - ✅ Navigation pokazuje user info
+   - ✅ Real-time notifications działają
+
+   GIT: Commit "feat(frontend): add core UI and authentication"
+
+Phase 8: Frontend - Content Pages
+   Duration: 3-4 dni
+   - Blog pages:
+     * Blog listing (pagination, filters)
+     * Blog detail page
+   - Articles pages:
+     * Articles listing
+     * Article detail page
+   - Wiki pages:
+     * Wiki tree navigation
+     * Wiki page view
+   - Gallery pages:
+     * Gallery grid
+     * Lightbox view
+   - Stories pages:
+     * Stories listing
+     * Story detail page
+   - Shared components:
+     * CommentSection (nested comments)
+     * RatingWidget (star ratings)
+     * ShareButtons
+     * SearchBar (MeiliSearch integration)
+
+   Success Criteria:
+   - ✅ Wszystkie listing pages działają
+   - ✅ Detail pages pokazują pełną treść
+   - ✅ Comments można dodawać i odczytywać
+   - ✅ Ratings działają (1-5 gwiazdek)
+   - ✅ Search zwraca wyniki
+
+   GIT: Commit "feat(frontend): add all content pages"
+
+Phase 9: Frontend - Admin Panel
+   Duration: 3-4 dni
+   - Admin layout (/dashboard route)
+   - Dashboard overview (Tremor charts):
+     * Statistics cards
+     * Traffic graphs
+     * Popular content charts
+   - CRUD interfaces dla wszystkich content types:
+     * Articles, Blog, Wiki, Gallery, Stories, Authors
+   - Rich text editor (Tiptap):
+     * Markdown support
+     * Image upload
+     * Code blocks
+   - User management interface
+   - Comment moderation
+   - Settings page
+   - TanStack Table dla list views
+
+   Success Criteria:
+   - ✅ Admin może zarządzać wszystkimi content types
+   - ✅ Rich text editor działa
+   - ✅ Upload images z admin panel działa
+   - ✅ User management działa (change roles)
+   - ✅ Dashboard pokazuje wykresy
+
+   GIT: Commit "feat(admin): add full admin panel"
+
+Phase 10: Advanced Features - Workflow & Analytics
+   Duration: 2-3 dni
+   - Content workflow:
+     * Draft/Published/Scheduled status
+     * Content scheduling (BullMQ cron jobs)
+     * Version history
+     * Auto-save drafts
+   - Analytics module:
+     * Page view tracking
+     * Popular content
+     * User behavior analytics
+   - Notification center:
+     * In-app notifications
+     * Mark as read/unread
+     * Notification preferences
+
+   Success Criteria:
+   - ✅ Draft content nie jest publiczne
+   - ✅ Scheduled content publikuje się automatycznie
+   - ✅ Analytics dashboard pokazuje dane
+   - ✅ Notification center działa
+
+   GIT: Commit "feat: add content workflow and analytics"
+
+Phase 11: CI/CD & Monitoring
+   Duration: 1-2 dni
+   - GitHub Actions workflows:
+     * Lint & Test na PR
+     * Build verification
+     * Automated deployment (staging)
+   - Prometheus metrics:
+     * API response times
+     * Request counts
+     * Error rates
+   - Grafana dashboards:
+     * Application metrics
+     * Database metrics
+     * Redis metrics
+   - Loki logging setup
+   - Health check monitoring
+
+   Success Criteria:
+   - ✅ GitHub Actions przepuszcza testy
+   - ✅ Prometheus zbiera metryki
+   - ✅ Grafana dashboards działają
+   - ✅ Loki agreguje logi
+
+   GIT: Commit "ci: add GitHub Actions and monitoring"
+
+Phase 12: Testing & Quality
+   Duration: 2-3 dni
+   - Backend tests:
+     * Unit tests (Jest) - service logic
+     * Integration tests - API endpoints
+     * E2E tests (Supertest)
+   - Frontend tests:
+     * Component tests (Jest + Testing Library)
+     * E2E tests (Playwright)
+   - Test coverage > 70%
+   - Performance tests:
+     * Load testing (k6)
+     * Database query optimization
+
+   Success Criteria:
+   - ✅ npm test przechodzi wszystkie testy
+   - ✅ Coverage > 70%
+   - ✅ E2E testy przechodzą
+   - ✅ API response time < 200ms (avg)
+
+   GIT: Commit "test: add comprehensive test suite"
+
+Phase 13: Security Hardening
+   Duration: 1-2 dni
+   - Rate limiting (@nestjs/throttler)
+   - Helmet.js security headers
+   - CORS configuration
+   - Input sanitization
+   - SQL injection prevention (Prisma handles this)
+   - XSS prevention
+   - CSRF tokens
+   - Security audit (npm audit)
+   - Penetration testing (opcjonalnie)
+
+   Success Criteria:
+   - ✅ Rate limiting działa (per IP, per user)
+   - ✅ Security headers ustawione
+   - ✅ npm audit nie pokazuje critical issues
+   - ✅ OWASP Top 10 addressed
+
+   GIT: Commit "security: harden application security"
+
+Phase 14: SEO & Performance Optimization
+   Duration: 1-2 dni
+   - Next.js optimization:
+     * Static generation (SSG) where possible
+     * Image optimization
+     * Font optimization
+   - SEO:
+     * Meta tags dla wszystkich stron
+     * Open Graph tags
+     * Sitemap.xml
+     * Robots.txt
+     * Structured data (JSON-LD)
+   - Performance:
+     * Lazy loading
+     * Code splitting
+     * Bundle size optimization
+     * CDN setup (Cloudflare)
+
+   Success Criteria:
+   - ✅ Lighthouse score > 90 (Performance, SEO, Accessibility)
+   - ✅ Sitemap.xml generowany automatycznie
+   - ✅ Open Graph preview działa
+   - ✅ Bundle size < 200KB (main chunk)
+
+   GIT: Commit "perf: optimize SEO and performance"
+
+Phase 15: Documentation & Deployment
+   Duration: 1-2 dni
+   - Documentation:
+     * API documentation (Swagger/OpenAPI)
+     * README.md (comprehensive)
+     * CONTRIBUTING.md
+     * Architecture documentation
+     * Deployment guide
+   - Production deployment:
+     * VPS setup (Hetzner/Contabo)
+     * Docker Compose production config
+     * Environment variables setup
+     * Domain & SSL (Let's Encrypt)
+     * Cloudflare CDN setup
+     * Backup strategy
+   - Post-deployment:
+     * Monitoring alerts
+     * Error tracking (Sentry)
+     * Uptime monitoring
+
+   Success Criteria:
+   - ✅ Aplikacja deployed na produkcji
+   - ✅ SSL działa (HTTPS)
+   - ✅ Domain wskazuje na aplikację
+   - ✅ Backups skonfigurowane (daily)
+   - ✅ Monitoring i alerts działają
+
+   GIT: Commit "docs: add comprehensive documentation"
+   GIT: Tag "v1.0.0" - First Production Release!
+
+================================================================================
+9. SUCCESS CRITERIA (ROZSZERZONE)
+================================================================================
+
+9.1 GIT & VERSION CONTROL ⭐
+- ✅ GitHub repository utworzone i aktywne
+- ✅ Branch strategy implemented (main, develop, feature/*)
+- ✅ Conventional commits used throughout
+- ✅ Pull Request workflow enforced
+- ✅ .gitignore prawidłowo skonfigurowany
+- ✅ All code changes committed and pushed
+- ✅ Git history clean i czytelna
+
+9.2 QUICK PREVIEW & DOCKER
+- ✅ docker-compose up uruchamia wszystkie services
+- ✅ Backend dostępny na localhost:3001 (NestJS + Prisma)
+- ✅ Frontend dostępny na localhost:3000 (Next.js)
+- ✅ PostgreSQL baza danych działająca
+- ✅ Redis działający i używany (cache, sessions)
+- ✅ MeiliSearch działający (search ready)
+- ✅ MinIO działający (file storage)
+- ✅ Seed data załadowane automatycznie
+- ✅ Health check endpoints (/api/health) działają
+- ✅ Quick start w < 5 minut możliwy
+
+9.3 CORE FUNCTIONALITY
+- ✅ Wszystkie moduły treści (blog, wiki, artykuły, galeria, opowiadania) działają
+- ✅ CRUD operations dla wszystkich content types
+- ✅ Hierarchiczna struktura wiki działa
+- ✅ Kategorie i tagi działają
+- ✅ Pagination na wszystkich listing pages
+- ✅ Filtering i sorting działa
+- ✅ Strona główna przyciągająca i intuicyjna
+
+9.4 AUTHENTICATION & AUTHORIZATION
+- ✅ Autentykacja JWT działająca (register, login, logout, refresh)
+- ✅ Role-based access control (user, moderator, admin) implemented
+- ✅ Protected routes wymagają autentykacji
+- ✅ Admin routes wymagają admin role
+- ✅ Password hashing z bcrypt
+- ✅ Session management z Redis
+- ✅ Token refresh mechanism działa
+
+9.5 COMMENTS & RATINGS
+- ✅ System komentarzy działa dla wszystkich content types
+- ✅ Nested comments (replies) działają
+- ✅ Comment moderation dla admin/moderator
+- ✅ System ocen działa (1-5 gwiazdek)
+- ✅ Average rating calculation poprawna
+- ✅ One rating per user per content enforced
+
+9.6 FILE UPLOAD & MEDIA
+- ✅ File upload dla galerii i artykułów działa
+- ✅ Image processing (Sharp) działa:
+  * Multiple sizes (thumbnail, medium, large)
+  * WebP conversion
+  * EXIF removal
+- ✅ MinIO storage integration działa
+- ✅ File validation (type, size) działa
+- ✅ Gallery lightbox działa
+
+9.7 ADVANCED FEATURES ⭐ NOWE
+- ✅ Real-time notifications (Socket.io) działają
+- ✅ Live comments update
+- ✅ Search (MeiliSearch) zwraca wyniki w < 50ms
+- ✅ Search autocomplete działa
+- ✅ Faceted search (filters) działa
+- ✅ Background jobs (BullMQ) przetwarzają zadania
+- ✅ Email queue działa
+- ✅ Email notifications wysyłane (MailerSend)
+- ✅ Content workflow (draft/published/scheduled) działa
+- ✅ Auto-save drafts działa
+- ✅ Content scheduling działa
+- ✅ Analytics tracking działa
+- ✅ Popular content dashboard działa
+
+9.8 ADMIN PANEL
+- ✅ Panel administracyjny pełnofunkcyjny
+- ✅ CRUD interfaces dla wszystkich content types
+- ✅ Rich text editor (Tiptap) działa
+- ✅ User management działa (role changes)
+- ✅ Comment moderation działa
+- ✅ Dashboard z statystykami i wykresami
+- ✅ Analytics charts (Tremor/Recharts) wyświetlają się
+- ✅ Settings management działa
+
+9.9 API & DOCUMENTATION
+- ✅ Dokumentacja API (Swagger/OpenAPI) dostępna na /api/docs
+- ✅ Wszystkie endpoints udokumentowane
+- ✅ API versioning implemented (/api/v1)
+- ✅ Error responses standaryzowane
+- ✅ Rate limiting działa (per IP, per user)
+- ✅ CORS prawidłowo skonfigurowany
+
+9.10 SECURITY
+- ✅ Helmet.js security headers ustawione
+- ✅ Rate limiting aktywne (@nestjs/throttler)
+- ✅ Input validation działa (class-validator)
+- ✅ SQL injection prevention (Prisma)
+- ✅ XSS prevention działą
+- ✅ CSRF protection implemented
+- ✅ npm audit nie pokazuje critical vulnerabilities
+- ✅ Environment variables secured (.env)
+- ✅ Secrets nie commitowane do Git
+
+9.11 TESTING
+- ✅ Testy jednostkowe dla krytycznych funkcjonalności
+- ✅ Integration tests dla API endpoints
+- ✅ E2E tests (Playwright) działają
+- ✅ Test coverage > 70%
+- ✅ npm test przechodzi bez błędów
+- ✅ CI pipeline (GitHub Actions) przechodzi testy
+
+9.12 PERFORMANCE & OPTIMIZATION
+- ✅ API response time < 200ms (average)
+- ✅ Database queries zoptymalizowane (indexes)
+- ✅ Redis cache używany efektywnie
+- ✅ Image lazy loading działa
+- ✅ Code splitting implemented
+- ✅ Bundle size < 200KB (main chunk)
+- ✅ Lighthouse score > 90 (Performance, SEO, Accessibility)
+
+9.13 SEO & ACCESSIBILITY
+- ✅ Meta tags dla wszystkich stron
+- ✅ Open Graph tags działają
+- ✅ Sitemap.xml generowany automatycznie
+- ✅ Robots.txt skonfigurowany
+- ✅ Structured data (JSON-LD) dodane
+- ✅ Responsive na urządzeniach mobilnych (mobile-first)
+- ✅ Keyboard navigation działa
+- ✅ Screen reader compatible
+
+9.14 MONITORING & LOGGING
+- ✅ Winston logging działa (structured logs)
+- ✅ Prometheus metrics zbierane
+- ✅ Grafana dashboards skonfigurowane
+- ✅ Loki agreguje logi
+- ✅ Error handling i logging w backendzie
+- ✅ Health check monitoring aktywny
+- ✅ Alerts skonfigurowane (opcjonalnie)
+
+9.15 DEPLOYMENT & INFRASTRUCTURE
+- ✅ Docker Compose postawia całą aplikację
+- ✅ Production-ready docker-compose.yml
+- ✅ Environment variables zarządzane
+- ✅ Database migrations działają (Prisma migrate)
+- ✅ Seed data scripts działają
+- ✅ Backup strategy skonfigurowana (opcjonalnie dla prod)
+- ✅ SSL certificate działa (Let's Encrypt)
+- ✅ Domain wskazuje na aplikację (prod)
+
+9.16 CI/CD ⭐ NOWE
+- ✅ GitHub Actions workflow configured
+- ✅ Automated testing na każdy PR
+- ✅ Linting i formatting checks
+- ✅ Build verification
+- ✅ Automated deployment (staging/production)
+- ✅ Git hooks (Husky) skonfigurowane
+
+9.17 DOCUMENTATION
+- ✅ README.md kompletny z instrukcjami
+- ✅ API documentation (Swagger)
+- ✅ Architecture documentation
+- ✅ Deployment guide
+- ✅ CONTRIBUTING.md (dla contributors)
+- ✅ Inline code comments gdzie potrzebne
+- ✅ Git commit messages czytelne (conventional commits)
+
+9.18 USER EXPERIENCE
+- ✅ Intuicyjna nawigacja
+- ✅ Szybkie ładowanie stron
+- ✅ Smooth transitions i animations
+- ✅ Toast notifications działają
+- ✅ Loading states pokazują się
+- ✅ Error messages są user-friendly
+- ✅ Forms validation real-time
+
+9.19 COST EFFICIENCY ⭐ NOWE
+- ✅ Całkowicie darmowy stack na starcie (lub < €5/miesiąc z VPS)
+- ✅ Wszystkie services self-hosted (opcjonalnie)
+- ✅ Email w free tier (MailerSend 12k/miesiąc)
+- ✅ CDN w free tier (Cloudflare)
+- ✅ CI/CD w free tier (GitHub Actions)
+- ✅ Monitoring self-hosted (Prometheus/Grafana/Loki)
+- ✅ Domain cost minimized (opcjonalnie darmowe domeny)
+
+9.20 FINAL CHECKLIST
+- ✅ Wszystkie dependencies zaktualizowane
+- ✅ Nie ma console.log w production code
+- ✅ Nie ma TODO komentarzy w krytycznym kodzie
+- ✅ Wszystkie env variables udokumentowane w .env.example
+- ✅ Git repository clean (no large files, no secrets)
+- ✅ All tests passing (100% success rate)
+- ✅ Production deployment successful
+- ✅ Post-deployment verification completed
+- ✅ README badges pokazują zielony status (build, tests, coverage)
+- ✅ v1.0.0 tag created w Git
+
+================================================================================
+10. PODSUMOWANIE
+================================================================================
+
+Ten PRD definiuje pełnofunkcyjny, modularny Portal Multimedialny zbudowany z:
+- 100% darmowym stackiem technologicznym (open source)
+- Obowiązkowym Git workflow dla wszystkich zmian
+- Quick preview w < 5 minut
+- Real-time features
+- Advanced search
+- Email notifications
+- Background jobs
+- Analytics i monitoring
+- Pełnym CI/CD pipeline
+- Bezpieczeństwem na poziomie enterprise
+- Doskonałym performance i SEO
+- Możliwością uruchomienia za €0-8/miesiąc
+
+Projekt zaprojektowany z naciskiem na:
+✅ Modularność - łatwa rozbudowa o nowe funkcjonalności
+✅ Skalowalność - gotowy na growth od 100 do 100,000+ użytkowników
+✅ Bezpieczeństwo - OWASP Top 10, rate limiting, security headers
+✅ Developer Experience - TypeScript, Prisma, hot reload, type safety
+✅ Cost Efficiency - darmowy stack, self-hosted, minimal dependencies
+✅ Quality - testy, CI/CD, monitoring, documentation
+
+Total Development Time Estimate: 6-8 tygodni (1 developer)
+Total Startup Cost: €4-8/miesiąc (opcjonalnie €0 z free tiers)
+
+🚀 Ready to build the future of content management! 🚀
+
+================================================================================

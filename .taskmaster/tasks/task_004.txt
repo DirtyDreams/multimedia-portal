@@ -1,0 +1,43 @@
+# Task ID: 4
+# Title: Inicjalizacja projektu Next.js frontend
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Stworzenie aplikacji Next.js 14 z App Router i podstawowymi dependencjami
+# Details:
+Użyj `npx create-next-app@latest frontend --typescript --tailwind --app --src-dir --import-alias '@/*'`. Zainstaluj dependencje: @tanstack/react-query, zustand, socket.io-client, react-hook-form, zod, framer-motion, lucide-react. Skonfiguruj podstawową strukturę folderów w src/. Dodaj Dockerfile dla frontend.
+
+# Test Strategy:
+Sprawdź czy `npm run dev` w folderze frontend uruchamia aplikację na porcie 3000, strona główna ładuje się poprawnie
+
+# Subtasks:
+## 1. Utworzenie aplikacji Next.js 14 z podstawową konfiguracją [pending]
+### Dependencies: None
+### Description: Inicjalizacja nowego projektu Next.js 14 z TypeScript, Tailwind CSS, App Router i src directory
+### Details:
+Uruchom `npx create-next-app@latest frontend --typescript --tailwind --app --src-dir --import-alias '@/*'` w głównym folderze projektu. Sprawdź czy wszystkie opcje zostały poprawnie skonfigurowane: TypeScript, Tailwind CSS, App Router, src/ directory i import alias @/*
+
+## 2. Instalacja bibliotek do zarządzania stanem i UI [pending]
+### Dependencies: 4.1
+### Description: Dodanie TanStack Query, Zustand, Socket.io client i innych kluczowych bibliotek
+### Details:
+W folderze frontend uruchom `npm install @tanstack/react-query zustand socket.io-client react-hook-form zod framer-motion lucide-react`. Sprawdź czy wszystkie pakiety zostały poprawnie zainstalowane i zapisane w package.json
+
+## 3. Konfiguracja struktury folderów w src/ [pending]
+### Dependencies: 4.2
+### Description: Utworzenie podstawowej struktury katalogów dla organizacji kodu frontend
+### Details:
+Utwórz następującą strukturę folderów w src/: components/, hooks/, lib/, stores/, types/, utils/. W każdym folderze dodaj index.ts eksportujący zawartość. Skonfiguruj aliasy ścieżek w tsconfig.json jeśli potrzeba
+
+## 4. Utworzenie Dockerfile dla frontend [pending]
+### Dependencies: 4.3
+### Description: Konfiguracja Docker container dla aplikacji Next.js
+### Details:
+Stwórz Dockerfile w folderze frontend z multi-stage build: 1) dependencies stage z npm install, 2) build stage z npm run build, 3) production stage z optimized image. Dodaj .dockerignore z node_modules, .git, .next itp.
+
+## 5. Weryfikacja działania aplikacji Next.js [pending]
+### Dependencies: 4.4
+### Description: Sprawdzenie czy aplikacja uruchamia się poprawnie i wszystkie konfiguracje działają
+### Details:
+Uruchom `npm run dev` w folderze frontend i sprawdź czy aplikacja startuje na porcie 3000. Sprawdź czy strona główna ładuje się poprawnie, Tailwind CSS działa, import aliasy są rozpoznawane przez TypeScript
+

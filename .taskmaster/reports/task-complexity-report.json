@@ -1,0 +1,293 @@
+{
+	"meta": {
+		"generatedAt": "2025-11-06T01:49:26.110Z",
+		"tasksAnalyzed": 35,
+		"totalTasks": 35,
+		"analysisCount": 35,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Utworzenie i konfiguracja GitHub repository",
+			"complexityScore": 2,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już odpowiednio rozłożone na 5 subtasków obejmujących wszystkie aspekty tworzenia repozytorium GitHub.",
+			"reasoning": "Zadanie jest względnie proste i dotyczy konfiguracji podstawowych narzędzi Git/GitHub. Ma już zdefiniowane 5 subtasków, które pokrywają wszystkie wymagane kroki. Złożoność jest niska, ponieważ to standardowe operacje administracyjne."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Utworzenie struktury projektu i Docker Compose",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już właściwy podział na 5 subtasków pokrywających strukturę folderów, konfigurację Docker Compose i zmienne środowiskowe.",
+			"reasoning": "Średnia złożoność ze względu na konieczność konfiguracji wieloserwisowego środowiska Docker (PostgreSQL, Redis, MeiliSearch, MinIO, backend, frontend). Zadanie już ma odpowiedni podział na 5 subtasków."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Inicjalizacja projektu NestJS backend",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących setup NestJS, instalację dependencies i podstawową konfigurację.",
+			"reasoning": "Średnia złożoność - wymaga znajomości NestJS, TypeScript, konfiguracji modułów i dependencies. Zadanie ma już dobrą strukturę 5 subtasków pokrywającą wszystkie aspekty inicjalizacji backend'u."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Inicjalizacja projektu Next.js frontend",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających setup Next.js, instalację bibliotek UI i state management.",
+			"reasoning": "Średnia złożoność - setup Next.js 14 z App Router, Tailwind, TanStack Query, Zustand. Wymaga znajomości nowoczesnego React ecosystem. Zadanie już ma właściwy podział."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Konfiguracja Prisma ORM i bazy danych",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących schema design, migracje i seed data dla wszystkich encji systemu.",
+			"reasoning": "Wysoka złożoność - projektowanie kompleksowego schema dla wszystkich encji (User, Article, BlogPost, WikiPage, etc.) z relacjami One-to-Many i Many-to-Many. Wymaga dobrej znajomości modelowania danych. Ma już odpowiedni podział."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Implementacja modułu autoryzacji JWT",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających AuthModule, JWT Strategy, Guards, hashowanie haseł i Redis integration.",
+			"reasoning": "Wysoka złożoność - bezpieczeństwo jest krytyczne, wymaga implementacji JWT, Passport, bcrypt, role-based access control, Redis dla sesji. Zadanie już ma doskonałą strukturę subtasków."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Implementacja modułu Articles",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących module setup, DTOs, CRUD endpoints i integrację z kategoriami.",
+			"reasoning": "Średnio-wysoka złożoność - pełny CRUD z paginacją, filtrowaniem, autoryzacją, relacjami z kategoriami/tagami. Zadanie ma już dobrą strukturę subtasków."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Implementacja modułu BlogPosts",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do modułu Articles ale z mniejszą złożonością.",
+			"reasoning": "Średnia złożoność - podobny do Articles ale prostszy, można wykorzystać wzorce z poprzedniego modułu. Zadanie już ma właściwy podział."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Implementacja modułu WikiPages z hierarchią",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących hierarchiczną strukturę, recursive queries i tree navigation.",
+			"reasoning": "Wysoka złożoność - hierarchiczna struktura parent-child wymaga zaawansowanych recursive queries, tree building, navigation. Zadanie ma już odpowiednią strukturę."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Implementacja modułu GalleryItems z upload plików",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już bardzo dobrą strukturę 5 subtasków pokrywającą upload, processing, MinIO integration i walidację plików.",
+			"reasoning": "Bardzo wysoka złożoność - file upload, image processing z Sharp, multiple sizes, WebP conversion, MinIO S3 storage, walidacja plików. Zadanie już ma doskonały podział."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Implementacja modułu Stories",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków, podobny do poprzednich content modules ale z dodatkowym series grouping.",
+			"reasoning": "Średnia złożoność - podobny do Articles/BlogPosts z dodatkiem seriesId dla grupowania. Może wykorzystać istniejące wzorce. Zadanie ma właściwy podział."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Implementacja modułu Authors",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących entity, service, controller, upload zdjęć i integrację z modułami.",
+			"reasoning": "Średnio-wysoka złożoność - CRUD dla autorów z integracją upload zdjęć profilowych, relacje z treściami, profile management. Zadanie ma dobrą strukturę."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Implementacja polymorphicznego systemu komentarzy",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających polymorphic design, nested replies i moderację.",
+			"reasoning": "Wysoka złożoność - polymorphic design dla wszystkich content types, nested structure, moderacja, real-time updates. Zadanie już ma doskonałą strukturę."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Implementacja systemu ocen (ratings)",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących polymorphic ratings, unique constraints i kalkulację średniej.",
+			"reasoning": "Średnio-wysoka złożoność - polymorphic design, unique constraints, average calculation, integracja z wszystkimi content modules. Ma odpowiedni podział."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Konfiguracja Redis i cache service",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już właściwą strukturę 5 subtasków pokrywających Redis setup, cache strategies i TTL configuration.",
+			"reasoning": "Średnio-wysoka złożoność - Redis integration, cache strategies, TTL management, invalidation. Wymaga znajomości cache patterns. Zadanie ma dobry podział."
+		},
+		{
+			"taskId": 16,
+			"taskTitle": "Integracja Socket.io dla real-time funkcjonalności",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących WebSocket setup, authentication, rooms i monitoring.",
+			"reasoning": "Średnio-wysoka złożoność - WebSocket integration, JWT auth dla WS, room management, real-time events. Zadanie ma odpowiednią strukturę."
+		},
+		{
+			"taskId": 17,
+			"taskTitle": "Integracja MeiliSearch dla wyszukiwania",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już bardzo dobry podział na 5 subtasków pokrywających indexowanie, search API i background processing.",
+			"reasoning": "Wysoka złożoność - search engine integration, indexing wszystkich content types, faceted search, background indexing z BullMQ. Zadanie ma doskonałą strukturę."
+		},
+		{
+			"taskId": 18,
+			"taskTitle": "Implementacja BullMQ dla background jobs",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących queue setup, procesory i monitoring dashboard.",
+			"reasoning": "Średnio-wysoka złożoność - queue system setup, multiple processors, retry logic, monitoring. Wymaga znajomości job queue patterns. Ma dobry podział."
+		},
+		{
+			"taskId": 19,
+			"taskTitle": "Implementacja systemu email z MailerSend",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających email setup, templates i integrację z BullMQ.",
+			"reasoning": "Średnio-wysoka złożoność - email service integration, templates, queue integration, delivery tracking. Zadanie ma właściwą strukturę."
+		},
+		{
+			"taskId": 20,
+			"taskTitle": "Implementacja content workflow (draft/published/scheduled)",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
+			"reasoning": "Wysoka złożoność - workflow engine, scheduled publishing, version history, auto-save, preview system. Kompleksny feature wymagający integracji z BullMQ. Ma doskonały podział."
+		},
+		{
+			"taskId": 21,
+			"taskTitle": "Implementacja Analytics i tracking",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających tracking, agregację i privacy compliance.",
+			"reasoning": "Średnio-wysoka złożoność - privacy-friendly tracking, data agregation, analytics dashboard. Zadanie ma właściwy podział na konkretne komponenty."
+		},
+		{
+			"taskId": 22,
+			"taskTitle": "Implementacja security middleware",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących rate limiting, security headers i audit logging.",
+			"reasoning": "Średnio-wysoka złożoność - security jest krytyczne, wymaga implementacji rate limiting, helmet, CORS, input sanitization, audit logs. Ma odpowiednią strukturę."
+		},
+		{
+			"taskId": 23,
+			"taskTitle": "Swagger API documentation",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już właściwy podział na 5 subtasków pokrywających Swagger setup, dekoratory i authentication integration.",
+			"reasoning": "Średnia złożoność - systematyczne dodawanie dekoratorów do wszystkich endpoints i DTOs, ale to głównie repetitive work. Zadanie ma dobry podział."
+		},
+		{
+			"taskId": 24,
+			"taskTitle": "Seed data i przykładowe dane",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już odpowiednio podzielone na 5 subtasków obejmujących seed setup, generowanie różnych typów danych i relacji.",
+			"reasoning": "Średnia złożoność - generowanie realistycznych danych z faker.js, tworzenie relacji, seed script. Zadanie ma właściwą strukturę subtasków."
+		},
+		{
+			"taskId": 25,
+			"taskTitle": "Konfiguracja Next.js frontend z podstawowymi komponentami",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą Next.js setup, shadcn/ui, layout i state management.",
+			"reasoning": "Średnio-wysoka złożoność - Next.js 14 setup, shadcn/ui integration, layout components, TanStack Query, Zustand. Podstawa frontend'u. Ma odpowiedni podział."
+		},
+		{
+			"taskId": 26,
+			"taskTitle": "Implementacja autentykacji frontend",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących forms, JWT storage, auth context i protected routes.",
+			"reasoning": "Średnio-wysoka złożoność - React Hook Form, Zod validation, JWT management, auth state, protected routes. Krytyczny dla UX. Ma doskonały podział."
+		},
+		{
+			"taskId": 27,
+			"taskTitle": "Implementacja landing page",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających strukturę, animacje, sekcje i SEO optimization.",
+			"reasoning": "Średnia złożoność - responsive landing page, Framer Motion animations, SEO tags. Głównie frontend work z fokusem na UX/UI. Zadanie ma właściwy podział."
+		},
+		{
+			"taskId": 28,
+			"taskTitle": "Implementacja stron content (blog, articles, wiki)",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących routing, komponenty, TanStack Query i interactive features.",
+			"reasoning": "Wysoka złożoność - implementacja wszystkich content pages, pagination, filtering, comments, ratings, TanStack Query integration. Duży scope pracy frontend. Ma doskonałą strukturę."
+		},
+		{
+			"taskId": 29,
+			"taskTitle": "Implementacja galerii i media viewer",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
+			"reasoning": "Średnio-wysoka złożoność - gallery grid, lazy loading, lightbox modal, infinite scroll, drag & drop upload. Wymaga zaawansowanych UI patterns. Ma odpowiedni podział."
+		},
+		{
+			"taskId": 30,
+			"taskTitle": "Implementacja systemu komentarzy frontend",
+			"complexityScore": 7,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy.",
+			"reasoning": "Średnio-wysoka złożoność - interactive comment system, nested replies, real-time updates, moderation. To duży feature wymagający szczegółowego podziału na komponenty UI."
+		},
+		{
+			"taskId": 31,
+			"taskTitle": "Implementacja rating widget i search",
+			"complexityScore": 6,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
+			"reasoning": "Średnio-wysoka złożoność - rating widget, zaawansowane wyszukiwanie z faceted search, autocomplete. Wymaga integracji z backend search API."
+		},
+		{
+			"taskId": 32,
+			"taskTitle": "Implementacja admin panel frontend",
+			"complexityScore": 9,
+			"recommendedSubtasks": 12,
+			"expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface.",
+			"reasoning": "Bardzo wysoka złożoność - pełny admin panel z wieloma CRUD interfaces, rich text editor, charts, table management. To největší frontend feature wymagający systematycznego podziału."
+		},
+		{
+			"taskId": 33,
+			"taskTitle": "Implementacja real-time notifications frontend",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
+			"reasoning": "Średnio-wysoka złożoność - real-time notifications UI, Socket.io integration, browser push notifications. Wymaga koordinacji z backend WebSocket events."
+		},
+		{
+			"taskId": 34,
+			"taskTitle": "Testowanie i optymalizacja performance",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
+			"reasoning": "Wysoka złożoność - comprehensive testing strategy, performance optimization, multiple testing frameworks. Krytyczne dla quality assurance."
+		},
+		{
+			"taskId": 35,
+			"taskTitle": "Deployment i dokumentacja",
+			"complexityScore": 7,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Rozłóż na subtaski: 1) Production Docker Compose configuration, 2) VPS setup i domain configuration, 3) SSL certificate setup z Let's Encrypt, 4) Cloudflare CDN configuration, 5) Database backup strategy implementation, 6) Monitoring setup (Prometheus/Grafana), 7) README.md z comprehensive instructions, 8) API documentation finalization, 9) Architecture documentation creation, 10) Post-deployment verification i testing.",
+			"reasoning": "Średnio-wysoka złożoność - production deployment, infrastructure setup, comprehensive documentation. Finalne steps do uruchomienia w produkcji."
+		}
+	]
+}

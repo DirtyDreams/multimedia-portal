@@ -1,0 +1,43 @@
+# Task ID: 6
+# Title: Implementacja modułu autoryzacji JWT
+# Status: pending
+# Dependencies: 5
+# Priority: high
+# Description: Stworzenie systemu autoryzacji z JWT tokenami, rejestracją i logowaniem
+# Details:
+Stwórz AuthModule z AuthController, AuthService. Implementuj Passport JWT strategy, JwtAuthGuard, RolesGuard. Dodaj endpointy: POST /auth/register, POST /auth/login, POST /auth/logout, GET /auth/me, POST /auth/refresh. Zaimplementuj hashowanie haseł bcrypt. Konfiguruj Redis dla sesji.
+
+# Test Strategy:
+Sprawdź czy rejestracja tworzy użytkownika, logowanie zwraca token JWT, chronione endpointy wymagają autoryzacji, role-based access działa
+
+# Subtasks:
+## 1. Stworzenie AuthModule z AuthController i AuthService [pending]
+### Dependencies: None
+### Description: Implementacja podstawowej struktury modułu autoryzacji z kontrolerem i serwisem do obsługi logiki biznesowej
+### Details:
+Stwórz AuthModule z dekoratorem @Module, AuthController z dekoratorami @Controller i endpointami, AuthService z logiką rejestracji/logowania. Skonfiguruj dependency injection między serwisem a kontrolerem. Dodaj podstawowe DTOs: RegisterDto, LoginDto z walidacją class-validator.
+
+## 2. Implementacja Passport JWT strategy i konfiguracji [pending]
+### Dependencies: 6.1
+### Description: Skonfigurowanie strategii JWT z biblioteką Passport dla autoryzacji tokenowej
+### Details:
+Zainstaluj @nestjs/passport, @nestjs/jwt, passport-jwt. Stwórz JwtStrategy extends PassportStrategy, skonfiguruj JWT_SECRET w ConfigService. Dodaj JwtModule.forRootAsync z konfiguracją expiration time, secret. Implementuj validate() metodę w JwtStrategy.
+
+## 3. Stworzenie JwtAuthGuard i RolesGuard [pending]
+### Dependencies: 6.2
+### Description: Implementacja guardów do ochrony endpointów i kontroli dostępu opartej na rolach
+### Details:
+Stwórz JwtAuthGuard extends AuthGuard('jwt'), RolesGuard implements CanActivate. Dodaj @Roles() dekorator dla role-based access control. Implementuj logikę sprawdzania ról w RolesGuard. Skonfiguruj guards globalnie lub per-controller.
+
+## 4. Implementacja hashowania haseł z bcrypt [pending]
+### Dependencies: 6.1
+### Description: Dodanie bezpiecznego hashowania i weryfikacji haseł przy użyciu biblioteki bcrypt
+### Details:
+Zainstaluj bcrypt i @types/bcrypt. Dodaj metody hashPassword() i comparePassword() w AuthService. Implementuj salt rounds (12). Dodaj hashowanie przy rejestracji i weryfikację przy logowaniu. Obsłuż błędy hashowania.
+
+## 5. Konfiguracja endpointów autoryzacji i Redis dla sesji [pending]
+### Dependencies: 6.3, 6.4
+### Description: Implementacja wszystkich endpointów API autoryzacji i konfiguracja Redis do zarządzania sesjami
+### Details:
+Dodaj endpointy: POST /auth/register, POST /auth/login (zwraca JWT), POST /auth/logout, GET /auth/me (protected), POST /auth/refresh. Skonfiguruj Redis z @nestjs/redis dla session management. Implementuj refresh token logic z blacklisting.
+

@@ -1,0 +1,11 @@
+# Task ID: 33
+# Title: Implementacja real-time notifications frontend
+# Status: pending
+# Dependencies: 32
+# Priority: medium
+# Description: Notification center z live updates i preferences
+# Details:
+Stwórz NotificationCenter component z dropdown, badge counter, mark as read/unread. Integruj Socket.io client, notification toast system. Dodaj notification preferences page, browser push notifications support.
+
+# Test Strategy:
+Sprawdź czy notifications wyświetlają się real-time, badge counter aktualizuje się, toast notifications działają, preferences zapisują się

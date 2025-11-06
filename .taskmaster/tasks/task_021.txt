@@ -1,0 +1,43 @@
+# Task ID: 21
+# Title: Implementacja Analytics i tracking
+# Status: pending
+# Dependencies: 20
+# Priority: low
+# Description: System śledzenia wyświetleń i zachowań użytkowników
+# Details:
+Stwórz AnalyticsModule z AnalyticsService. Implementuj privacy-friendly tracking: page views, time on page, popular content, user paths. Dodaj endpoints: GET /analytics/dashboard, GET /analytics/popular, GET /analytics/trends. Użyj Redis do aggregacji danych.
+
+# Test Strategy:
+Sprawdź czy page views są trackowane, popular content aktualizuje się, dashboard analytics wyświetla dane, privacy jest zachowana
+
+# Subtasks:
+## 1. Stworzenie AnalyticsModule i podstawowej struktury [pending]
+### Dependencies: None
+### Description: Utwórz AnalyticsModule z podstawową strukturą kontrolera i serwisu dla systemu trackingu
+### Details:
+Stwórz moduł analytics w NestJS z AnalyticsController i AnalyticsService. Dodaj podstawowe importy i konfigurację modułu. Zaimplementuj skeleton metod dla kontrolera i serwisu.
+
+## 2. Implementacja trackingu page views i user behavior [pending]
+### Dependencies: 21.1
+### Description: Dodaj mechanizm śledzenia wyświetleń stron i zachowań użytkowników w sposób privacy-friendly
+### Details:
+Zaimplementuj endpointy i logikę do trackowania page views, time on page i user paths. Użyj Redis do przechowywania danych analitycznych. Zapewnij privacy-friendly tracking bez przechowywania danych osobowych.
+
+## 3. Dodanie systemu agregacji popularnej treści [pending]
+### Dependencies: 21.2
+### Description: Implementuj system zbierania i analizy danych o popularności treści
+### Details:
+Stwórz mechanizm agregacji danych o popularnej treści na podstawie page views, czasu spędzonego na stronie i interakcji użytkowników. Użyj Redis do przechowywania zagregowanych danych.
+
+## 4. Implementacja endpointów analytics API [pending]
+### Dependencies: 21.3
+### Description: Dodaj wszystkie wymagane endpointy do pobierania danych analitycznych
+### Details:
+Zaimplementuj endpointy: GET /analytics/dashboard (statystyki ogólne), GET /analytics/popular (popularna treść), GET /analytics/trends (trendy). Dodaj paginację, filtrowanie i sortowanie danych.
+
+## 5. Konfiguracja Redis do agregacji i zabezpieczenie prywatności [pending]
+### Dependencies: 21.4
+### Description: Skonfiguruj Redis do efektywnej agregacji danych i zapewnij privacy compliance
+### Details:
+Zoptymalizuj użycie Redis do agregacji danych analytics. Dodaj TTL dla danych, skonfiguruj cache policies. Zaimplementuj mechanizmy zapewniające prywatność użytkowników zgodnie z GDPR.
+

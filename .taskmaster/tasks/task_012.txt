@@ -1,0 +1,43 @@
+# Task ID: 12
+# Title: Implementacja modułu Authors
+# Status: pending
+# Dependencies: 10
+# Priority: medium
+# Description: Stworzenie systemu profili autorów z biografiami i zdjęciami
+# Details:
+Stwórz AuthorsModule z AuthorsController, AuthorsService. Implementuj profile autorów z polami: name, bio, profileImage, contactInfo, socialLinks. Dodaj endpointy: GET /authors, GET /authors/:id, POST /authors, PUT /authors/:id, DELETE /authors/:id. Integruj z upload zdjęć profilowych.
+
+# Test Strategy:
+Sprawdź czy profile autorów można tworzyć i edytować, zdjęcia profilowe się uploadują, lista autorów wyświetla się poprawnie
+
+# Subtasks:
+## 1. Stworzenie entity Author z relacjami [pending]
+### Dependencies: None
+### Description: Implementacja encji Author z wszystkimi polami i relacjami do innych encji
+### Details:
+Stwórz entity Author z polami: id, name, bio, profileImage, contactInfo, socialLinks, createdAt, updatedAt. Dodaj relacje @OneToMany do Articles, BlogPosts, Stories. Skonfiguruj TypeORM decoratory i walidacje. Ustaw cascade options i foreign keys.
+
+## 2. Implementacja AuthorsService z metodami CRUD [pending]
+### Dependencies: 12.1
+### Description: Stworzenie serwisu do zarządzania autorami z pełnym CRUD i logiką biznesową
+### Details:
+Implementuj AuthorsService z metodami: findAll(), findOne(), create(), update(), remove(). Dodaj QueryBuilder dla paginacji i filtrowania. Implementuj logikę walidacji danych, obsługę błędów i relacji z treściami. Dodaj soft delete dla authorów.
+
+## 3. Stworzenie AuthorsController z endpointami API [pending]
+### Dependencies: 12.2
+### Description: Implementacja kontrolera z pełnym API REST dla autorów
+### Details:
+Stwórz AuthorsController z endpointami: GET /authors (z paginacją), GET /authors/:id, POST /authors (admin), PUT /authors/:id (admin), DELETE /authors/:id (admin). Dodaj guards dla autoryzacji, DTOs dla walidacji, Swagger dokumentację. Implementuj error handling.
+
+## 4. Implementacja upload systemu dla zdjęć profilowych [pending]
+### Dependencies: 12.3
+### Description: Stworzenie systemu upload zdjęć profilowych autorów z optymalizacją
+### Details:
+Zainstaluj multer, sharp. Stwórz upload middleware dla zdjęć profilowych. Implementuj resizing obrazków (200x200, 400x400), walidację typu pliku, ograniczenie rozmiaru. Dodaj endpoint PATCH /authors/:id/avatar. Skonfiguruj storage (lokalny lub cloud).
+
+## 5. Integracja AuthorsModule z aplikacją i testowanie [pending]
+### Dependencies: 12.4
+### Description: Finalna integracja modułu autorów z całą aplikacją i kompletne testowanie
+### Details:
+Dodaj AuthorsModule do AppModule. Skonfiguruj relacje z Articles, BlogPosts, Stories modules. Stwórz migration dla bazy danych. Dodaj seeder dla przykładowych autorów. Sprawdź integrację z frontend, popraw błędy, zoptymalizuj zapytania.
+

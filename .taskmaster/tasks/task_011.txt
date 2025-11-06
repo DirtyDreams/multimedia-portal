@@ -1,0 +1,43 @@
+# Task ID: 11
+# Title: Implementacja modułu Stories
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Stworzenie systemu opowiadań z supportem dla serii
+# Details:
+Stwórz StoriesModule z pełnym CRUD. Dodaj pole seriesId dla grupowania opowiadań w serie. Implementuj endpointy: GET /stories, GET /stories/:id, POST /stories, PUT /stories/:id, DELETE /stories/:id. Dodaj filtering po seriach, autorach.
+
+# Test Strategy:
+Sprawdź czy opowiadania można grupować w serie, CRUD operacje działają, filtering po seriach działa
+
+# Subtasks:
+## 1. Stworzenie Story entity i migracji bazy danych [pending]
+### Dependencies: None
+### Description: Zdefiniowanie encji Story z polami: id, title, content, seriesId, authorId, categories, tags, createdAt, updatedAt
+### Details:
+Stwórz Story entity z dekoratorami TypeORM. Dodaj pole seriesId jako opcjonalne dla grupowania opowiadań w serie. Skonfiguruj relacje z Authors, Categories, Tags. Wygeneruj i uruchom migrację bazy danych.
+
+## 2. Implementacja StoriesService z logiką biznesową [pending]
+### Dependencies: 11.1
+### Description: Stworzenie service layer z metodami CRUD i funkcjami pomocniczymi dla operacji na opowiadaniach
+### Details:
+Implementuj StoriesService z metodami: findAll() (z paginacją i filtrowaniem), findOne(), create(), update(), remove(). Dodaj filtering po seriach, autorach, kategoriach. Użyj QueryBuilder dla zaawansowanych zapytań.
+
+## 3. Stworzenie DTOs z walidacją dla Stories [pending]
+### Dependencies: 11.1
+### Description: Definicja CreateStoryDto i UpdateStoryDto z class-validator dla bezpiecznej walidacji danych wejściowych
+### Details:
+Stwórz CreateStoryDto z walidacją: title (wymagane, min 5 znaków), content (wymagane, min 50 znaków), seriesId (opcjonalne), authorId (wymagane), categories, tags. UpdateStoryDto jako Partial z CreateStoryDto.
+
+## 4. Implementacja StoriesController z endpointami API [pending]
+### Dependencies: 11.2, 11.3
+### Description: Stworzenie kontrolera z pełnym CRUD i autoryzacją dla operacji administracyjnych
+### Details:
+Implementuj StoriesController z endpointami: GET /stories (publiczny z paginacją), GET /stories/:id (publiczny), POST /stories (admin), PUT /stories/:id (admin), DELETE /stories/:id (admin). Dodaj guards dla autoryzacji admin.
+
+## 5. Konfiguracja StoriesModule i integracja z główną aplikacją [pending]
+### Dependencies: 11.4
+### Description: Połączenie wszystkich komponentów w module i rejestracja w głównym AppModule
+### Details:
+Stwórz StoriesModule importując TypeOrmModule.forFeature([Story]), rejestruj StoriesController i StoriesService. Dodaj do imports w AppModule. Skonfiguruj routing i swagger documentation.
+

@@ -1,0 +1,458 @@
+PRODUCT REQUIREMENTS DOCUMENT (PRD)
+Portal Multimedialny - NestJS + Next.js 14
+
+================================================================================
+1. OVERVIEW
+================================================================================
+
+Projekt: Portal Multimedialny z Panelem Administracji
+Technologie: NestJS (Backend API), Next.js 14 (Frontend), PostgreSQL (Baza)
+Cel: Budowa nowoczesnego portalu internetowego umożliwiającego zarządzanie
+      różnorodną treścią (artykuły, blog, wiki, galeria, opowiadania)
+      z możliwościami komentowania, oceniania, udostępniania.
+      Backend bez CMS'u - pełna kontrola nad logiką biznesową.
+      Frontend zawiera pełnofunkcyjny panel administracji dla zarządzania treścią.
+
+================================================================================
+2. GŁÓWNE FUNKCJONALNOŚCI
+================================================================================
+
+2.1 LANDING PAGE / STRONA GŁÓWNA
+   - Atrakcyjna, nowoczesna strona powitalna
+   - Wymaga logowania dla dostępu do pełnej zawartości portalu
+   - Showcase głównych sekcji portalu
+   - Call-to-action do rejestracji/zalogowania
+   - Responsive design mobile-first
+
+2.2 BLOG
+   - Publikacja artykułów/postów
+   - Paginacja listy artykułów
+   - Widok szczegółów artykułu
+   - System komentarzy (zalogowani użytkownicy)
+   - Ocenianie artykułów (gwiazdki 1-5)
+   - Udostępnianie na social media
+   - Kategorie artykułów
+   - Tagi
+   - Wyszukiwanie i filtrowanie
+
+2.3 WIKI / ENCYKLOPEDIA
+   - Hierarchiczna struktura stron (parent-child)
+   - System nawigacji treeview
+   - Edycja w Markdownie/Rich Text
+   - Historia zmian
+   - Wersjonowanie treści
+   - Linki do powiązanych stron wiki
+   - Wyszukiwanie pełnotekstowe
+
+2.4 SEKCJA ARTYKUŁÓW
+   - Oddzielne artykuły od bloga
+   - Zawartość multimedialna (tekst, zdjęcia, wideo)
+   - Kategorie artykułów
+   - System komentarzy
+   - System ocen (1-5 gwiazdek)
+   - Udostępnianie
+   - Data publikacji i autorstwo
+
+2.5 GALERIA MULTIMEDIALNA
+   - Przechowywanie zdjęć i filmów
+   - Organizacja w kategorie
+   - Lightbox/modal do przeglądania zdjęć
+   - Opis każdego pliku multimedialnego
+   - System ocen dla multimediów
+   - Komentarze dla multimediów
+   - Możliwość udostępnienia
+   - Tagi dla mediów
+   - Paginacja
+
+2.6 OPOWIADANIA
+   - Publikacja opowiadań/historii
+   - Wsparcie dla tekstu, zdjęć i filmów
+   - Kategorie opowiadań
+   - Seria opowiadań (powiązane)
+   - System komentarzy
+   - System ocen
+   - Udostępnianie
+   - Zakładki/ulubione (zalogowani użytkownicy)
+
+2.7 SEKCJA BIO / O AUTORACH
+   - Profile autorów
+   - Zdjęcie profilowe
+   - Biografia
+   - Lista artykułów/opowiadań autora
+   - Linki do profili społecznych
+   - Informacje kontaktowe (opcjonalnie)
+
+2.8 SYSTEM KOMENTARZY (CROSS-CONTENT)
+   - Jednolity system dla artykułów, blog postów, multimediów, opowiadań
+   - Zagnieżdżone komentarze (replies)
+   - Moderacja komentarzy (admin)
+   - Blokowanie/usuwanie komentarzy
+   - Notyfikacje dla autora
+
+2.9 SYSTEM OCEN (CROSS-CONTENT)
+   - Oceny 1-5 gwiazdek
+   - Średnia ocena i liczba głosów
+   - Histogram rozkładu ocen
+   - Każdy użytkownik może ocenić raz
+
+2.10 SYSTEM AUTENTYKACJI
+   - Rejestracja nowych użytkowników
+   - Logowanie z JWT
+   - Profile użytkowników
+   - Rola użytkownika (user, moderator, admin)
+   - Bezpieczeństwo: hasło hashowane, CSRF protection
+
+2.11 PANEL ADMINISTRACYJNY
+   - Zarządzanie artykułami (CRUD)
+   - Zarządzanie blog postami
+   - Zarządzanie stronami wiki
+   - Zarządzanie galerią
+   - Zarządzanie opowiadaniami
+   - Zarządzanie autorami
+   - Zarządzanie użytkownikami
+   - Zarządzanie komentarzami (moderacja)
+   - Zarządzanie kategoriami
+   - Analityka (liczba odwiedzin, popularne treści)
+   - Ustawienia portalu
+
+================================================================================
+3. FEATURE BREAKDOWN - SZCZEGÓŁOWY OPIS
+================================================================================
+
+3.1 ARCHITEKTURA BAZY DANYCH
+Content Types (Collections):
+   - Articles (artykuły z komentarzami, ocenami)
+   - BlogPosts (posty na blogu)
+   - WikiPages (strony wiki, hierarchia)
+   - GalleryItems (zdjęcia/filmy)
+   - Stories (opowiadania)
+   - Authors (profil autora)
+   - Users (użytkownicy systemu - built-in Strapi)
+   - Comments (ogólny system komentarzy)
+   - Ratings (ogólny system ocen)
+   - Categories (kategorie dla treści)
+   - Tags (tagi dla treści)
+   - Settings (globalne ustawienia portalu)
+
+Relations:
+   - Article has many Comments
+   - Article has many Ratings
+   - BlogPost has many Comments
+   - BlogPost has many Ratings
+   - GalleryItem has many Comments
+   - GalleryItem has many Ratings
+   - Story has many Comments
+   - Story has many Ratings
+   - Author has many Articles
+   - Author has many BlogPosts
+   - Author has many Stories
+   - User has many Comments
+   - User has many Ratings
+   - Article has many Tags
+   - Article has Category (many-to-one)
+
+3.2 FRONTEND - ROUTING (NEXT.JS APP ROUTER)
+/ - Landing page
+/login - Strona logowania
+/register - Rejestracja
+/profile - Profil użytkownika (zalogowani)
+/dashboard (admin panel)
+  /dashboard - Overview
+  /dashboard/articles - Zarządzanie artykułami
+  /dashboard/blog - Zarządzanie blogiem
+  /dashboard/wiki - Zarządzanie wiki
+  /dashboard/gallery - Zarządzanie galerią
+  /dashboard/stories - Zarządzanie opowiadaniami
+  /dashboard/authors - Zarządzanie autorami
+  /dashboard/users - Zarządzanie użytkownikami
+  /dashboard/comments - Moderacja komentarzy
+  /dashboard/settings - Ustawienia
+/blog - Lista blog postów
+/blog/[slug] - Szczegóły blog posta
+/articles - Lista artykułów
+/articles/[slug] - Szczegóły artykułu
+/wiki - Wiki homepage
+/wiki/[slug] - Strona wiki
+/gallery - Galeria mediów
+/gallery/[id] - Szczegóły media
+/stories - Lista opowiadań
+/stories/[slug] - Szczegóły opowiadania
+/authors - Lista autorów
+/authors/[slug] - Profil autora
+/about - O nas / Info o portalu
+
+3.3 KOMPONENTY REACT
+Shared Components:
+   - Navigation / Header
+   - Footer
+   - Sidebar
+   - CommentsSection
+   - RatingWidget
+   - ShareButtons
+   - CategoryFilter
+   - SearchBar
+   - Pagination
+   - LoadingSpinner
+   - ErrorBoundary
+
+Page-Specific Components:
+   - BlogPostList
+   - BlogPostDetail
+   - ArticleList
+   - ArticleDetail
+   - WikiPage
+   - WikiTree
+   - GalleryGrid
+   - GalleryLightbox
+   - StoryList
+   - StoryDetail
+   - AuthorCard
+   - AdminDashboard
+   - AdminPanel
+
+3.4 NESTJS API ENDPOINTS
+REST Endpoints (NestJS Controllers):
+
+Articles Module:
+   GET  /api/articles - Lista artykułów (publiczne)
+   GET  /api/articles/:id - Szczegóły artykułu
+   POST /api/articles - Tworzenie (admin)
+   PUT  /api/articles/:id - Edycja (admin)
+   DELETE /api/articles/:id - Usunięcie (admin)
+
+BlogPosts Module:
+   GET  /api/blog - Lista postów na blogu
+   GET  /api/blog/:id - Szczegóły postu
+   POST /api/blog - Tworzenie (admin)
+   PUT  /api/blog/:id - Edycja (admin)
+   DELETE /api/blog/:id - Usunięcie (admin)
+
+WikiPages Module:
+   GET  /api/wiki - Lista stron wiki (z hierarchią)
+   GET  /api/wiki/:id - Szczegóły strony wiki
+   POST /api/wiki - Tworzenie (admin)
+   PUT  /api/wiki/:id - Edycja (admin)
+   DELETE /api/wiki/:id - Usunięcie (admin)
+
+GalleryItems Module:
+   GET  /api/gallery - Lista multimediów
+   GET  /api/gallery/:id - Szczegóły media
+   POST /api/gallery - Upload (admin)
+   DELETE /api/gallery/:id - Usunięcie (admin)
+
+Stories Module:
+   GET  /api/stories - Lista opowiadań
+   GET  /api/stories/:id - Szczegóły opowiadania
+   POST /api/stories - Tworzenie (admin)
+   PUT  /api/stories/:id - Edycja (admin)
+   DELETE /api/stories/:id - Usunięcie (admin)
+
+Authors Module:
+   GET  /api/authors - Lista autorów
+   GET  /api/authors/:id - Profil autora
+   POST /api/authors - Tworzenie (admin)
+   PUT  /api/authors/:id - Edycja (admin)
+   DELETE /api/authors/:id - Usunięcie (admin)
+
+Comments Module:
+   GET  /api/comments - Komentarze (z filtrowaniem po content type)
+   POST /api/comments - Dodanie komentarza (zalogowani)
+   DELETE /api/comments/:id - Usunięcie (admin/właściciel)
+
+Ratings Module:
+   GET  /api/ratings - Oceny (z filtrowaniem)
+   POST /api/ratings - Dodanie oceny (zalogowani)
+   PUT  /api/ratings/:id - Aktualizacja oceny
+
+Authentication Module:
+   POST /api/auth/register - Rejestracja
+   POST /api/auth/login - Logowanie (zwraca JWT)
+   POST /api/auth/logout - Wylogowanie
+   GET  /api/auth/me - Aktualny użytkownik
+   POST /api/auth/refresh - Odświeżenie tokenu
+
+Admin Module (Content Management):
+   GET  /api/admin/dashboard - Statistyki i overview
+   GET  /api/admin/users - Zarządzanie użytkownikami
+   POST /api/admin/users/:id/role - Zmiana roli użytkownika
+   DELETE /api/admin/users/:id - Usunięcie użytkownika
+   GET  /api/admin/comments - Moderacja komentarzy
+   DELETE /api/admin/comments/:id - Usunięcie komentarza
+   GET  /api/admin/settings - Ustawienia portalu
+   PUT  /api/admin/settings - Edycja ustawień
+
+File Upload Module:
+   POST /api/upload - Upload pliku (admin)
+   DELETE /api/files/:id - Usunięcie pliku (admin)
+
+3.5 BEZPIECZEŃSTWO
+   - JWT tokens dla autentykacji
+   - CORS configuration
+   - Role-based access control (RBAC)
+   - API rate limiting
+   - Input validation
+   - SQL injection prevention (ORM)
+   - XSS prevention
+   - CSRF tokens
+
+3.6 PERFORMANCE
+   - Caching (Redis opcjonalnie)
+   - Image optimization w Next.js
+   - Lazy loading dla mediów
+   - Pagination (nie pobieranie wszystkiego naraz)
+   - Indeksowanie bazy danych
+   - CDN dla statycznych assets
+
+3.7 SEO
+   - Meta tags dla każdej strony
+   - Open Graph tags
+   - XML sitemap
+   - Robots.txt
+   - Canonical URLs
+   - Structured data (JSON-LD)
+
+================================================================================
+4. TECHNICAL REQUIREMENTS
+================================================================================
+
+4.1 BACKEND (NESTJS + TYPEORM)
+- Node.js 18+
+- NestJS framework (TypeScript)
+- PostgreSQL 13+
+- TypeORM dla ORM (database mapping)
+- Class Validator dla walidacji
+- JWT (jsonwebtoken) dla autentykacji
+- Multer dla upload plików
+- Pagination z TypeORM QueryBuilder
+- Database migrations (TypeORM migrations)
+- Custom guards (JwtAuthGuard, RolesGuard)
+- Custom interceptors (logging, error handling)
+- Custom pipes (validation)
+- Swagger/OpenAPI dla dokumentacji API
+
+4.2 FRONTEND (NEXT.JS 14+ Z ADMIN PANEL)
+- React 18+
+- TypeScript
+- Tailwind CSS dla stylingu
+- SWR lub React Query dla data fetching
+- Next.js Image optimization
+- App Router (nie Pages Router)
+- Dynamic imports dla code splitting
+- Admin Panel komponenty:
+  * Dashboard z statystykami
+  * CRUD interfaces dla każdego content type'u
+  * User management interface
+  * Comment moderation interface
+  * Settings management interface
+  * Rich text editor dla artykułów/blog postów/wiki
+  * Image upload i galeria
+
+4.3 DATABASE (POSTGRESQL + TYPEORM)
+- TypeORM entities dla każdego content type'u
+- Relationships (One-to-Many, Many-to-Many)
+- Database migrations dla schema changes
+- Indeksowanie dla performance
+- Constraints i validacja na poziomie DB
+
+4.4 INFRASTRUCTURE
+- Docker & Docker Compose dla development
+- PostgreSQL database container
+- NestJS backend container
+- Next.js frontend container
+- Environment variables dla konfiguracji
+- Git version control
+- Redis (opcjonalnie) dla caching
+
+================================================================================
+5. IMPLEMENTACJA PHASES
+================================================================================
+
+Phase 1: Setup & Infrastructure
+   - Inicjalizacja NestJS backend z TypeORM
+   - Inicjalizacja Next.js frontend
+   - Docker & Docker Compose setup
+   - PostgreSQL database configuration
+   - Environment variables setup
+   - Development environment ready
+
+Phase 2: Database & Entities
+   - Modelowanie TypeORM entities dla wszystkich content types
+   - Relationships (One-to-Many, Many-to-Many)
+   - Database migrations setup
+   - Seed data (opcjonalnie)
+
+Phase 3: Backend - Core Modules & API
+   - Authentication module (JWT, register, login)
+   - Articles module (CRUD + service logic)
+   - BlogPosts module (CRUD + service logic)
+   - WikiPages module (CRUD + hierarchia)
+   - GalleryItems module (CRUD + file handling)
+   - Stories module (CRUD)
+   - Authors module (CRUD)
+   - Comments module (CRUD + cross-content)
+   - Ratings module (CRUD + logic)
+   - Admin module (dashboard, users, settings)
+   - File upload service
+   - Guards, pipes, interceptors (security, validation)
+
+Phase 4: Frontend - Core Pages & Layout
+   - Landing page
+   - Login/Register pages
+   - Navigation & Layout components
+   - Blog listing & detail pages
+   - Articles listing & detail pages
+   - Basic styling z Tailwind
+
+Phase 5: Frontend - Advanced Features
+   - Wiki system (hierarchia + navigation)
+   - Gallery z lightbox
+   - Stories section
+   - Comments system UI
+   - Ratings system UI
+   - Share buttons
+
+Phase 6: Admin Panel - Full Implementation
+   - Admin dashboard z statystykami
+   - Articles CRUD interface
+   - BlogPosts CRUD interface
+   - WikiPages hierarchical editor
+   - Gallery management
+   - Stories management
+   - Authors management
+   - User management
+   - Comment moderation
+   - Settings management
+   - Rich text editors (Markdown/WYSIWYG)
+
+Phase 7: Polish & Deployment
+   - API documentation (Swagger)
+   - Testing (unit, integration, e2e)
+   - Performance optimization
+   - SEO optimization
+   - Error handling & logging
+   - Documentation
+   - Production deployment
+   - Monitoring setup
+
+================================================================================
+6. SUCCESS CRITERIA
+================================================================================
+
+- ✅ Backend dostępny na localhost:3001 (NestJS)
+- ✅ Frontend dostępny na localhost:3000 (Next.js)
+- ✅ PostgreSQL baza danych działająca
+- ✅ Strona główna przyciągająca i intuicyjna
+- ✅ Wszystkie moduły treści (blog, wiki, artykuły, galeria, opowiadania) działają
+- ✅ System komentarzy i ocen działa
+- ✅ Panel administracyjny pełnofunkcyjny (CRUD dla wszystkich content types)
+- ✅ Autentykacja JWT działająca (register, login, token refresh)
+- ✅ Role-based access control (user, admin) implementowany
+- ✅ File upload dla galerii i artykułów działa
+- ✅ Docker Compose postawia całą aplikację
+- ✅ Responsywne na urządzeniach mobilnych
+- ✅ Dokumentacja API (Swagger/OpenAPI endpoint dostępny)
+- ✅ Testy jednostkowe dla krytycznych funkcjonalności
+- ✅ Error handling i logging w backendzie
+- ✅ Database migrations działają
+
+================================================================================

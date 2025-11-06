@@ -1,0 +1,43 @@
+# Task ID: 8
+# Title: Implementacja modułu BlogPosts
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Stworzenie systemu blog postów z funkcjonalnościami podobnymi do Articles
+# Details:
+Stwórz BlogPostsModule z pełnym CRUD. Implementuj endpointy: GET /blog, GET /blog/:id, POST /blog, PUT /blog/:id, DELETE /blog/:id. Dodaj support dla kategorii, tagów, paginacji. Implementuj DTOs z walidacją class-validator.
+
+# Test Strategy:
+Sprawdź czy blog posts można tworzyć, edytować, usuwać, lista zwraca posty z paginacją, filtering działa
+
+# Subtasks:
+## 1. Stworzenie BlogPost entity i BlogPostsModule [pending]
+### Dependencies: None
+### Description: Stworzenie podstawowej struktury modułu blog postów z entity i modułem
+### Details:
+Stwórz BlogPost entity z polami: id, title, content, excerpt, slug, categories, tags, authorId, createdAt, updatedAt, publishedAt. Dodaj BlogPostsModule, BlogPostsController, BlogPostsService. Skonfiguruj TypeORM relationships z User (author), Categories, Tags.
+
+## 2. Implementacja DTOs i walidacji [pending]
+### Dependencies: 8.1
+### Description: Stworzenie DTOs dla operacji CRUD z walidacją class-validator
+### Details:
+Implementuj CreateBlogPostDto z walidacją: title (wymagane, 5-200 znaków), content (wymagane, min 50 znaków), excerpt (opcjonalne, max 300 znaków), categories, tags. Stwórz UpdateBlogPostDto, BlogPostResponseDto z transformacją danych.
+
+## 3. Implementacja operacji CRUD w service [pending]
+### Dependencies: 8.2
+### Description: Stworzenie logiki biznesowej dla zarządzania blog postami
+### Details:
+Implementuj w BlogPostsService: findAll() z paginacją i filtrowaniem, findOne(), create(), update(), remove(). Dodaj automatyczne generowanie slug z title, obsługę kategorii i tagów, soft delete. Implementuj query builder dla zaawansowanego filtrowania.
+
+## 4. Implementacja endpointów REST API [pending]
+### Dependencies: 8.3
+### Description: Stworzenie kontrolera z pełnym zestawem endpointów dla blog postów
+### Details:
+Implementuj w BlogPostsController: GET /blog (lista z query params: page, limit, category, tag, search), GET /blog/:slug, POST /blog (admin only), PUT /blog/:id (admin only), DELETE /blog/:id (admin only). Dodaj proper HTTP status codes, error handling, autoryzację admin dla operacji modyfikujących.
+
+## 5. Dodanie paginacji i zaawansowanego filtrowania [pending]
+### Dependencies: 8.4
+### Description: Implementacja paginacji i systemów filtrowania dla listy blog postów
+### Details:
+Implementuj PaginationDto z page, limit, sort, order. Dodaj FiltersDto z category, tag, author, dateFrom, dateTo, search. Implementuj search po title, content, excerpt. Dodaj meta informacje w response (totalItems, totalPages, currentPage).
+

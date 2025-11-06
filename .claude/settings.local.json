@@ -1,0 +1,34 @@
+{
+  "env": {
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
+    "DISABLE_COST_WARNINGS": "1",
+    "USE_BUILTIN_RIPGREP": "1",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(task-master expand:*)",
+      "Bash(task-master show:*)",
+      "Bash(task-master list:*)",
+      "Bash(task-master generate:*)",
+      "Bash(__NEW_LINE__ echo \"=== Task Master Status Summary ===\")",
+      "Bash(__NEW_LINE__ echo \"=== Task Master Project Completion Summary ===\" echo \"\" task-master list)",
+      "Bash(task-master complexity-report:*)",
+      "Bash(task-master next:*)",
+      "Bash(task-master set-status:*)",
+      "Bash(gh auth:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "hooks": {},
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c 'input=$(cat); MODEL=$(echo \"$input\" | jq -r \".model.display_name\"); DIR=$(echo \"$input\" | jq -r \".workspace.current_dir\"); VERSION=$(echo \"$input\" | jq -r \".version\"); NODE_VER=$(node --version 2>/dev/null || echo \"N/A\"); echo \"[$MODEL] 📁 ${DIR##*/} | Node $NODE_VER | Claude $VERSION\"'"
+  }
+}

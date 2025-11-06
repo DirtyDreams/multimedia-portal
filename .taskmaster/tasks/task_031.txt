@@ -1,0 +1,11 @@
+# Task ID: 31
+# Title: Implementacja rating widget i search
+# Status: pending
+# Dependencies: 30
+# Priority: medium
+# Description: System oceniania i zaawansowane wyszukiwanie
+# Details:
+Stwórz RatingWidget component (1-5 stars), SearchBar z autocomplete, SearchResults page z faceted search. Integruj z MeiliSearch API. Dodaj filtering options, sorting, search history dla zalogowanych użytkowników.
+
+# Test Strategy:
+Sprawdź czy rating widget zapisuje oceny, search autocomplete działa, faceted search zwraca odpowiednie wyniki, search history zapisuje się

@@ -1,0 +1,43 @@
+# Task ID: 14
+# Title: Implementacja systemu ocen (ratings)
+# Status: pending
+# Dependencies: 13
+# Priority: medium
+# Description: Stworzenie systemu ocen 1-5 gwiazdek dla wszystkich typów treści
+# Details:
+Stwórz RatingsModule z polymorphic design podobnym do Comments. Dodaj pola: contentType, contentId, userId, rating (1-5). Implementuj constraint unique per user per content. Dodaj endpointy: GET /ratings, POST /ratings, PUT /ratings/:id. Implementuj kalkulację średniej oceny.
+
+# Test Strategy:
+Sprawdź czy oceny można dodawać dla wszystkich content types, jeden użytkownik może ocenić raz, średnia ocena kalkuluje się poprawnie
+
+# Subtasks:
+## 1. Utworzenie encji Rating z polami polymorphicznymi w Prisma schema [pending]
+### Dependencies: None
+### Description: Stworzenie modelu Rating w schema.prisma z polami contentType, contentId, userId, rating dla obsługi ocen wszystkich typów treści
+### Details:
+Zdefiniuj model Rating w schema.prisma z polami: id (String @id @default(cuid())), contentType (String - enum: ARTICLE, BLOG_POST, WIKI_PAGE, GALLERY_ITEM, STORY), contentId (String), userId (String), rating (Int - wartość 1-5), createdAt (DateTime @default(now())), updatedAt (DateTime @updatedAt). Dodaj constraint @@unique([userId, contentType, contentId]) zapewniający że jeden użytkownik może ocenić dany content tylko raz. Dodaj relację @relation do User i indeksy na contentType+contentId dla wydajności zapytań.
+
+## 2. Implementacja RatingsModule z serwisem i kontrolerem [pending]
+### Dependencies: 14.1
+### Description: Stworzenie modułu NestJS Ratings z podstawową strukturą - RatingsService i RatingsController oraz konfiguracją Prisma
+### Details:
+Utwórz src/modules/ratings/ z plikami: ratings.module.ts (importuj PrismaModule, AuthModule), ratings.controller.ts z podstawowymi endpointami, ratings.service.ts z Prisma injection. Skonfiguruj module imports w app.module.ts. Dodaj podstawowe metody serwisu: findByContent(), create(), update(), findUserRating(), calculateAverageRating(). Ustaw provider dla RatingsService i controller w module.
+
+## 3. Implementacja DTOs i walidacji dla ocen [pending]
+### Dependencies: 14.2
+### Description: Utworzenie CreateRatingDto, UpdateRatingDto z walidacją class-validator oraz QueryRatingDto dla parametrów wyszukiwania
+### Details:
+Stwórz dto/create-rating.dto.ts z polami: contentType (string, required, @IsEnum), contentId (string, required, @IsString), rating (number, required, @IsInt, @Min(1), @Max(5)). UpdateRatingDto z polami: rating (number, required, @IsInt, @Min(1), @Max(5)). QueryRatingDto z contentType, contentId, page, limit. Dodaj enum RatingContentType z wartościami ARTICLE, BLOG_POST, WIKI_PAGE, GALLERY_ITEM, STORY. Dodaj RatingResponseDto z danymi rating + user info + average rating dla content.
+
+## 4. Implementacja endpointów REST API dla systemu ocen [pending]
+### Dependencies: 14.3
+### Description: Stworzenie endpointów GET /ratings, POST /ratings, PUT /ratings/:id z autoryzacją i kalkulacją średniej oceny
+### Details:
+W ratings.controller.ts implementuj: GET /ratings z @Query() QueryRatingDto (filtrowanie po contentType i contentId + average rating), POST /ratings z @UseGuards(JwtAuthGuard) i @Body() CreateRatingDto, PUT /ratings/:id z autoryzacją (tylko autor rating może edytować). W ratings.service.ts dodaj metody: findByContent() zwracającą listę ratings + average, create() z automatycznym ustawieniem userId i sprawdzaniem unique constraint, update() z sprawdzaniem ownership, calculateAverageRating() dla danego content.
+
+## 5. Dodanie integracji z modułami treści i finalizacja systemu ocen [pending]
+### Dependencies: 14.4
+### Description: Integracja kalkulacji średniej oceny z modułami Articles, BlogPosts, WikiPages, GalleryItems, Stories oraz dodanie dokumentacji Swagger
+### Details:
+Rozszerz serwisy content modules (Articles, BlogPosts etc.) o metodę getAverageRating() używającą RatingsService. Dodaj pole averageRating do response DTOs wszystkich content types. Implementuj automatyczne przeliczanie średniej po dodaniu/aktualizacji rating. Dodaj endpoint GET /ratings/content/:contentType/:contentId/average dla quick access do średniej. Dodaj @ApiTags('ratings'), @ApiOperation decorators dla Swagger. Implementuj cache dla często pobieranych średnich ocen. Dodaj proper error responses z status codes.
+
