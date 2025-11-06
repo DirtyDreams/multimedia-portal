@@ -2719,10 +2719,10 @@
             "description": "Implementacja systemu toast notifications dla powiadomień w czasie rzeczywistym",
             "dependencies": [],
             "details": "Stwórz ToastNotification komponent używając biblioteki react-hot-toast lub react-toastify. Implementuj różne typy toastów (success, info, warning, error). Dodaj customowe styling zgodny z design system. Skonfiguruj auto-dismiss i pozycjonowanie toastów.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy toasty wyświetlają się w odpowiednim czasie, różne typy mają odpowiednie style, auto-dismiss działa",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:02:45.359Z"
+            "updatedAt": "2025-11-06T21:05:12.666Z"
           },
           {
             "id": 4,
@@ -2776,7 +2776,7 @@
         "complexity": 6,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
-        "updatedAt": "2025-11-06T21:02:45.359Z"
+        "updatedAt": "2025-11-06T21:05:12.666Z"
       },
       {
         "id": "34",
@@ -3042,7 +3042,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:02:45.362Z",
+      "lastModified": "2025-11-06T21:05:12.669Z",
       "taskCount": 35,
       "completedCount": 28,
       "tags": [
