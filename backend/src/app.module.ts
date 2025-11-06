@@ -11,6 +11,7 @@ import { GalleryItemsModule } from './modules/gallery-items/gallery-items.module
 import { StoriesModule } from './modules/stories/stories.module';
 import { AuthorsModule } from './modules/authors/authors.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { RatingsModule } from './modules/ratings/ratings.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 
 @Module({
@@ -29,6 +30,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
     StoriesModule,
     AuthorsModule,
     CommentsModule,
+    RatingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
