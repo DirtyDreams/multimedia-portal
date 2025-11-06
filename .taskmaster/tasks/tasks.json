@@ -2245,7 +2245,7 @@
         "dependencies": [
           "29"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2377,15 +2377,16 @@
               9
             ],
             "details": "Napisz integration testy: dodawanie komentarzy, nested replies, real-time updates, moderation workflow. Testuj cross-browser compatibility, mobile responsiveness. Przeprowadź performance testing z dużą ilością komentarzy. Testuj edge cases i error handling.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy cały workflow komentarzy działa end-to-end, performance jest acceptable, mobile działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:18:34.371Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy.",
-        "updatedAt": "2025-11-06T19:12:58.698Z"
+        "updatedAt": "2025-11-06T19:18:48.575Z"
       },
       {
         "id": "31",
@@ -3016,9 +3017,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:12:58.701Z",
+      "lastModified": "2025-11-06T19:18:48.578Z",
       "taskCount": 35,
-      "completedCount": 25,
+      "completedCount": 26,
       "tags": [
         "master"
       ]
