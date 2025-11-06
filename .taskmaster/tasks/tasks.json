@@ -1476,7 +1476,7 @@
         "dependencies": [
           "19"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1537,16 +1537,16 @@
               4
             ],
             "details": "Dodaj query parameter ?preview=true do content endpoints. Zmodyfikuj content services aby zwracały draft/scheduled content z preview flag. Implementuj PreviewGuard sprawdzający uprawnienia. Stwórz specjalne preview URLs z tokenami. Dodaj preview banner w UI.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy draft content jest dostępne z preview URLs, preview nie jest dostępne bez autoryzacji, preview banner wyświetla się poprawnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:29:09.592Z"
+            "updatedAt": "2025-11-06T18:31:34.553Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
-        "updatedAt": "2025-11-06T18:29:09.592Z"
+        "updatedAt": "2025-11-06T18:31:34.553Z"
       },
       {
         "id": "21",
@@ -3002,9 +3002,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:29:09.595Z",
+      "lastModified": "2025-11-06T18:31:34.556Z",
       "taskCount": 35,
-      "completedCount": 23,
+      "completedCount": 24,
       "tags": [
         "master"
       ]
