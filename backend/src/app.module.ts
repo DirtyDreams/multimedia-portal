@@ -9,6 +9,7 @@ import { BlogPostsModule } from './modules/blog-posts/blog-posts.module';
 import { WikiPagesModule } from './modules/wiki-pages/wiki-pages.module';
 import { GalleryItemsModule } from './modules/gallery-items/gallery-items.module';
 import { StoriesModule } from './modules/stories/stories.module';
+import { AuthorsModule } from './modules/authors/authors.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 
 @Module({
@@ -25,6 +26,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
     WikiPagesModule,
     GalleryItemsModule,
     StoriesModule,
+    AuthorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
