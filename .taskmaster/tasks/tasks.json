@@ -432,9 +432,11 @@
               1
             ],
             "details": "Zainstaluj @nestjs/passport, @nestjs/jwt, passport-jwt. Stw\u00f3rz JwtStrategy extends PassportStrategy, skonfiguruj JWT_SECRET w ConfigService. Dodaj JwtModule.forRootAsync z konfiguracj\u0105 expiration time, secret. Implementuj validate() metod\u0119 w JwtStrategy.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Testy czy JWT strategy poprawnie waliduje tokeny, sprawd\u017a expiration handling",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T23:27:49.284924Z",
+            "completionNotes": "Task 6.2 - Passport JWT Strategy implementation was mostly complete but had a critical bug.\n\nExisting Implementation:\n\u2713 JwtStrategy properly extends PassportStrategy from @nestjs/passport\n\u2713 All required dependencies installed:\n  - @nestjs/passport (^11.0.5)\n  - @nestjs/jwt (^11.0.1)\n  - passport-jwt (^4.0.1)\n\u2713 JWT secret properly configured in ConfigService with error handling\n\u2713 JwtModule.registerAsync configured in AuthModule with:\n  - ConfigService injection\n  - 15-minute access token expiration\n  - Secret from environment variables\n\u2713 ExtractJwt.fromAuthHeaderAsBearerToken() for token extraction\n\u2713 ignoreExpiration: false for security\n\u2713 .env.example documents JWT_SECRET and JWT_EXPIRATION\n\nBug Fixed:\n- JwtStrategy.validate() was returning 'roles: payload.roles' but tokens contain 'role: payload.role' (singular)\n- This would cause role-based access control to fail\n- Fixed to match the payload structure from AuthService\n\nEnhancements:\n- Added comprehensive unit tests (jwt.strategy.spec.ts) covering:\n  - Payload validation for all roles (USER, ADMIN, MODERATOR)\n  - Field transformation (sub -> userId)\n  - Edge cases (undefined role, missing fields)\n  - Configuration verification\n\nAll requirements for Task 6.2 are complete with proper testing."
           },
           {
             "id": 3,
