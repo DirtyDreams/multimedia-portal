@@ -2593,10 +2593,10 @@
               1
             ],
             "details": "Stwórz /dashboard/gallery/ z grid view dla mediów. Implementuj drag-and-drop file upload, image preview, bulk operations. Dodaj metadata editing, category/tag assignment, file size optimization.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy upload plików działa, preview obrazów wyświetla się, bulk operations działają, metadata można edytować",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T20:37:43.615Z"
+            "updatedAt": "2025-11-06T20:40:14.293Z"
           },
           {
             "id": 7,
@@ -2606,9 +2606,10 @@
               1
             ],
             "details": "Stwórz /dashboard/stories/ z listing i forms. Implementuj series management - tworzenie, edycja, przypisywanie stories do serii. Dodaj ordering w ramach serii, chapters management.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy stories można grupować w serie, ordering w serii działa, chapters management funkcjonuje poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:40:24.942Z"
           },
           {
             "id": 8,
@@ -2672,7 +2673,7 @@
         "complexity": 9,
         "recommendedSubtasks": 12,
         "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface.",
-        "updatedAt": "2025-11-06T20:37:43.615Z"
+        "updatedAt": "2025-11-06T20:40:24.942Z"
       },
       {
         "id": "33",
@@ -3035,7 +3036,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T20:37:43.618Z",
+      "lastModified": "2025-11-06T20:40:24.944Z",
       "taskCount": 35,
       "completedCount": 27,
       "tags": [
