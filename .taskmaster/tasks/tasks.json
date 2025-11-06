@@ -2554,9 +2554,10 @@
               1
             ],
             "details": "Stwórz /dashboard/articles/page.tsx z listą artykułów używając TanStack Table. Implementuj /dashboard/articles/new i /dashboard/articles/[id]/edit z formularzami. Dodaj Rich Text Editor (Tiptap) dla content. Implementuj search, filtering po kategoriach/tagach.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy można tworzyć, edytować, usuwać artykuły, rich text editor działa poprawnie, filtering i search działają",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:29:16.929Z"
           },
           {
             "id": 4,
@@ -2668,7 +2669,7 @@
         "complexity": 9,
         "recommendedSubtasks": 12,
         "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface.",
-        "updatedAt": "2025-11-06T20:24:06.404Z"
+        "updatedAt": "2025-11-06T20:29:16.929Z"
       },
       {
         "id": "33",
@@ -3031,7 +3032,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T20:24:06.407Z",
+      "lastModified": "2025-11-06T20:29:16.933Z",
       "taskCount": 35,
       "completedCount": 27,
       "tags": [
