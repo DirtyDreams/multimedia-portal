@@ -1917,7 +1917,7 @@
         "dependencies": [
           "25"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1925,7 +1925,7 @@
             "description": "Implementacja stron /login i /register z React Hook Form i walidacją Zod",
             "dependencies": [],
             "details": "Stwórz komponenty LoginForm i RegisterForm używając React Hook Form. Zaimplementuj schematy walidacji Zod dla email, hasła i potwierdzenia hasła. Dodaj styled components z Tailwind CSS dla responsywnego designu. Implementuj obsługę błędów walidacji i wyświetlanie komunikatów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy formularze walidują poprawnie dane wejściowe, wyświetlają błędy walidacji, submitują dane do API",
             "parentId": "undefined"
           },
@@ -1937,7 +1937,7 @@
               1
             ],
             "details": "Stwórz utility functions do zapisywania/odczytywania JWT z localStorage. Implementuj automatic token refresh przed wygaśnięciem. Dodaj interceptory axios do automatycznego dodawania Authorization header. Obsłuż scenariusze expired/invalid tokens z przekierowaniem do /login.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy token zapisuje się w localStorage, automatic refresh działa, expired tokens powodują logout",
             "parentId": "undefined"
           },
@@ -1949,7 +1949,7 @@
               2
             ],
             "details": "Implementuj AuthContext lub Zustand store dla user state (isAuthenticated, user data, loading states). Stwórz custom hooks useAuth, useLogin, useRegister, useLogout. Dodaj persist middleware dla Zustand jeśli używane. Implementuj automatic user data fetch po successful login.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy auth state persystuje między sesjami, user data ładuje się poprawnie, hooks działają we wszystkich komponentach",
             "parentId": "undefined"
           },
@@ -1961,7 +1961,7 @@
               3
             ],
             "details": "Stwórz ProtectedRoute component wrapper sprawdzający auth status. Implementuj redirect do /login dla nieautentykowanych użytkowników z return URL. Dodaj loading states podczas weryfikacji tokena. Stwórz RoleGuard dla różnych poziomów dostępu (user/admin).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy nieautentykowane żądania przekierowują do /login, authenticated users mają dostęp, role-based access działa",
             "parentId": "undefined"
           },
@@ -1973,7 +1973,7 @@
               4
             ],
             "details": "Stwórz logout function czyszczącą localStorage, auth state i przekierowującą do /login. Dodaj logout button w navigation/header. Implementuj optional server-side token invalidation. Dodaj confirmation dialog dla logout action. Obsłuż cleanup subscriptions/timers.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy logout czyści wszystkie dane auth, przekierowuje do /login, unieważnia token na serwerze",
             "parentId": "undefined"
           }
