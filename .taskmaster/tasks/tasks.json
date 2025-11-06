@@ -1992,7 +1992,7 @@
         "dependencies": [
           "26"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2000,7 +2000,7 @@
             "description": "Implementacja podstawowego layoutu strony głównej z sekcjami hero, features, showcase i CTA",
             "dependencies": [],
             "details": "Stwórz komponent LandingPage w Next.js z podstawową strukturą HTML. Zdefiniuj sekcje: HeroSection, FeaturesSection, ContentShowcaseSection, CallToActionSection. Użyj semantic HTML tags (header, main, section). Przygotuj podstawowy routing dla / endpoint.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy strona renderuje się poprawnie, wszystkie sekcje są widoczne, routing działa",
             "parentId": "undefined"
           },
@@ -2012,7 +2012,7 @@
               1
             ],
             "details": "Implementuj responsive grid layout używając Tailwind CSS classes. Zdefiniuj breakpoints dla mobile (sm), tablet (md), desktop (lg). Stwórz utility classes dla spacing, typography, colors. Zapewnij mobile-first design z progressive enhancement dla większych ekranów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź responsywność na różnych rozmiarach ekranu (320px, 768px, 1024px, 1440px)",
             "parentId": "undefined"
           },
@@ -2024,7 +2024,7 @@
               2
             ],
             "details": "Zainstaluj framer-motion. Dodaj fade-in animations dla sekcji przy scroll, hover effects dla buttons i cards. Implementuj staggered animations dla list elementów. Stwórz custom motion variants dla consistent animation timing.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy animacje działają smoothly, nie powodują lag-u, są dostępne na wszystkich urządzeniach",
             "parentId": "undefined"
           },
@@ -2036,7 +2036,7 @@
               3
             ],
             "details": "HeroSection: headline, subheadline, primary CTA button do rejestracji, hero image/video. FeaturesSection: grid 3-4 features (Articles, Blog, Wiki, Gallery) z ikonami, krótkimi opisami. Dodaj hover effects, responsive images, proper semantic markup.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy CTA button prowadzi do rejestracji, features są czytelne, images ładują się poprawnie",
             "parentId": "undefined"
           },
@@ -2048,7 +2048,7 @@
               4
             ],
             "details": "Implementuj Next.js Metadata API. Dodaj title, description, keywords meta tags. Skonfiguruj Open Graph tags (og:title, og:description, og:image, og:url). Dodaj structured data (JSON-LD). Implementuj robots.txt, sitemap.xml. Optymalizuj Core Web Vitals.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź meta tags w browser dev tools, przetestuj Open Graph w Facebook/Twitter debugger, zmierz PageSpeed Insights score",
             "parentId": "undefined"
           }
