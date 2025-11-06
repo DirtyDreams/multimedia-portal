@@ -2883,10 +2883,10 @@
             "description": "Optymalizuj zapytania do bazy danych i dodaj odpowiednie indeksy",
             "dependencies": [],
             "details": "Przeanalizuj slow queries w PostgreSQL logs. Dodaj database indexes dla często używanych pól: user_id, created_at, title, category_id, tag relations. Optymalizuj N+1 queries używając Prisma include/select. Dodaj connection pooling configuration.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź query performance w database logs, slow queries < 100ms",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T22:42:42.239Z"
+            "updatedAt": "2025-11-06T22:47:52.882Z"
           },
           {
             "id": 9,
@@ -2915,7 +2915,7 @@
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T22:42:42.239Z"
+        "updatedAt": "2025-11-06T22:47:52.882Z"
       },
       {
         "id": "35",
@@ -3054,7 +3054,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T22:42:42.241Z",
+      "lastModified": "2025-11-06T22:47:52.885Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
