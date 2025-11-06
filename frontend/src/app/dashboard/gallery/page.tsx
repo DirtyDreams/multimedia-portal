@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Pencil, Trash2, Eye, Grid, List, Image as ImageIcon, Video } from "lucide-react";
+import Image from "next/image";
 import { GalleryFormModal } from "@/components/admin/gallery/gallery-form-modal";
 import { DataTable, DataTableColumnHeader } from "@/components/table";
 import { ColumnDef } from "@tanstack/react-table";
@@ -126,10 +127,12 @@ export default function GalleryPage() {
         const item = row.original;
         return (
           <div className="relative w-16 h-16 rounded overflow-hidden bg-muted">
-            <img
+            <Image
               src={item.thumbnail}
               alt={item.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="64px"
             />
             {item.type === "video" && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/50">
@@ -289,10 +292,12 @@ export default function GalleryPage() {
               >
                 {/* Thumbnail */}
                 <div className="relative aspect-video bg-muted">
-                  <img
+                  <Image
                     src={item.thumbnail}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   {item.type === "video" && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">

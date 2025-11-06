@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Pencil, Trash2, Eye, Mail, User } from "lucide-react";
+import Image from "next/image";
 import { DataTable, DataTableColumnHeader } from "@/components/table";
 import { ColumnDef } from "@tanstack/react-table";
 import { AuthorFormModal } from "@/components/admin/authors/author-form-modal";
@@ -128,10 +129,12 @@ export default function AuthorsPage() {
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 rounded-full overflow-hidden bg-muted flex-shrink-0">
               {author.avatar ? (
-                <img
+                <Image
                   src={author.avatar}
                   alt={author.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="40px"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

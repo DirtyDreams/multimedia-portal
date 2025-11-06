@@ -2814,10 +2814,10 @@
               1
             ],
             "details": "Stwórz integration testy dla wszystkich REST endpoints: auth, articles, blog, wiki, gallery, comments, ratings. Użyj Supertest do testowania HTTP requests/responses. Testuj authentication, authorization, CRUD operations, error responses, data validation.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Uruchom npm run test:e2e w backend/, wszystkie API endpoints muszą odpowiadać poprawnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:41:22.360Z"
+            "updatedAt": "2025-11-06T23:04:18.807Z"
           },
           {
             "id": 3,
@@ -2825,10 +2825,10 @@
             "description": "Napisz testy komponentów React używając React Testing Library i Jest",
             "dependencies": [],
             "details": "Stwórz testy dla key components: Navigation, Footer, ArticleCard, BlogCard, CommentSection, RatingWidget, AdminPanel components. Testuj user interactions, props rendering, state changes, form submissions. Użyj @testing-library/react i @testing-library/user-event.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom npm test w frontend/, sprawdź coverage report dla komponentów",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:37:10.871Z"
+            "updatedAt": "2025-11-06T22:22:06.101Z"
           },
           {
             "id": 4,
@@ -2839,9 +2839,10 @@
               3
             ],
             "details": "Stwórz Playwright testy dla: user registration/login, article creation/editing, blog posting, wiki page creation, gallery upload, commenting, rating. Testuj full user workflows w różnych browserach (Chrome, Firefox, Safari). Dodaj fixtures i page objects pattern.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Uruchom npx playwright test, wszystkie user flows muszą działać w różnych browserach",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T23:12:06.975Z"
           },
           {
             "id": 5,
@@ -2851,9 +2852,10 @@
               2
             ],
             "details": "Stwórz k6 scripts dla load testing API endpoints. Testuj scenarios: normal load (10 users), stress load (100 users), spike test. Monitoruj response times, throughput, error rates. Ustaw performance thresholds: avg response < 500ms, 95th percentile < 1s, error rate < 1%.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom k6 testy, sprawdź czy API spełnia performance requirements pod load",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T23:10:49.545Z"
           },
           {
             "id": 6,
@@ -2861,9 +2863,10 @@
             "description": "Optymalizuj rozmiar bundle i implementuj code splitting w Next.js aplikacji",
             "dependencies": [],
             "details": "Zaimplementuj dynamic imports dla heavy components, route-based code splitting, vendor chunks separation. Użyj webpack-bundle-analyzer do analizy bundle size. Optymalizuj imports (tree shaking), usuń unused dependencies. Cel: main chunk < 200KB, vendor chunk < 500KB.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom npm run build, sprawdź bundle analyzer report, main chunk musi być < 200KB",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T22:32:21.087Z"
           },
           {
             "id": 7,
@@ -2871,9 +2874,10 @@
             "description": "Implementuj optymalizację obrazów i lazy loading dla lepszej wydajności",
             "dependencies": [],
             "details": "Użyj Next.js Image component z automatic optimization. Implementuj lazy loading dla gallery images, responsive images z różnymi sizes. Dodaj WebP format support, blur placeholder podczas ładowania. Optymalizuj JPEG/PNG compression settings.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź w dev tools Network tab czy images są lazy loaded i optimized",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T22:40:26.553Z"
           },
           {
             "id": 8,
@@ -2881,9 +2885,10 @@
             "description": "Optymalizuj zapytania do bazy danych i dodaj odpowiednie indeksy",
             "dependencies": [],
             "details": "Przeanalizuj slow queries w PostgreSQL logs. Dodaj database indexes dla często używanych pól: user_id, created_at, title, category_id, tag relations. Optymalizuj N+1 queries używając Prisma include/select. Dodaj connection pooling configuration.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź query performance w database logs, slow queries < 100ms",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T22:47:52.882Z"
           },
           {
             "id": 9,
@@ -2904,15 +2909,16 @@
             "description": "Implementuj comprehensive error handling i error boundary components",
             "dependencies": [],
             "details": "Stwórz ErrorBoundary components dla różnych sekcji aplikacji. Implementuj error logging system (Sentry lub własny). Dodaj user-friendly error pages, fallback UI components, retry mechanisms. Obsługuj network errors, API failures, authentication errors.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Testuj error scenarios, sprawdź czy error boundaries catch errors i pokazują fallback UI",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T22:57:19.043Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T21:41:22.360Z"
+        "updatedAt": "2025-11-06T23:12:06.975Z"
       },
       {
         "id": "35",
@@ -3051,7 +3057,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:41:22.363Z",
+      "lastModified": "2025-11-06T23:12:06.978Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [

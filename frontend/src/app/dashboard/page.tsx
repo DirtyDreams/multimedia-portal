@@ -1,16 +1,46 @@
-import { Suspense } from "react";
-import { Loader2 } from "lucide-react";
-import {
-  DashboardStats,
-  ContentOverviewChart,
-  ContentDistributionChart,
-  RecentActivity,
-} from "@/components/dashboard";
+"use client";
 
-export const metadata = {
-  title: "Dashboard - Multimedia Portal Admin",
-  description: "Admin dashboard for managing content",
-};
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Loader2 } from "lucide-react";
+import { DashboardStats } from "@/components/dashboard";
+
+// Dynamic imports for chart components (heavy Recharts library)
+const ContentOverviewChart = dynamic(
+  () => import("@/components/dashboard/content-overview-chart").then((mod) => ({ default: mod.ContentOverviewChart })),
+  {
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      </div>
+    ),
+    ssr: false,
+  }
+);
+
+const ContentDistributionChart = dynamic(
+  () => import("@/components/dashboard/content-distribution-chart").then((mod) => ({ default: mod.ContentDistributionChart })),
+  {
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      </div>
+    ),
+    ssr: false,
+  }
+);
+
+const RecentActivity = dynamic(
+  () => import("@/components/dashboard/recent-activity").then((mod) => ({ default: mod.RecentActivity })),
+  {
+    loading: () => (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      </div>
+    ),
+  }
+);
+
 
 export default function DashboardPage() {
   return (

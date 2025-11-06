@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { X, Loader2 } from "lucide-react";
-import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { RichTextEditorLazy as RichTextEditor } from "@/components/editor/rich-text-editor-lazy";
 
 interface Article {
   id: string;
