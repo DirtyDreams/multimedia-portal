@@ -1497,10 +1497,10 @@
               1
             ],
             "details": "Zainstaluj BullMQ i Redis. Stwórz PublishingQueue z job 'publishScheduledContent'. Implementuj PublishingProcessor który zmienia status z 'scheduled' na 'published'. Skonfiguruj cron job sprawdzający co minutę scheduled content. Dodaj endpoint do planowania publikacji.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy scheduled content publikuje się automatycznie w określonym czasie, queue worker przetwarza joby poprawnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:18:43.803Z"
+            "updatedAt": "2025-11-06T18:21:08.339Z"
           },
           {
             "id": 3,
@@ -1510,9 +1510,10 @@
               1
             ],
             "details": "Stwórz ContentVersionEntity z polami: contentId, contentType, version, data, createdAt, author. Implementuj ContentVersionService z metodami saveVersion, getVersions, restoreVersion. Dodaj automatyczne zapisywanie wersji przy każdej zmianie content. Stwórz endpoint do przeglądania historii wersji.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy każda zmiana content tworzy nową wersję, można przywrócić poprzednią wersję, historia wersji jest poprawnie wyświetlana",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:21:27.656Z"
           },
           {
             "id": 4,
@@ -1543,7 +1544,7 @@
         "complexity": 8,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
-        "updatedAt": "2025-11-06T18:18:43.803Z"
+        "updatedAt": "2025-11-06T18:21:27.656Z"
       },
       {
         "id": "21",
@@ -2999,7 +3000,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:18:43.806Z",
+      "lastModified": "2025-11-06T18:21:27.659Z",
       "taskCount": 35,
       "completedCount": 23,
       "tags": [

@@ -17,6 +17,7 @@ import { SearchModule } from './modules/search/search.module';
 import { QueuesModule } from './queues/queues.module';
 import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
+import { ContentVersionsModule } from './modules/content-versions/content-versions.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
     RatingsModule,
     NotificationsModule,
     SearchModule,
+    ContentVersionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

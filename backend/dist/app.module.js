@@ -26,6 +26,7 @@ const search_module_1 = require("./modules/search/search.module");
 const queues_module_1 = require("./queues/queues.module");
 const cache_module_1 = require("./cache/cache.module");
 const config_module_1 = require("./config/config.module");
+const content_versions_module_1 = require("./modules/content-versions/content-versions.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -51,6 +52,7 @@ exports.AppModule = AppModule = __decorate([
             ratings_module_1.RatingsModule,
             notifications_module_1.NotificationsModule,
             search_module_1.SearchModule,
+            content_versions_module_1.ContentVersionsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
