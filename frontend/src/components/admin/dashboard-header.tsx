@@ -1,9 +1,10 @@
 "use client";
 
-import { Bell, Search, User, LogOut } from "lucide-react";
+import { Search, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
+import { NotificationCenter } from "@/components/notifications/notification-center";
 
 export function DashboardHeader() {
   const { user, logout } = useAuth();
@@ -31,10 +32,7 @@ export function DashboardHeader() {
       {/* Actions */}
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <button className="relative p-2 hover:bg-muted rounded-lg transition">
-          <Bell className="h-5 w-5 text-muted-foreground" />
-          <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
-        </button>
+        <NotificationCenter />
 
         {/* User Menu */}
         <div className="flex items-center gap-3 pl-4 border-l border-border">
