@@ -2696,10 +2696,10 @@
             "description": "Implementacja głównego komponentu NotificationCenter z dropdown menu i listą powiadomień",
             "dependencies": [],
             "details": "Stwórz NotificationCenter komponent w Next.js z dropdown menu używając Tailwind CSS. Implementuj listę powiadomień z avatar użytkownika, tytułem, treścią i timestampem. Dodaj state management dla otwarcia/zamknięcia dropdown. Zaimplementuj lazy loading dla starszych powiadomień.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy dropdown otwiera się/zamyka poprawnie, lista powiadomień wyświetla się, lazy loading działa przy scrollowaniu",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T21:00:07.567Z"
+            "updatedAt": "2025-11-06T21:02:34.899Z"
           },
           {
             "id": 2,
@@ -2719,9 +2719,10 @@
             "description": "Implementacja systemu toast notifications dla powiadomień w czasie rzeczywistym",
             "dependencies": [],
             "details": "Stwórz ToastNotification komponent używając biblioteki react-hot-toast lub react-toastify. Implementuj różne typy toastów (success, info, warning, error). Dodaj customowe styling zgodny z design system. Skonfiguruj auto-dismiss i pozycjonowanie toastów.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy toasty wyświetlają się w odpowiednim czasie, różne typy mają odpowiednie style, auto-dismiss działa",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T21:02:45.359Z"
           },
           {
             "id": 4,
@@ -2775,7 +2776,7 @@
         "complexity": 6,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Rozłóż na subtaski: 1) NotificationCenter dropdown component, 2) Notification badge counter z real-time updates, 3) Toast notification system, 4) Socket.io client integration i event handling, 5) Notification preferences page, 6) Browser push notifications setup, 7) Notification persistence i mark as read functionality.",
-        "updatedAt": "2025-11-06T21:00:07.567Z"
+        "updatedAt": "2025-11-06T21:02:45.359Z"
       },
       {
         "id": "34",
@@ -3041,7 +3042,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T21:00:07.570Z",
+      "lastModified": "2025-11-06T21:02:45.362Z",
       "taskCount": 35,
       "completedCount": 28,
       "tags": [

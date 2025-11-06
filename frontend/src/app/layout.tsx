@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { QueryProvider } from "@/providers/query-provider";
 import { AuthProvider } from "@/providers/auth-provider";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
+import { ToastProvider } from "@/hooks/use-toast";
 
 export const metadata: Metadata = {
   title: "Multimedia Portal - Articles, Blog, Wiki, Gallery & Stories",
@@ -23,11 +24,13 @@ export default function RootLayout({
         <ErrorBoundary>
           <QueryProvider>
             <AuthProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
+              <ToastProvider>
+                <div className="flex min-h-screen flex-col">
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                </div>
+              </ToastProvider>
             </AuthProvider>
           </QueryProvider>
         </ErrorBoundary>
