@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ArticlesModule } from './modules/articles/articles.module';
 import { BlogPostsModule } from './modules/blog-posts/blog-posts.module';
 import { WikiPagesModule } from './modules/wiki-pages/wiki-pages.module';
+import { GalleryItemsModule } from './modules/gallery-items/gallery-items.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 
 @Module({
@@ -21,6 +22,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
     ArticlesModule,
     BlogPostsModule,
     WikiPagesModule,
+    GalleryItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
