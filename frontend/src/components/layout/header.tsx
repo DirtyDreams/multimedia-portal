@@ -1,13 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, User, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navigation } from "./navigation";
 import { useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/95">
@@ -26,12 +32,37 @@ export function Header() {
 
         {/* User Actions */}
         <div className="hidden md:flex md:items-center md:space-x-4">
-          <Button variant="ghost" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/register">Sign Up</Link>
-          </Button>
+          {isAuthenticated && user ? (
+            <>
+              <div className="flex items-center space-x-2 text-sm">
+                <User className="h-4 w-4" />
+                <span className="text-zinc-600 dark:text-zinc-400">
+                  {user.name || user.email}
+                </span>
+              </div>
+              {(user.role === "admin" || user.role === "moderator") && (
+                <Button variant="ghost" asChild size="sm">
+                  <Link href="/dashboard">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Dashboard
+                  </Link>
+                </Button>
+              )}
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -52,12 +83,41 @@ export function Header() {
           <div className="container mx-auto px-4 py-4 space-y-4">
             <Navigation mobile />
             <div className="flex flex-col space-y-2 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-              <Button variant="ghost" asChild className="w-full justify-start">
-                <Link href="/login">Login</Link>
-              </Button>
-              <Button asChild className="w-full">
-                <Link href="/register">Sign Up</Link>
-              </Button>
+              {isAuthenticated && user ? (
+                <>
+                  <div className="px-3 py-2 text-sm text-zinc-600 dark:text-zinc-400">
+                    <div className="flex items-center space-x-2">
+                      <User className="h-4 w-4" />
+                      <span>{user.name || user.email}</span>
+                    </div>
+                  </div>
+                  {(user.role === "admin" || user.role === "moderator") && (
+                    <Button variant="ghost" asChild className="w-full justify-start">
+                      <Link href="/dashboard">
+                        <Settings className="h-4 w-4 mr-2" />
+                        Dashboard
+                      </Link>
+                    </Button>
+                  )}
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" asChild className="w-full justify-start">
+                    <Link href="/login">Login</Link>
+                  </Button>
+                  <Button asChild className="w-full">
+                    <Link href="/register">Sign Up</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

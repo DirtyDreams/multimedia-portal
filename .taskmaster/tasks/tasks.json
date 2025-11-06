@@ -1842,7 +1842,7 @@
         "dependencies": [
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1850,7 +1850,7 @@
             "description": "Stworzenie nowego projektu Next.js 14 z App Router i podstawową konfiguracją",
             "dependencies": [],
             "details": "Wykonaj `npx create-next-app@latest frontend --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\"` w folderze głównym. Skonfiguruj next.config.js z podstawowymi ustawieniami. Skonfiguruj TypeScript i ESLint. Dodaj podstawowe foldery w src/: app, components, lib, types, hooks.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy `npm run dev` uruchamia aplikację na localhost:3000, TypeScript kompiluje się bez błędów, TailwindCSS styles ładują się poprawnie",
             "parentId": "undefined"
           },
@@ -1862,7 +1862,7 @@
               1
             ],
             "details": "Wykonaj `npx shadcn-ui@latest init` w folderze frontend. Skonfiguruj components.json z odpowiednimi ścieżkami. Zainstaluj podstawowe komponenty: `npx shadcn-ui@latest add button card input dialog toast navigation-menu`. Skonfiguruj globals.css z CSS variables dla theme.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy shadcn/ui komponenty importują się bez błędów, styles theme działają poprawnie, komponenty renderują się z odpowiednimi stylami",
             "parentId": "undefined"
           },
@@ -1874,7 +1874,7 @@
               2
             ],
             "details": "Stwórz komponenty w src/components/: Header.tsx (logo, user menu, search), Navigation.tsx (main navigation menu), Footer.tsx (links, copyright), LoadingSpinner.tsx, ErrorBoundary.tsx. Wszystkie komponenty z TypeScript interfaces i responsive design. Użyj shadcn/ui komponentów jako baza.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie komponenty renderują się bez błędów, responsive design działa na mobile/desktop, TypeScript types są poprawne",
             "parentId": "undefined"
           },
@@ -1886,7 +1886,7 @@
               3
             ],
             "details": "Skonfiguruj src/app/layout.tsx z Header, Navigation, main content area i Footer. Stwórz page.tsx jako homepage. Dodaj loading.tsx, error.tsx, not-found.tsx templates. Skonfiguruj metadata i viewport settings. Dodaj podstawowe routing dla /blog, /articles, /wiki, /gallery, /stories.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy layout renderuje się poprawnie na wszystkich stronach, navigation działa, loading states działają, error boundaries catchują błędy",
             "parentId": "undefined"
           },
@@ -1898,7 +1898,7 @@
               4
             ],
             "details": "Zainstaluj @tanstack/react-query i zustand. Stwórz QueryClient provider w layout.tsx. Stwórz Zustand stores w src/lib/store/: authStore.ts (user state), uiStore.ts (sidebar, modals). Stwórz query hooks w src/hooks/ dla API calls. Skonfiguruj devtools dla development.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy TanStack Query devtools działają, Zustand store zapisuje state poprawnie, query hooks wykonują się bez błędów, devtools pokazują state changes",
             "parentId": "undefined"
           }
