@@ -26,12 +26,17 @@ import { Roles } from '../../common/decorators/roles.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UserRole } from '../../types/prisma.types';
+import { ContentVersionsService } from '../content-versions/content-versions.service';
+import { VersionableType } from '../content-versions/dto';
 
 @ApiTags('articles')
 @Controller('articles')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ArticlesController {
-  constructor(private readonly articlesService: ArticlesService) {}
+  constructor(
+    private readonly articlesService: ArticlesService,
+    private readonly contentVersionsService: ContentVersionsService,
+  ) {}
 
   @Post()
   @Roles(UserRole.ADMIN, UserRole.MODERATOR)
@@ -94,6 +99,39 @@ export class ArticlesController {
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
     return this.articlesService.update(id, updateArticleDto);
+  }
+
+  @Post(':id/autosave')
+  @Roles(UserRole.ADMIN, UserRole.MODERATOR)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Auto-save article as a version (Admin/Moderator only)' })
+  @ApiParam({ name: 'id', description: 'Article ID' })
+  @ApiResponse({ status: 201, description: 'Article auto-saved successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Article not found' })
+  @HttpCode(HttpStatus.CREATED)
+  async autosave(
+    @Param('id') id: string,
+    @CurrentUser('id') userId: string,
+  ) {
+    // Get current article data
+    const article = await this.articlesService.findOne(id);
+
+    // Auto-save as a new version
+    return this.contentVersionsService.autoSaveVersion(
+      userId,
+      VersionableType.ARTICLE,
+      id,
+      article.title,
+      article.content,
+      article.excerpt || undefined,
+      {
+        featuredImage: article.featuredImage,
+        status: article.status,
+      },
+      'Auto-saved draft',
+    );
   }
 
   @Delete(':id')

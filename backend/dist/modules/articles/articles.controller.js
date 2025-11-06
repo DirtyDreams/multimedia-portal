@@ -23,10 +23,14 @@ const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const public_decorator_1 = require("../../common/decorators/public.decorator");
 const current_user_decorator_1 = require("../../common/decorators/current-user.decorator");
 const prisma_types_1 = require("../../types/prisma.types");
+const content_versions_service_1 = require("../content-versions/content-versions.service");
+const dto_2 = require("../content-versions/dto");
 let ArticlesController = class ArticlesController {
     articlesService;
-    constructor(articlesService) {
+    contentVersionsService;
+    constructor(articlesService, contentVersionsService) {
         this.articlesService = articlesService;
+        this.contentVersionsService = contentVersionsService;
     }
     async create(userId, createArticleDto) {
         return this.articlesService.create(userId, createArticleDto);
@@ -43,6 +47,13 @@ let ArticlesController = class ArticlesController {
     }
     async update(id, updateArticleDto) {
         return this.articlesService.update(id, updateArticleDto);
+    }
+    async autosave(id, userId) {
+        const article = await this.articlesService.findOne(id);
+        return this.contentVersionsService.autoSaveVersion(userId, dto_2.VersionableType.ARTICLE, id, article.title, article.content, article.excerpt || undefined, {
+            featuredImage: article.featuredImage,
+            status: article.status,
+        }, 'Auto-saved draft');
     }
     async remove(id) {
         return this.articlesService.remove(id);
@@ -107,6 +118,23 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ArticlesController.prototype, "update", null);
 __decorate([
+    (0, common_1.Post)(':id/autosave'),
+    (0, roles_decorator_1.Roles)(prisma_types_1.UserRole.ADMIN, prisma_types_1.UserRole.MODERATOR),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Auto-save article as a version (Admin/Moderator only)' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Article ID' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Article auto-saved successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Article not found' }),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, current_user_decorator_1.CurrentUser)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], ArticlesController.prototype, "autosave", null);
+__decorate([
     (0, common_1.Delete)(':id'),
     (0, roles_decorator_1.Roles)(prisma_types_1.UserRole.ADMIN),
     (0, swagger_1.ApiBearerAuth)(),
@@ -126,6 +154,7 @@ exports.ArticlesController = ArticlesController = __decorate([
     (0, swagger_1.ApiTags)('articles'),
     (0, common_1.Controller)('articles'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    __metadata("design:paramtypes", [articles_service_1.ArticlesService])
+    __metadata("design:paramtypes", [articles_service_1.ArticlesService,
+        content_versions_service_1.ContentVersionsService])
 ], ArticlesController);
 //# sourceMappingURL=articles.controller.js.map

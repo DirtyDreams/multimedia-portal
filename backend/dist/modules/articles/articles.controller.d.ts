@@ -1,8 +1,10 @@
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto, UpdateArticleDto, QueryArticleDto } from './dto';
+import { ContentVersionsService } from '../content-versions/content-versions.service';
 export declare class ArticlesController {
     private readonly articlesService;
-    constructor(articlesService: ArticlesService);
+    private readonly contentVersionsService;
+    constructor(articlesService: ArticlesService, contentVersionsService: ContentVersionsService);
     create(userId: string, createArticleDto: CreateArticleDto): Promise<any>;
     findAll(queryDto: QueryArticleDto): Promise<{
         data: any;
@@ -15,6 +17,7 @@ export declare class ArticlesController {
     }>;
     findOne(identifier: string): Promise<any>;
     update(id: string, updateArticleDto: UpdateArticleDto): Promise<any>;
+    autosave(id: string, userId: string): Promise<any>;
     remove(id: string): Promise<{
         message: string;
     }>;

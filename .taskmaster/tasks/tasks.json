@@ -1510,10 +1510,10 @@
               1
             ],
             "details": "Stwórz ContentVersionEntity z polami: contentId, contentType, version, data, createdAt, author. Implementuj ContentVersionService z metodami saveVersion, getVersions, restoreVersion. Dodaj automatyczne zapisywanie wersji przy każdej zmianie content. Stwórz endpoint do przeglądania historii wersji.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy każda zmiana content tworzy nową wersję, można przywrócić poprzednią wersję, historia wersji jest poprawnie wyświetlana",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:21:27.656Z"
+            "updatedAt": "2025-11-06T18:25:27.686Z"
           },
           {
             "id": 4,
@@ -1523,9 +1523,10 @@
               3
             ],
             "details": "Stwórz AutoSaveService z metodą saveDraft. Implementuj frontend timer który wywołuje auto-save co 30s. Dodaj endpoint POST /content/:type/:id/autosave. Użyj debouncing dla optymalizacji. Przechowuj drafts w osobnej tabeli lub jako specjalny typ version.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy auto-save uruchamia się co 30s podczas edycji, drafts są zapisywane poprawnie, nie ma konfliktów z manual save",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:26:02.316Z"
           },
           {
             "id": 5,
@@ -1544,7 +1545,7 @@
         "complexity": 8,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
-        "updatedAt": "2025-11-06T18:21:27.656Z"
+        "updatedAt": "2025-11-06T18:26:02.316Z"
       },
       {
         "id": "21",
@@ -3000,7 +3001,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:21:27.659Z",
+      "lastModified": "2025-11-06T18:26:02.319Z",
       "taskCount": 35,
       "completedCount": 23,
       "tags": [
