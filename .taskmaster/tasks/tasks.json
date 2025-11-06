@@ -2198,10 +2198,10 @@
               1
             ],
             "details": "Stwórz komponent Lightbox z nawigacją (poprzedni/następny), zoom, close button. Implementuj keyboard navigation (strzałki, escape). Dodaj overlay z blur background. Użyj Portal dla renderowania modala poza DOM tree. Obsłuż touch gestures dla mobile (swipe).",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy lightbox otwiera się po kliknięciu, nawigacja strzałkami działa, escape zamyka modal, touch gestures działają na mobile",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:39:29.285Z"
+            "updatedAt": "2025-11-06T18:42:21.865Z"
           },
           {
             "id": 4,
@@ -2231,7 +2231,7 @@
         "complexity": 7,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
-        "updatedAt": "2025-11-06T18:39:29.285Z"
+        "updatedAt": "2025-11-06T18:42:21.865Z"
       },
       {
         "id": "30",
@@ -3006,7 +3006,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:39:29.288Z",
+      "lastModified": "2025-11-06T18:42:21.869Z",
       "taskCount": 35,
       "completedCount": 24,
       "tags": [
