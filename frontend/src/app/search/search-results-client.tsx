@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Calendar, User, Loader2, Filter } from "lucide-react";
+import { Search, Calendar, User, Loader2 } from "lucide-react";
 import { SearchResponse, SearchResult, ContentTypeFilter } from "@/types/search";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { formatDistance } from "date-fns";
+import { FilterPanel, SearchFilters } from "@/components/search/filter-panel";
 
 export function SearchResultsClient() {
   const router = useRouter();
@@ -15,17 +16,59 @@ export function SearchResultsClient() {
   const query = searchParams.get("q") || "";
   const [page, setPage] = useState(1);
   const [contentTypeFilter, setContentTypeFilter] = useState<ContentTypeFilter | "">("");
+  const [showFilters, setShowFilters] = useState(true);
+
+  // Initialize filters from URL
+  const [filters, setFilters] = useState<SearchFilters>(() => {
+    const categoryIds = searchParams.getAll("categoryIds");
+    const tagIds = searchParams.getAll("tagIds");
+    const dateFrom = searchParams.get("dateFrom") || undefined;
+    const dateTo = searchParams.get("dateTo") || undefined;
+    const sortBy = (searchParams.get("sortBy") as "relevance" | "date" | "title") || "relevance";
+    const sortOrder = (searchParams.get("sortOrder") as "asc" | "desc") || "desc";
+
+    return {
+      categoryIds,
+      tagIds,
+      dateFrom,
+      dateTo,
+      sortBy,
+      sortOrder,
+    };
+  });
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
-  // Reset page when query changes
+  // Update URL when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("q", query);
+
+    if (contentTypeFilter) {
+      params.set("contentType", contentTypeFilter);
+    }
+
+    filters.categoryIds.forEach((id) => params.append("categoryIds", id));
+    filters.tagIds.forEach((id) => params.append("tagIds", id));
+
+    if (filters.dateFrom) params.set("dateFrom", filters.dateFrom);
+    if (filters.dateTo) params.set("dateTo", filters.dateTo);
+    if (filters.sortBy !== "relevance") params.set("sortBy", filters.sortBy);
+    if (filters.sortOrder !== "desc") params.set("sortOrder", filters.sortOrder);
+
+    if (page > 1) params.set("page", page.toString());
+
+    router.replace(`/search?${params.toString()}`, { scroll: false });
+  }, [filters, contentTypeFilter, query, page, router]);
+
+  // Reset page when query or filters change
   useEffect(() => {
     setPage(1);
-  }, [query, contentTypeFilter]);
+  }, [query, contentTypeFilter, filters]);
 
   // Fetch search results
   const { data, isLoading, error } = useQuery<SearchResponse>({
-    queryKey: ["search", query, page, contentTypeFilter],
+    queryKey: ["search", query, page, contentTypeFilter, filters],
     queryFn: async () => {
       const params = new URLSearchParams();
       params.append("q", query);
@@ -35,6 +78,15 @@ export function SearchResultsClient() {
       if (contentTypeFilter) {
         params.append("contentType", contentTypeFilter);
       }
+
+      // Add filter parameters
+      filters.categoryIds.forEach((id) => params.append("categoryIds", id));
+      filters.tagIds.forEach((id) => params.append("tagIds", id));
+
+      if (filters.dateFrom) params.append("dateFrom", filters.dateFrom);
+      if (filters.dateTo) params.append("dateTo", filters.dateTo);
+      if (filters.sortBy) params.append("sortBy", filters.sortBy);
+      if (filters.sortOrder) params.append("sortOrder", filters.sortOrder);
 
       const response = await fetch(`${API_URL}/search?${params.toString()}`);
 
@@ -46,6 +98,10 @@ export function SearchResultsClient() {
     },
     enabled: query.length >= 2,
   });
+
+  const handleFiltersChange = useCallback((newFilters: SearchFilters) => {
+    setFilters(newFilters);
+  }, []);
 
   const getContentTypeLabel = (contentType: string) => {
     const labels: Record<string, string> = {
@@ -128,7 +184,7 @@ export function SearchResultsClient() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Search Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">
@@ -142,10 +198,23 @@ export function SearchResultsClient() {
           )}
         </div>
 
-        {/* Content Type Filter */}
-        <div className="mb-6 flex items-center gap-2 flex-wrap">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground mr-2">Filter by type:</span>
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Filter Panel - Left Column */}
+          <aside className="lg:col-span-1">
+            <div className="lg:sticky lg:top-20">
+              <FilterPanel
+                onFiltersChange={handleFiltersChange}
+                initialFilters={filters}
+              />
+            </div>
+          </aside>
+
+          {/* Results - Right Column */}
+          <main className="lg:col-span-3">
+            {/* Content Type Filter */}
+            <div className="mb-6 flex items-center gap-2 flex-wrap">
+              <span className="text-sm text-muted-foreground mr-2">Content type:</span>
           <Button
             variant={contentTypeFilter === "" ? "default" : "outline"}
             size="sm"
@@ -325,6 +394,8 @@ export function SearchResultsClient() {
             )}
           </>
         )}
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -2430,10 +2430,10 @@
               2
             ],
             "details": "Stwórz SearchResults komponent wyświetlający wyniki w grid/list layout, implementuj paginację z infinite scroll lub page numbers. Dodaj search metadata (liczba wyników, czas wyszukiwania). Użyj SWR do cache'owania wyników.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy wyniki wyświetlają się poprawnie, paginacja ładuje kolejne strony, metadata jest aktualna, cache działa",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T19:34:09.614Z"
+            "updatedAt": "2025-11-06T19:36:39.896Z"
           },
           {
             "id": 4,
@@ -2443,9 +2443,10 @@
               3
             ],
             "details": "Stwórz FilterPanel komponent z checkboxami dla kategorii, tagów, date range picker, sortowanie. Implementuj multi-select filters, clear all filters, filter badges. Użyj URLSearchParams do persistencji filtrów w URL.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy filtry ograniczają wyniki, multi-select działa, clear filters resetuje wszystko, URL params są aktualizowane",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:37:23.505Z"
           },
           {
             "id": 5,
@@ -2503,7 +2504,7 @@
         "complexity": 6,
         "recommendedSubtasks": 8,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
-        "updatedAt": "2025-11-06T19:34:09.614Z"
+        "updatedAt": "2025-11-06T19:37:23.505Z"
       },
       {
         "id": "32",
@@ -3021,7 +3022,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:34:09.617Z",
+      "lastModified": "2025-11-06T19:37:23.509Z",
       "taskCount": 35,
       "completedCount": 26,
       "tags": [
