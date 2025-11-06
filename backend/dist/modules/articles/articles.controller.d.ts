@@ -17,6 +17,7 @@ export declare class ArticlesController {
     }>;
     findOne(identifier: string): Promise<any>;
     update(id: string, updateArticleDto: UpdateArticleDto): Promise<any>;
+    preview(id: string): Promise<any>;
     autosave(id: string, userId: string): Promise<any>;
     remove(id: string): Promise<{
         message: string;

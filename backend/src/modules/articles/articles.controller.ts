@@ -101,6 +101,20 @@ export class ArticlesController {
     return this.articlesService.update(id, updateArticleDto);
   }
 
+  @Get(':id/preview')
+  @Roles(UserRole.ADMIN, UserRole.MODERATOR)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Preview article regardless of status (Admin/Moderator only)' })
+  @ApiParam({ name: 'id', description: 'Article ID' })
+  @ApiResponse({ status: 200, description: 'Article preview retrieved successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Article not found' })
+  async preview(@Param('id') id: string) {
+    // Retrieve article regardless of status (DRAFT, PUBLISHED, etc.)
+    return this.articlesService.findOne(id);
+  }
+
   @Post(':id/autosave')
   @Roles(UserRole.ADMIN, UserRole.MODERATOR)
   @ApiBearerAuth()

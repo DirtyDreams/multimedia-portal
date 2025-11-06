@@ -48,6 +48,9 @@ let ArticlesController = class ArticlesController {
     async update(id, updateArticleDto) {
         return this.articlesService.update(id, updateArticleDto);
     }
+    async preview(id) {
+        return this.articlesService.findOne(id);
+    }
     async autosave(id, userId) {
         const article = await this.articlesService.findOne(id);
         return this.contentVersionsService.autoSaveVersion(userId, dto_2.VersionableType.ARTICLE, id, article.title, article.content, article.excerpt || undefined, {
@@ -117,6 +120,21 @@ __decorate([
     __metadata("design:paramtypes", [String, dto_1.UpdateArticleDto]),
     __metadata("design:returntype", Promise)
 ], ArticlesController.prototype, "update", null);
+__decorate([
+    (0, common_1.Get)(':id/preview'),
+    (0, roles_decorator_1.Roles)(prisma_types_1.UserRole.ADMIN, prisma_types_1.UserRole.MODERATOR),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Preview article regardless of status (Admin/Moderator only)' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Article ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Article preview retrieved successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Article not found' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticlesController.prototype, "preview", null);
 __decorate([
     (0, common_1.Post)(':id/autosave'),
     (0, roles_decorator_1.Roles)(prisma_types_1.UserRole.ADMIN, prisma_types_1.UserRole.MODERATOR),

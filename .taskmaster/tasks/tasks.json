@@ -1523,10 +1523,10 @@
               3
             ],
             "details": "Stwórz AutoSaveService z metodą saveDraft. Implementuj frontend timer który wywołuje auto-save co 30s. Dodaj endpoint POST /content/:type/:id/autosave. Użyj debouncing dla optymalizacji. Przechowuj drafts w osobnej tabeli lub jako specjalny typ version.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy auto-save uruchamia się co 30s podczas edycji, drafts są zapisywane poprawnie, nie ma konfliktów z manual save",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T18:26:02.316Z"
+            "updatedAt": "2025-11-06T18:28:36.782Z"
           },
           {
             "id": 5,
@@ -1537,15 +1537,16 @@
               4
             ],
             "details": "Dodaj query parameter ?preview=true do content endpoints. Zmodyfikuj content services aby zwracały draft/scheduled content z preview flag. Implementuj PreviewGuard sprawdzający uprawnienia. Stwórz specjalne preview URLs z tokenami. Dodaj preview banner w UI.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy draft content jest dostępne z preview URLs, preview nie jest dostępne bez autoryzacji, preview banner wyświetla się poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:29:09.592Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
-        "updatedAt": "2025-11-06T18:26:02.316Z"
+        "updatedAt": "2025-11-06T18:29:09.592Z"
       },
       {
         "id": "21",
@@ -3001,7 +3002,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:26:02.319Z",
+      "lastModified": "2025-11-06T18:29:09.595Z",
       "taskCount": 35,
       "completedCount": 23,
       "tags": [
