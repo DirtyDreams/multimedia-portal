@@ -1323,7 +1323,7 @@
         "dependencies": [
           "17"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1386,7 +1386,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących queue setup, procesory i monitoring dashboard."
+        "expansionPrompt": "Zadanie jest już właściwie podzielone na 5 subtasków obejmujących queue setup, procesory i monitoring dashboard.",
+        "updatedAt": "2025-11-06T17:54:21.059Z"
       },
       {
         "id": "19",
@@ -2994,9 +2995,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T17:45:56.944Z",
+      "lastModified": "2025-11-06T17:54:21.062Z",
       "taskCount": 35,
-      "completedCount": 21,
+      "completedCount": 22,
       "tags": [
         "master"
       ]
