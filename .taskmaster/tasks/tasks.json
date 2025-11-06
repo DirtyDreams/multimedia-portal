@@ -2224,15 +2224,16 @@
               1
             ],
             "details": "Stwórz komponent UploadZone z drag & drop interface. Implementuj file validation (typ, rozmiar, format). Dodaj progress bar dla upload. Stwórz API endpoint /api/gallery/upload z multer middleware. Implementuj preview uploaded files przed zapisaniem. Dodaj batch upload support.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy drag & drop działa, file validation blokuje niepoprawne pliki, progress bar pokazuje postęp, uploaded files pojawiają się w galerii",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:49:54.319Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Zadanie ma już dobrą strukturę 5 subtasków pokrywającą grid layout, lazy loading, lightbox i upload functionality.",
-        "updatedAt": "2025-11-06T18:45:08.936Z"
+        "updatedAt": "2025-11-06T18:49:54.319Z"
       },
       {
         "id": "30",
@@ -3007,7 +3008,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T18:45:08.939Z",
+      "lastModified": "2025-11-06T18:49:54.323Z",
       "taskCount": 35,
       "completedCount": 24,
       "tags": [

@@ -51,7 +51,7 @@ export class GalleryItemsController {
         file: {
           type: 'string',
           format: 'binary',
-          description: 'Image file to upload',
+          description: 'Image or video file to upload (JPEG, PNG, GIF, WebP, MP4, WebM)',
         },
         title: {
           type: 'string',
@@ -92,12 +92,23 @@ export class GalleryItemsController {
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
-        fileSize: 10 * 1024 * 1024, // 10MB
+        fileSize: 50 * 1024 * 1024, // 50MB (increased for video support)
       },
       fileFilter: (req, file, callback) => {
-        if (!file.mimetype.startsWith('image/')) {
+        const allowedMimeTypes = [
+          'image/jpeg',
+          'image/png',
+          'image/gif',
+          'image/webp',
+          'video/mp4',
+          'video/webm',
+        ];
+
+        if (!allowedMimeTypes.includes(file.mimetype)) {
           return callback(
-            new BadRequestException('Only image files are allowed'),
+            new BadRequestException(
+              'Only image (JPEG, PNG, GIF, WebP) and video (MP4, WebM) files are allowed',
+            ),
             false,
           );
         }
