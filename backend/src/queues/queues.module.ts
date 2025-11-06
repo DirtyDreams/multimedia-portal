@@ -5,6 +5,7 @@ import { ImageProcessingProcessor } from './processors/image-processing.processo
 import { SearchIndexingProcessor } from './processors/search-indexing.processor';
 import { QueuesService } from './queues.service';
 import { SearchModule } from '../modules/search/search.module';
+import { EmailModule } from '../modules/email/email.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { SearchModule } from '../modules/search/search.module';
       },
     ),
     SearchModule,
+    EmailModule,
   ],
   providers: [
     EmailProcessor,
