@@ -2406,10 +2406,10 @@
             "description": "Stworzenie interaktywnego komponentu do oceniania treści w skali 1-5 gwiazdek z animacjami hover i kliknięć",
             "dependencies": [],
             "details": "Stwórz React komponent StarRating z state management dla aktualnej oceny, hover effects, animacje przy kliknięciu, readonly mode dla wyświetlania średniej oceny. Użyj Tailwind CSS do stylowania ikon gwiazdek. Implementuj onRatingChange callback dla zapisywania ocen w bazie danych.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy gwiazdki reagują na hover, kliknięcie zapisuje ocenę, readonly mode wyświetla średnią, animacje działają płynnie",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T19:21:45.053Z"
+            "updatedAt": "2025-11-06T19:25:29.557Z"
           },
           {
             "id": 2,
@@ -2417,9 +2417,10 @@
             "description": "Stworzenie paska wyszukiwania z funkcjonalnością autocomplete i debounced search",
             "dependencies": [],
             "details": "Stwórz SearchBar komponent z input field, dropdown z sugestiami, debounced search (300ms), keyboard navigation (strzałki, Enter, Escape). Implementuj useDebounce hook, integracja z search API dla autocomplete. Dodaj loading state i error handling.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy autocomplete wyświetla sugestie po wpisaniu 3 znaków, debounce działa, navigation klawiaturą działa, loading state jest widoczny",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T19:25:43.782Z"
           },
           {
             "id": 3,
@@ -2501,7 +2502,7 @@
         "complexity": 6,
         "recommendedSubtasks": 8,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent StarRating widget z interakcją, 2) SearchBar z autocomplete funkcjonalnością, 3) SearchResults page z pagination, 4) Faceted search filters (kategorie, tagi, data), 5) Search history management, 6) Advanced search options UI, 7) Search suggestions i typo correction, 8) Integration z MeiliSearch API i performance optimization.",
-        "updatedAt": "2025-11-06T19:21:45.053Z"
+        "updatedAt": "2025-11-06T19:25:43.782Z"
       },
       {
         "id": "32",
@@ -3019,7 +3020,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:21:45.057Z",
+      "lastModified": "2025-11-06T19:25:43.785Z",
       "taskCount": 35,
       "completedCount": 26,
       "tags": [
