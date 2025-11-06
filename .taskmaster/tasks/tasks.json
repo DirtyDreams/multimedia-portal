@@ -2839,9 +2839,10 @@
               3
             ],
             "details": "Stwórz Playwright testy dla: user registration/login, article creation/editing, blog posting, wiki page creation, gallery upload, commenting, rating. Testuj full user workflows w różnych browserach (Chrome, Firefox, Safari). Dodaj fixtures i page objects pattern.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Uruchom npx playwright test, wszystkie user flows muszą działać w różnych browserach",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T23:12:06.975Z"
           },
           {
             "id": 5,
@@ -2917,7 +2918,7 @@
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T23:10:49.545Z"
+        "updatedAt": "2025-11-06T23:12:06.975Z"
       },
       {
         "id": "35",
@@ -3056,7 +3057,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T23:10:49.548Z",
+      "lastModified": "2025-11-06T23:12:06.978Z",
       "taskCount": 35,
       "completedCount": 29,
       "tags": [
