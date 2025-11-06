@@ -12,6 +12,7 @@ import { StoriesModule } from './modules/stories/stories.module';
 import { AuthorsModule } from './modules/authors/authors.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { RatingsModule } from './modules/ratings/ratings.module';
+import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 
 @Module({
@@ -22,6 +23,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
     }),
     PrismaModule,
     CustomConfigModule,
+    CacheModule,
     AuthModule,
     ArticlesModule,
     BlogPostsModule,
