@@ -2541,9 +2541,10 @@
               1
             ],
             "details": "Stwórz /dashboard/page.tsx z overview cards (total users, articles, blog posts, etc.). Implementuj charts używając Tremor lub Recharts - line chart dla user registrations, bar chart dla content creation. Dodaj API endpoint GET /admin/dashboard dla statystyk.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy dashboard ładuje się dla admin users, charts wyświetlają poprawne dane, overview cards pokazują aktualne statystyki",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T20:19:21.154Z"
           },
           {
             "id": 3,
@@ -2667,7 +2668,7 @@
         "complexity": 9,
         "recommendedSubtasks": 12,
         "expansionPrompt": "Rozłóż na subtaski: 1) Admin layout z sidebar navigation, 2) Dashboard overview z charts i statistics, 3) Articles CRUD interface, 4) Blog CRUD interface, 5) Wiki CRUD interface z tree editor, 6) Gallery management interface, 7) Stories CRUD interface, 8) Authors management, 9) User management z role changes, 10) Rich Text Editor (Tiptap) integration, 11) TanStack Table dla wszystkich list views, 12) Settings management interface.",
-        "updatedAt": "2025-11-06T20:12:27.721Z"
+        "updatedAt": "2025-11-06T20:19:21.154Z"
       },
       {
         "id": "33",
@@ -3030,7 +3031,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T20:12:27.724Z",
+      "lastModified": "2025-11-06T20:19:21.157Z",
       "taskCount": 35,
       "completedCount": 27,
       "tags": [

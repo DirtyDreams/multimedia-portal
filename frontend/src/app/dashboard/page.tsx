@@ -1,5 +1,11 @@
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
+import {
+  DashboardStats,
+  ContentOverviewChart,
+  ContentDistributionChart,
+  RecentActivity,
+} from "@/components/dashboard";
 
 export const metadata = {
   title: "Dashboard - Multimedia Portal Admin",
@@ -23,32 +29,38 @@ export default function DashboardPage() {
           </div>
         }
       >
-        {/* Dashboard content will be added in Task 32.2 */}
-        <div className="grid gap-6">
-          <div className="p-6 bg-card border border-border rounded-lg">
-            <h2 className="text-xl font-semibold mb-2">Getting Started</h2>
-            <p className="text-muted-foreground">
-              Use the sidebar to navigate between different sections of the admin panel.
-            </p>
+        <div className="space-y-6">
+          {/* Statistics Cards */}
+          <DashboardStats />
+
+          {/* Charts Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Content Overview Chart */}
+            <div className="p-6 bg-card border border-border rounded-lg">
+              <h2 className="text-lg font-semibold mb-4">Content Overview</h2>
+              <p className="text-sm text-muted-foreground mb-4">
+                Content creation over the last 6 months
+              </p>
+              <ContentOverviewChart />
+            </div>
+
+            {/* Content Distribution Chart */}
+            <div className="p-6 bg-card border border-border rounded-lg">
+              <h2 className="text-lg font-semibold mb-4">Content Distribution</h2>
+              <p className="text-sm text-muted-foreground mb-4">
+                Distribution by content type
+              </p>
+              <ContentDistributionChart />
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 bg-card border border-border rounded-lg">
-              <div className="text-sm text-muted-foreground mb-1">Total Articles</div>
-              <div className="text-2xl font-bold">--</div>
-            </div>
-            <div className="p-4 bg-card border border-border rounded-lg">
-              <div className="text-sm text-muted-foreground mb-1">Blog Posts</div>
-              <div className="text-2xl font-bold">--</div>
-            </div>
-            <div className="p-4 bg-card border border-border rounded-lg">
-              <div className="text-sm text-muted-foreground mb-1">Wiki Pages</div>
-              <div className="text-2xl font-bold">--</div>
-            </div>
-            <div className="p-4 bg-card border border-border rounded-lg">
-              <div className="text-sm text-muted-foreground mb-1">Total Users</div>
-              <div className="text-2xl font-bold">--</div>
-            </div>
+          {/* Recent Activity */}
+          <div className="p-6 bg-card border border-border rounded-lg">
+            <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Latest actions in the system
+            </p>
+            <RecentActivity />
           </div>
         </div>
       </Suspense>
