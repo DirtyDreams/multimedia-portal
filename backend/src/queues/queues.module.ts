@@ -3,9 +3,11 @@ import { BullModule } from '@nestjs/bull';
 import { EmailProcessor } from './processors/email.processor';
 import { ImageProcessingProcessor } from './processors/image-processing.processor';
 import { SearchIndexingProcessor } from './processors/search-indexing.processor';
+import { ScheduledPublishProcessor } from './processors/scheduled-publish.processor';
 import { QueuesService } from './queues.service';
 import { SearchModule } from '../modules/search/search.module';
 import { EmailModule } from '../modules/email/email.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
   imports: [
@@ -34,14 +36,19 @@ import { EmailModule } from '../modules/email/email.module';
       {
         name: 'search-indexing',
       },
+      {
+        name: 'scheduled-publish',
+      },
     ),
     SearchModule,
     EmailModule,
+    PrismaModule,
   ],
   providers: [
     EmailProcessor,
     ImageProcessingProcessor,
     SearchIndexingProcessor,
+    ScheduledPublishProcessor,
     QueuesService,
   ],
   exports: [BullModule, QueuesService],

@@ -1,21 +1,52 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import type { Queue } from 'bull';
 import {
   EmailJobData,
   ImageProcessingJobData,
   SearchIndexingJobData,
+  ScheduledPublishJobData,
 } from './processors';
 
 @Injectable()
-export class QueuesService {
+export class QueuesService implements OnModuleInit {
   private readonly logger = new Logger(QueuesService.name);
 
   constructor(
     @InjectQueue('email') private emailQueue: Queue,
     @InjectQueue('image-processing') private imageProcessingQueue: Queue,
     @InjectQueue('search-indexing') private searchIndexingQueue: Queue,
+    @InjectQueue('scheduled-publish') private scheduledPublishQueue: Queue,
   ) {}
+
+  async onModuleInit() {
+    // Set up cron job to check for scheduled content every minute
+    await this.setupScheduledPublishCron();
+  }
+
+  /**
+   * Set up cron job to check for scheduled content
+   */
+  private async setupScheduledPublishCron() {
+    try {
+      // Add repeatable job that runs every minute
+      await this.scheduledPublishQueue.add(
+        'check-scheduled-content',
+        {},
+        {
+          repeat: {
+            cron: '* * * * *', // Every minute
+          },
+          jobId: 'check-scheduled-content-cron',
+        },
+      );
+      this.logger.log(
+        'Set up scheduled publish cron job (runs every minute)',
+      );
+    } catch (error) {
+      this.logger.error('Failed to set up scheduled publish cron:', error);
+    }
+  }
 
   /**
    * Add email job to queue
@@ -150,20 +181,84 @@ export class QueuesService {
   }
 
   /**
+   * Add scheduled publish job to queue
+   */
+  async addScheduledPublishJob(
+    jobName: string,
+    data: ScheduledPublishJobData | any,
+    options?: any,
+  ) {
+    try {
+      const job = await this.scheduledPublishQueue.add(jobName, data, options);
+      this.logger.log(`Added scheduled publish job ${job.id} to queue`);
+      return job;
+    } catch (error) {
+      this.logger.error('Failed to add scheduled publish job:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Schedule content for future publishing
+   */
+  async scheduleContentPublish(
+    contentType: ScheduledPublishJobData['contentType'],
+    contentId: string,
+    publishAt: Date,
+  ) {
+    const delay = publishAt.getTime() - Date.now();
+
+    if (delay <= 0) {
+      this.logger.warn(
+        `Scheduled publish time is in the past for ${contentType} ${contentId}. Publishing immediately.`,
+      );
+      return this.addScheduledPublishJob('publish-content', {
+        contentType,
+        contentId,
+      });
+    }
+
+    return this.addScheduledPublishJob(
+      'publish-content',
+      {
+        contentType,
+        contentId,
+      },
+      {
+        delay,
+        jobId: `publish-${contentType}-${contentId}`,
+      },
+    );
+  }
+
+  /**
+   * Trigger immediate check for scheduled content
+   */
+  async checkScheduledContent() {
+    return this.addScheduledPublishJob('check-scheduled-content', {});
+  }
+
+  /**
    * Get queue statistics
    */
   async getQueueStats() {
-    const [emailCounts, imageProcessingCounts, searchIndexingCounts] =
-      await Promise.all([
-        this.emailQueue.getJobCounts(),
-        this.imageProcessingQueue.getJobCounts(),
-        this.searchIndexingQueue.getJobCounts(),
-      ]);
+    const [
+      emailCounts,
+      imageProcessingCounts,
+      searchIndexingCounts,
+      scheduledPublishCounts,
+    ] = await Promise.all([
+      this.emailQueue.getJobCounts(),
+      this.imageProcessingQueue.getJobCounts(),
+      this.searchIndexingQueue.getJobCounts(),
+      this.scheduledPublishQueue.getJobCounts(),
+    ]);
 
     return {
       email: emailCounts,
       imageProcessing: imageProcessingCounts,
       searchIndexing: searchIndexingCounts,
+      scheduledPublish: scheduledPublishCounts,
     };
   }
 }

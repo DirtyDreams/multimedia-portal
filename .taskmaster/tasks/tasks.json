@@ -1399,7 +1399,7 @@
         "dependencies": [
           "18"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1463,7 +1463,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających email setup, templates i integrację z BullMQ."
+        "expansionPrompt": "Zadanie ma już odpowiedni podział na 5 subtasków pokrywających email setup, templates i integrację z BullMQ.",
+        "updatedAt": "2025-11-06T18:12:31.431Z"
       },
       {
         "id": "20",
@@ -1475,7 +1476,7 @@
         "dependencies": [
           "19"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -1483,9 +1484,10 @@
             "description": "Dodanie pola status do wszystkich content entities z enum: draft, pending-review, scheduled, published, archived",
             "dependencies": [],
             "details": "Stwórz migration dodający pole 'status' typu enum do tabel: articles, blog_posts, wiki_pages, gallery_items, stories. Dodaj pole 'scheduledPublishAt' typu timestamp. Zaktualizuj wszystkie entity klasy w TypeORM z nowymi polami. Ustaw domyślny status na 'draft' dla nowych rekordów.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy migracja wykonuje się bez błędów, nowe pola są dodane do wszystkich tabel, domyślne wartości są ustawione",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:18:22.842Z"
           },
           {
             "id": 2,
@@ -1495,9 +1497,10 @@
               1
             ],
             "details": "Zainstaluj BullMQ i Redis. Stwórz PublishingQueue z job 'publishScheduledContent'. Implementuj PublishingProcessor który zmienia status z 'scheduled' na 'published'. Skonfiguruj cron job sprawdzający co minutę scheduled content. Dodaj endpoint do planowania publikacji.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Sprawdź czy scheduled content publikuje się automatycznie w określonym czasie, queue worker przetwarza joby poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-06T18:18:43.803Z"
           },
           {
             "id": 3,
@@ -1539,7 +1542,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview."
+        "expansionPrompt": "Zadanie jest już bardzo dobrze podzielone na 5 subtasków obejmujących status system, scheduling, version history i preview.",
+        "updatedAt": "2025-11-06T18:18:43.803Z"
       },
       {
         "id": "21",
@@ -2995,9 +2999,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T17:54:21.062Z",
+      "lastModified": "2025-11-06T18:18:43.806Z",
       "taskCount": 35,
-      "completedCount": 22,
+      "completedCount": 23,
       "tags": [
         "master"
       ]

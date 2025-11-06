@@ -1,0 +1,91 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConfigService = void 0;
+const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
+let ConfigService = class ConfigService {
+    configService;
+    constructor(configService) {
+        this.configService = configService;
+    }
+    get isDevelopment() {
+        return this.configService.get('NODE_ENV') === 'development';
+    }
+    get isProduction() {
+        return this.configService.get('NODE_ENV') === 'production';
+    }
+    get databaseUrl() {
+        const url = this.configService.get('DATABASE_URL');
+        if (!url) {
+            throw new Error('DATABASE_URL is not defined in environment variables');
+        }
+        return url;
+    }
+    get dbHost() {
+        return this.configService.get('DB_HOST', 'localhost');
+    }
+    get dbPort() {
+        return this.configService.get('DB_PORT', 5432);
+    }
+    get dbUser() {
+        const user = this.configService.get('DB_USER');
+        if (!user) {
+            throw new Error('DB_USER is not defined in environment variables');
+        }
+        return user;
+    }
+    get dbPassword() {
+        const password = this.configService.get('DB_PASSWORD');
+        if (!password) {
+            throw new Error('DB_PASSWORD is not defined in environment variables');
+        }
+        return password;
+    }
+    get dbName() {
+        return this.configService.get('DB_NAME', 'multimedia_db');
+    }
+    get jwtSecret() {
+        const secret = this.configService.get('JWT_SECRET');
+        if (!secret) {
+            throw new Error('JWT_SECRET is not defined in environment variables');
+        }
+        return secret;
+    }
+    get jwtExpiration() {
+        return this.configService.get('JWT_EXPIRATION', '86400');
+    }
+    get redisHost() {
+        return this.configService.get('REDIS_HOST', 'localhost');
+    }
+    get redisPort() {
+        return this.configService.get('REDIS_PORT', 6379);
+    }
+    get serverPort() {
+        return this.configService.get('SERVER_PORT', 3000);
+    }
+    get serverHost() {
+        return this.configService.get('SERVER_HOST', '0.0.0.0');
+    }
+    get corsOrigin() {
+        const origin = this.configService.get('CORS_ORIGIN');
+        return origin ? origin.split(',').map((o) => o.trim()) : '*';
+    }
+    get logLevel() {
+        return this.configService.get('LOG_LEVEL', 'debug');
+    }
+};
+exports.ConfigService = ConfigService;
+exports.ConfigService = ConfigService = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [config_1.ConfigService])
+], ConfigService);
+//# sourceMappingURL=config.service.js.map
