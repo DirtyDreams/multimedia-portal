@@ -715,7 +715,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -778,7 +778,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie ma już bardzo dobrą strukturę 5 subtasków pokrywającą upload, processing, MinIO integration i walidację plików."
+        "expansionPrompt": "Zadanie ma już bardzo dobrą strukturę 5 subtasków pokrywającą upload, processing, MinIO integration i walidację plików.",
+        "updatedAt": "2025-11-06T17:07:17.684Z"
       },
       {
         "id": "11",
@@ -2986,9 +2987,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T16:56:29.610Z",
+      "lastModified": "2025-11-06T17:07:17.687Z",
       "taskCount": 35,
-      "completedCount": 13,
+      "completedCount": 14,
       "tags": [
         "master"
       ]
