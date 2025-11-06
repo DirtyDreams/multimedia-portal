@@ -2304,10 +2304,10 @@
               3
             ],
             "details": "Dodaj moderation przyciski w CommentItem: approve, reject, ban user (tylko admin/moderator). Implementuj ModerationPanel z pending comments queue. Dodaj bulk actions dla moderacji. Implementuj comment reporting system.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy moderation controls są widoczne dla admin/moderator, bulk actions działają",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T19:08:55.342Z"
+            "updatedAt": "2025-11-06T19:12:44.201Z"
           },
           {
             "id": 6,
@@ -2318,10 +2318,10 @@
               4
             ],
             "details": "Implementuj infinite scrolling lub pagination dla głównych komentarzy. Dodaj 'Load more replies' dla zagnieżdżonych komentarzy. Implementuj comment threading z collapse/expand functionality. Dodaj sorting options: newest, oldest, most liked.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Sprawdź czy pagination działa, threading collapse/expand funkcjonuje, sorting opcje działają",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T19:10:10.534Z"
+            "updatedAt": "2025-11-06T19:12:58.698Z"
           },
           {
             "id": 7,
@@ -2385,7 +2385,7 @@
         "complexity": 7,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Komponent CommentList z nested display, 2) Komponent AddCommentForm z validation, 3) Komponent CommentItem z reply functionality, 4) Real-time updates z Socket.io, 5) Comment moderation controls dla admin, 6) Comment threading i pagination, 7) Comment voting/likes (opcjonalnie), 8) Comment editing i deletion, 9) Comment notifications UI, 10) Integration testing całego systemu komentarzy.",
-        "updatedAt": "2025-11-06T19:10:10.534Z"
+        "updatedAt": "2025-11-06T19:12:58.698Z"
       },
       {
         "id": "31",
@@ -3016,7 +3016,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-06T19:10:10.537Z",
+      "lastModified": "2025-11-06T19:12:58.701Z",
       "taskCount": 35,
       "completedCount": 25,
       "tags": [
