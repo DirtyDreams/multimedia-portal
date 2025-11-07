@@ -2793,7 +2793,7 @@
         "dependencies": [
           "33"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2899,9 +2899,10 @@
               7
             ],
             "details": "Uruchom Lighthouse audit dla wszystkich key pages. Popraw First Contentful Paint, Largest Contentful Paint, Cumulative Layout Shift, First Input Delay. Zoptymalizuj critical CSS, usuń render-blocking resources, dodaj preload dla important assets. Cel: Lighthouse score > 90.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom Lighthouse audit, sprawdź czy wszystkie pages mają score > 90",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:35:23.000Z"
           },
           {
             "id": 10,
@@ -2918,7 +2919,7 @@
         "complexity": 8,
         "recommendedSubtasks": 10,
         "expansionPrompt": "Rozłóż na subtaski: 1) Backend unit tests dla critical services, 2) API integration tests z Supertest, 3) Frontend component tests z Testing Library, 4) E2E tests z Playwright dla user workflows, 5) Performance testing z k6 load tests, 6) Bundle size optimization i code splitting, 7) Image optimization i lazy loading, 8) Database query optimization i indexing, 9) Lighthouse audit i Core Web Vitals improvement, 10) Error boundary components i error handling.",
-        "updatedAt": "2025-11-06T23:12:06.975Z"
+        "updatedAt": "2025-11-07T00:35:45.000Z"
       },
       {
         "id": "35",
