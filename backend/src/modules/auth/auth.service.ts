@@ -10,6 +10,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto, LoginDto, AuthResponseDto, UserResponseDto } from './dto';
 import { User } from '../../types/prisma.types';
+import { JwtBlacklistService } from './jwt-blacklist.service';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     private jwtService: JwtService,
     private prisma: PrismaService,
     private configService: ConfigService,
+    private jwtBlacklistService: JwtBlacklistService,
   ) {}
 
   /**
@@ -120,9 +122,13 @@ export class AuthService {
 
   /**
    * Logout user
+   * Blacklists the JWT access token and deletes refresh token session
    */
   async logout(userId: string, token: string): Promise<void> {
-    // Invalidate session
+    // Blacklist the access token to prevent reuse
+    await this.jwtBlacklistService.blacklistToken(token);
+
+    // Invalidate refresh token session
     await this.prisma.session.deleteMany({
       where: {
         userId,
@@ -173,7 +179,7 @@ export class AuthService {
    * Hash password with bcrypt
    */
   private async hashPassword(password: string): Promise<string> {
-    const saltRounds = 12;
+    const saltRounds = this.configService.bcryptSaltRounds;
     return bcrypt.hash(password, saltRounds);
   }
 

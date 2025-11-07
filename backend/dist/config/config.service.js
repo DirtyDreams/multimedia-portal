@@ -109,6 +109,14 @@ let ConfigService = class ConfigService {
     get jwtExpiration() {
         return this.configService.get('JWT_EXPIRATION', '86400');
     }
+    get bcryptSaltRounds() {
+        const saltRounds = this.configService.get('BCRYPT_SALT_ROUNDS', 12);
+        if (saltRounds < 10 || saltRounds > 20) {
+            console.warn(`⚠️  WARNING: BCRYPT_SALT_ROUNDS (${saltRounds}) is outside recommended range (10-14). ` +
+                `Higher values increase security but slow down hashing.`);
+        }
+        return saltRounds;
+    }
     get redisHost() {
         return this.configService.get('REDIS_HOST', 'localhost');
     }

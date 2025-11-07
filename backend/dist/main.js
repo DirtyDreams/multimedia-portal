@@ -8,12 +8,15 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const helmet_1 = __importDefault(require("helmet"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const express_1 = require("express");
 const app_module_1 = require("./app.module");
 const http_exception_filter_1 = require("./common/filters/http-exception.filter");
 const config_service_1 = require("./config/config.service");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const configService = app.get(config_service_1.ConfigService);
+    app.use((0, express_1.json)({ limit: '10mb' }));
+    app.use((0, express_1.urlencoded)({ extended: true, limit: '10mb' }));
     app.use((0, cookie_parser_1.default)());
     app.use((0, helmet_1.default)());
     app.enableCors({

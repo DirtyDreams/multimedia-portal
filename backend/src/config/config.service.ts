@@ -140,6 +140,22 @@ export class ConfigService {
     return this.configService.get<string>('JWT_EXPIRATION', '86400');
   }
 
+  // Bcrypt
+  get bcryptSaltRounds(): number {
+    const saltRounds = this.configService.get<number>(
+      'BCRYPT_SALT_ROUNDS',
+      12,
+    );
+    // Validate salt rounds (recommended range: 10-14)
+    if (saltRounds < 10 || saltRounds > 20) {
+      console.warn(
+        `⚠️  WARNING: BCRYPT_SALT_ROUNDS (${saltRounds}) is outside recommended range (10-14). ` +
+          `Higher values increase security but slow down hashing.`,
+      );
+    }
+    return saltRounds;
+  }
+
   // Redis
   get redisHost(): string {
     return this.configService.get<string>('REDIS_HOST', 'localhost');

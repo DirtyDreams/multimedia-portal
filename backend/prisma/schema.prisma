@@ -327,9 +327,10 @@ model Comment {
   galleryItem GalleryItem?  @relation(fields: [galleryItemId], references: [id], onDelete: Cascade)
   story     Story?          @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
-  @@index([contentType, contentId])
-  @@index([userId])
-  @@index([parentId])
+  // Composite indexes for efficient polymorphic queries
+  @@index([contentType, contentId, createdAt]) // List comments sorted by date
+  @@index([userId, contentType]) // User's comments by content type
+  @@index([parentId]) // Nested replies
   @@index([articleId])
   @@index([blogPostId])
   @@index([wikiPageId])
@@ -379,8 +380,9 @@ model Rating {
 
   // Unique constraint: one rating per user per content
   @@unique([userId, contentType, contentId])
-  @@index([contentType, contentId])
-  @@index([userId])
+  // Composite indexes for efficient polymorphic queries
+  @@index([contentType, contentId, createdAt]) // List ratings sorted by date
+  @@index([userId, contentType]) // User's ratings by content type
   @@index([articleId])
   @@index([blogPostId])
   @@index([wikiPageId])

@@ -48,14 +48,17 @@ const jwt_1 = require("@nestjs/jwt");
 const config_service_1 = require("../../config/config.service");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const bcrypt = __importStar(require("bcrypt"));
+const jwt_blacklist_service_1 = require("./jwt-blacklist.service");
 let AuthService = class AuthService {
     jwtService;
     prisma;
     configService;
-    constructor(jwtService, prisma, configService) {
+    jwtBlacklistService;
+    constructor(jwtService, prisma, configService, jwtBlacklistService) {
         this.jwtService = jwtService;
         this.prisma = prisma;
         this.configService = configService;
+        this.jwtBlacklistService = jwtBlacklistService;
     }
     async register(registerDto) {
         const { email, username, password, name } = registerDto;
@@ -120,6 +123,7 @@ let AuthService = class AuthService {
         return this.sanitizeUser(user);
     }
     async logout(userId, token) {
+        await this.jwtBlacklistService.blacklistToken(token);
         await this.prisma.session.deleteMany({
             where: {
                 userId,
@@ -152,7 +156,7 @@ let AuthService = class AuthService {
         }
     }
     async hashPassword(password) {
-        const saltRounds = 12;
+        const saltRounds = this.configService.bcryptSaltRounds;
         return bcrypt.hash(password, saltRounds);
     }
     async comparePassword(plainPassword, hashedPassword) {
@@ -198,6 +202,7 @@ exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService,
         prisma_service_1.PrismaService,
-        config_service_1.ConfigService])
+        config_service_1.ConfigService,
+        jwt_blacklist_service_1.JwtBlacklistService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

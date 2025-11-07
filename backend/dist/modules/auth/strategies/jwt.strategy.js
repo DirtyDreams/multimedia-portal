@@ -14,28 +14,43 @@ const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
 const config_service_1 = require("../../../config/config.service");
+const jwt_blacklist_service_1 = require("../jwt-blacklist.service");
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
     configService;
-    constructor(configService) {
+    jwtBlacklistService;
+    constructor(configService, jwtBlacklistService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
             secretOrKey: configService.jwtSecret,
+            passReqToCallback: true,
         });
         this.configService = configService;
+        this.jwtBlacklistService = jwtBlacklistService;
     }
-    async validate(payload) {
+    async validate(req, payload) {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            throw new common_1.UnauthorizedException('No authorization header');
+        }
+        const token = authHeader.replace('Bearer ', '');
+        const isBlacklisted = await this.jwtBlacklistService.isBlacklisted(token);
+        if (isBlacklisted) {
+            throw new common_1.UnauthorizedException('Token has been revoked. Please log in again.');
+        }
         return {
             userId: payload.sub,
             username: payload.username,
             email: payload.email,
             role: payload.role,
+            token,
         };
     }
 };
 exports.JwtStrategy = JwtStrategy;
 exports.JwtStrategy = JwtStrategy = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_service_1.ConfigService])
+    __metadata("design:paramtypes", [config_service_1.ConfigService,
+        jwt_blacklist_service_1.JwtBlacklistService])
 ], JwtStrategy);
 //# sourceMappingURL=jwt.strategy.js.map

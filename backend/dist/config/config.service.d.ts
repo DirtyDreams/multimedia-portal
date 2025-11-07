@@ -13,6 +13,7 @@ export declare class ConfigService {
     get dbName(): string;
     get jwtSecret(): string;
     get jwtExpiration(): string;
+    get bcryptSaltRounds(): number;
     get redisHost(): string;
     get redisPort(): number;
     get serverPort(): number;
