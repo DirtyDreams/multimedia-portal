@@ -1,27 +1,101 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as helmet from 'helmet';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  // Enable CORS
-  app.enableCors({
-    origin: process.env.CORS_ORIGIN || '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log', 'debug', 'verbose'],
   });
 
-  // Global validation pipe
+  // Security Middleware - Helmet (must be first)
+  app.use(
+    helmet({
+      // Content Security Policy
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+          imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
+          fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+          connectSrc: ["'self'", process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'],
+          frameSrc: ["'self'"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+        },
+      },
+      // HTTP Strict Transport Security
+      hsts: {
+        maxAge: 31536000, // 1 year
+        includeSubDomains: true,
+        preload: true,
+      },
+      // X-Frame-Options
+      frameguard: {
+        action: 'deny',
+      },
+      // X-Content-Type-Options
+      noSniff: true,
+      // X-XSS-Protection (deprecated but still useful)
+      xssFilter: true,
+      // Referrer-Policy
+      referrerPolicy: {
+        policy: 'strict-origin-when-cross-origin',
+      },
+      // Hide X-Powered-By header
+      hidePoweredBy: true,
+    }),
+  );
+
+  // Enhanced CORS Configuration with Whitelist
+  const corsOrigins = process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim()) || ['http://localhost:3000'];
+
+  app.enableCors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, Postman, server-to-server)
+      if (!origin) return callback(null, true);
+
+      // Check if origin is in whitelist
+      if (corsOrigins.includes('*') || corsOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS: Blocked request from origin: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'Accept',
+      'Origin',
+      'Access-Control-Request-Method',
+      'Access-Control-Request-Headers',
+    ],
+    exposedHeaders: [
+      'X-RateLimit-Limit',
+      'X-RateLimit-Remaining',
+      'X-RateLimit-Reset',
+    ],
+    maxAge: 3600, // Cache preflight requests for 1 hour
+  });
+
+  // Global Validation Pipe with Enhanced Security
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
+      whitelist: true, // Strip properties that don't have decorators
+      forbidNonWhitelisted: true, // Throw error if non-whitelisted values exist
+      transform: true, // Auto-transform payloads to DTO instances
       transformOptions: {
         enableImplicitConversion: true,
       },
+      disableErrorMessages: process.env.NODE_ENV === 'production', // Hide detailed errors in production
+      validateCustomDecorators: true,
+      forbidUnknownValues: true, // Throw error on unknown objects
     }),
   );
 

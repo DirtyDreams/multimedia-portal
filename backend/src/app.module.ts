@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
@@ -18,12 +20,36 @@ import { QueuesModule } from './queues/queues.module';
 import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 import { ContentVersionsModule } from './modules/content-versions/content-versions.module';
+import { AuditLogModule } from './modules/audit-log/audit-log.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
+    }),
+    // Rate Limiting - Throttler
+    ThrottlerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        throttlers: [
+          {
+            name: 'short',
+            ttl: config.get('THROTTLE_TTL', 60000), // 60 seconds default
+            limit: config.get('THROTTLE_LIMIT', 10), // 10 requests per TTL
+          },
+          {
+            name: 'medium',
+            ttl: config.get('THROTTLE_TTL_MEDIUM', 900000), // 15 minutes
+            limit: config.get('THROTTLE_LIMIT_MEDIUM', 100),
+          },
+          {
+            name: 'long',
+            ttl: config.get('THROTTLE_TTL_LONG', 86400000), // 24 hours
+            limit: config.get('THROTTLE_LIMIT_LONG', 1000),
+          },
+        ],
+      }),
     }),
     PrismaModule,
     CustomConfigModule,
@@ -41,8 +67,16 @@ import { ContentVersionsModule } from './modules/content-versions/content-versio
     NotificationsModule,
     SearchModule,
     ContentVersionsModule,
+    AuditLogModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // Apply ThrottlerGuard globally
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

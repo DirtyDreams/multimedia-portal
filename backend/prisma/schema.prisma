@@ -42,6 +42,7 @@ model User {
   ratings       Rating[]
   notifications Notification[]
   contentVersions ContentVersion[]
+  auditLogs     AuditLog[]
 
   @@index([email])
   @@index([username])
@@ -641,4 +642,45 @@ model EmailQueue {
 
   @@index([status])
   @@map("email_queue")
+}
+
+// ============================================
+// AUDIT LOGGING
+// ============================================
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  PUBLISH
+  UNPUBLISH
+  APPROVE
+  REJECT
+}
+
+model AuditLog {
+  id         String      @id @default(uuid())
+  action     AuditAction
+  resource   String      // e.g., "Article", "User", "BlogPost"
+  resourceId String?     // ID of the affected resource
+  oldValues  Json?       // Previous state (for UPDATE/DELETE)
+  newValues  Json?       // New state (for CREATE/UPDATE)
+  ipAddress  String?
+  userAgent  String?
+
+  createdAt  DateTime    @default(now())
+
+  // Foreign Keys
+  userId     String?     // Nullable for system actions
+
+  // Relations
+  user       User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([resource])
+  @@index([createdAt])
+  @@map("audit_logs")
 }
