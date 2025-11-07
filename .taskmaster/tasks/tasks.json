@@ -1558,7 +1558,8 @@
         "dependencies": [
           "20"
         ],
-        "status": "pending",
+        "status": "done",
+        "updatedAt": "2025-11-07T02:30:00.000Z",
         "subtasks": [
           {
             "id": 1,
@@ -1634,7 +1635,8 @@
         "dependencies": [
           "21"
         ],
-        "status": "pending",
+        "status": "done",
+        "updatedAt": "2025-11-07T02:45:00.000Z",
         "subtasks": [
           {
             "id": 1,
@@ -1712,7 +1714,8 @@
         "dependencies": [
           "22"
         ],
-        "status": "pending",
+        "status": "done",
+        "updatedAt": "2025-11-07T02:50:00.000Z",
         "subtasks": [
           {
             "id": 1,
@@ -1787,7 +1790,8 @@
         "dependencies": [
           "23"
         ],
-        "status": "pending",
+        "status": "done",
+        "updatedAt": "2025-11-07T02:55:00.000Z",
         "subtasks": [
           {
             "id": 1,
