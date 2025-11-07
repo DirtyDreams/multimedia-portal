@@ -2793,7 +2793,8 @@
         "dependencies": [
           "33"
         ],
-        "status": "in-progress",
+        "status": "done",
+        "updatedAt": "2025-11-07T00:35:00.000Z",
         "subtasks": [
           {
             "id": 1,
@@ -2899,9 +2900,10 @@
               7
             ],
             "details": "Uruchom Lighthouse audit dla wszystkich key pages. Popraw First Contentful Paint, Largest Contentful Paint, Cumulative Layout Shift, First Input Delay. Zoptymalizuj critical CSS, usuń render-blocking resources, dodaj preload dla important assets. Cel: Lighthouse score > 90.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Uruchom Lighthouse audit, sprawdź czy wszystkie pages mają score > 90",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:30:00.000Z"
           },
           {
             "id": 10,
