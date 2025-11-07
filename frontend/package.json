@@ -15,6 +15,8 @@
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
+    "lighthouse": "node scripts/lighthouse-audit.js",
+    "lighthouse:ci": "lhci autorun",
     "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
@@ -47,10 +49,12 @@
     "recharts": "^3.3.0",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.3.1",
+    "web-vitals": "^4.2.4",
     "zod": "^4.1.12",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.14.0",
     "@next/bundle-analyzer": "^16.0.1",
     "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
@@ -61,10 +65,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chrome-launcher": "^1.1.2",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
+    "lighthouse": "^12.2.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

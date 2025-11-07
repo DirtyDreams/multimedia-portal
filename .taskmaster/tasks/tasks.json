@@ -2839,10 +2839,10 @@
               3
             ],
             "details": "Stwórz Playwright testy dla: user registration/login, article creation/editing, blog posting, wiki page creation, gallery upload, commenting, rating. Testuj full user workflows w różnych browserach (Chrome, Firefox, Safari). Dodaj fixtures i page objects pattern.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Uruchom npx playwright test, wszystkie user flows muszą działać w różnych browserach",
             "parentId": "undefined",
-            "updatedAt": "2025-11-06T23:12:06.975Z"
+            "updatedAt": "2025-11-07T00:00:00.000Z"
           },
           {
             "id": 5,
