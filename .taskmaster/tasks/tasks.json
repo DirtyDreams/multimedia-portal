@@ -2940,9 +2940,10 @@
             "description": "Przygotowanie zoptymalizowanej konfiguracji Docker Compose dla środowiska produkcyjnego",
             "dependencies": [],
             "details": "Stwórz docker-compose.prod.yml z optimized images (multi-stage builds), environment variables, resource limits, restart policies. Skonfiguruj separate networks dla frontend/backend/database. Dodaj Redis cache, reverse proxy (nginx). Użyj secrets management dla sensitive data.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie kontenery startują poprawnie, aplikacja jest dostępna przez reverse proxy, environment variables są poprawnie załadowane",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T01:00:00.000Z"
           },
           {
             "id": 2,
@@ -3010,9 +3011,10 @@
             "description": "Stworzenie kompletnej dokumentacji projektu w README.md",
             "dependencies": [],
             "details": "Napisz README.md z: project overview, architecture diagram, installation instructions, development setup, environment variables, API endpoints overview, deployment instructions, troubleshooting guide. Dodaj badges (build status, coverage), screenshots, feature list.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy README jest kompletny, instrukcje są clear i actionable, wszystkie sekcje są pokryte",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T01:00:00.000Z"
           },
           {
             "id": 8,
