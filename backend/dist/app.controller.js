@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const app_service_1 = require("./app.service");
 let AppController = class AppController {
     appService;
@@ -32,17 +33,41 @@ let AppController = class AppController {
 exports.AppController = AppController;
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get welcome message' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Welcome message retrieved successfully',
+        schema: {
+            type: 'string',
+            example: 'Welcome to Multimedia Portal API!',
+        },
+    }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], AppController.prototype, "getHello", null);
 __decorate([
     (0, common_1.Get)('health'),
+    (0, swagger_1.ApiOperation)({ summary: 'Health check endpoint' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'API health status',
+        schema: {
+            type: 'object',
+            properties: {
+                status: { type: 'string', example: 'ok' },
+                timestamp: { type: 'string', example: '2025-11-07T12:00:00.000Z' },
+                uptime: { type: 'number', example: 123.456 },
+                environment: { type: 'string', example: 'development' },
+            },
+        },
+    }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "healthCheck", null);
 exports.AppController = AppController = __decorate([
+    (0, swagger_1.ApiTags)('System'),
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
