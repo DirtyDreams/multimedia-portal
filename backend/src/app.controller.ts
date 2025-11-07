@@ -1,16 +1,41 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
+@ApiTags('System')
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get welcome message' })
+  @ApiResponse({
+    status: 200,
+    description: 'Welcome message retrieved successfully',
+    schema: {
+      type: 'string',
+      example: 'Welcome to Multimedia Portal API!',
+    },
+  })
   getHello(): string {
     return this.appService.getHello();
   }
 
   @Get('health')
+  @ApiOperation({ summary: 'Health check endpoint' })
+  @ApiResponse({
+    status: 200,
+    description: 'API health status',
+    schema: {
+      type: 'object',
+      properties: {
+        status: { type: 'string', example: 'ok' },
+        timestamp: { type: 'string', example: '2025-11-07T12:00:00.000Z' },
+        uptime: { type: 'number', example: 123.456 },
+        environment: { type: 'string', example: 'development' },
+      },
+    },
+  })
   healthCheck() {
     return {
       status: 'ok',

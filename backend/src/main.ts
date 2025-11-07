@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 
@@ -43,11 +44,52 @@ async function bootstrap() {
     }),
   );
 
-  // Global prefix for all routes
-  app.setGlobalPrefix('api');
+  // Global prefix for all routes with versioning
+  app.setGlobalPrefix('api/v1');
+
+  // Swagger API Documentation
+  const config = new DocumentBuilder()
+    .setTitle('Multimedia Portal API')
+    .setDescription('Comprehensive API documentation for the Multimedia Portal - Articles, Blog, Wiki, Gallery & Stories')
+    .setVersion('1.0')
+    .addTag('Authentication', 'User authentication and authorization endpoints')
+    .addTag('Articles', 'Article management endpoints')
+    .addTag('Blog Posts', 'Blog post management endpoints')
+    .addTag('Wiki Pages', 'Wiki page management with hierarchical structure')
+    .addTag('Gallery Items', 'Gallery and media management endpoints')
+    .addTag('Stories', 'Story management endpoints')
+    .addTag('Authors', 'Author management endpoints')
+    .addTag('Comments', 'Comment management across all content types')
+    .addTag('Ratings', 'Rating and review system endpoints')
+    .addTag('Notifications', 'User notification system')
+    .addTag('Search', 'Content search and filtering')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth', // This name will be used with @ApiBearerAuth()
+    )
+    .addServer('http://localhost:3000', 'Local Development Server')
+    .addServer('https://api.example.com', 'Production Server')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true, // Persist authentication across page refreshes
+      tagsSorter: 'alpha',
+      operationsSorter: 'alpha',
+    },
+    customSiteTitle: 'Multimedia Portal API Documentation',
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 
-  console.log(`🚀 Application is running on: http://localhost:${process.env.PORT ?? 3000}/api`);
+  console.log(`🚀 Application is running on: http://localhost:${process.env.PORT ?? 3000}/api/v1`);
+  console.log(`📚 API Documentation available at: http://localhost:${process.env.PORT ?? 3000}/api/docs`);
 }
 bootstrap();
