@@ -21,6 +21,7 @@ import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 import { ContentVersionsModule } from './modules/content-versions/content-versions.module';
 import { AuditLogModule } from './modules/audit-log/audit-log.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { AuditLogModule } from './modules/audit-log/audit-log.module';
     SearchModule,
     ContentVersionsModule,
     AuditLogModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [
