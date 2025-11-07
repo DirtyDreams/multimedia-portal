@@ -390,6 +390,55 @@ NEXT_PUBLIC_ENABLE_WEB_VITALS=true
 
 ## 📚 API Documentation
 
+### 📖 Documentation Resources
+
+The Multimedia Portal API provides comprehensive documentation and tools for integration:
+
+| Resource | Description | Link |
+|----------|-------------|------|
+| **Swagger UI** | Interactive API documentation with "Try It Out" functionality | [http://localhost:4000/api-docs](http://localhost:4000/api-docs) |
+| **OpenAPI JSON** | OpenAPI 3.0 specification for code generation | [http://localhost:4000/api-docs-json](http://localhost:4000/api-docs-json) |
+| **Postman Collection** | Pre-configured API collection for testing | [Generate with `npm run docs:generate`](backend/scripts/generate-postman-collection.ts) |
+| **API Guide** | Comprehensive API documentation guide | [backend/docs/API_DOCUMENTATION.md](backend/docs/API_DOCUMENTATION.md) |
+| **Deployment Guide** | API documentation deployment instructions | [backend/docs/DEPLOYMENT_GUIDE.md](backend/docs/DEPLOYMENT_GUIDE.md) |
+
+### 🚀 Quick Start
+
+1. **Start the backend server:**
+   ```bash
+   cd backend
+   npm run start:dev
+   ```
+
+2. **Access Swagger UI:**
+   Open [http://localhost:4000/api-docs](http://localhost:4000/api-docs) in your browser
+
+3. **Generate Postman Collection:**
+   ```bash
+   cd backend
+   npm run docs:generate
+   ```
+   Import the generated `postman-collection.json` into Postman
+
+### 🔐 Authentication
+
+The API uses **JWT (JSON Web Tokens)** for authentication:
+
+1. Register or login to receive an access token
+2. Include token in Authorization header: `Authorization: Bearer <token>`
+3. Tokens expire after 15 minutes (refresh using `/auth/refresh`)
+
+**Rate Limits:**
+- Anonymous: 100 requests / 15 minutes
+- Authenticated: 1,000 requests / 15 minutes
+- Admin: 5,000 requests / 15 minutes
+
+### 📊 API Versioning
+
+Current version: **v1**
+
+All endpoints are prefixed with version (except root endpoints).
+
 ### Authentication Endpoints
 
 #### POST /api/auth/register
