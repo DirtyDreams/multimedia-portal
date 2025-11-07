@@ -1634,7 +1634,7 @@
         "dependencies": [
           "21"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1642,9 +1642,10 @@
             "description": "Zainstaluj i skonfiguruj @nestjs/throttler do implementacji rate limiting per IP i per użytkownik",
             "dependencies": [],
             "details": "Zainstaluj @nestjs/throttler npm package. Skonfiguruj ThrottlerModule w app.module.ts z limitami requests per minute per IP. Dodaj ThrottlerGuard do kontrolerów. Implementuj custom rate limiting per user ID dla zalogowanych użytkowników. Skonfiguruj różne limity dla różnych endpointów (np. login endpoints mają niższe limity).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Napisz testy sprawdzające czy rate limiting blokuje requests po przekroczeniu limitu, czy różni użytkownicy mają osobne liczniki, czy custom limity per endpoint działają poprawnie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:50:38.000Z"
           },
           {
             "id": 2,
@@ -1654,9 +1655,10 @@
               1
             ],
             "details": "Zainstaluj helmet package. Skonfiguruj helmet middleware w main.ts z security headers: Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Frame-Options, X-Content-Type-Options, Referrer-Policy. Dostosuj CSP policy do potrzeb aplikacji (dozwolone domeny dla scripts, styles, images). Skonfiguruj HSTS z odpowiednim max-age.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie security headers są obecne w HTTP responses, czy CSP policy nie blokuje zasobów aplikacji, czy HSTS header ma właściwe wartości",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:50:38.000Z"
           },
           {
             "id": 3,
@@ -1666,9 +1668,10 @@
               2
             ],
             "details": "Skonfiguruj CORS w main.ts z whitelist dozwolonych origins (frontend URLs). Dodaj credentials: true dla cross-origin cookies. Zainstaluj class-sanitizer lub podobne narzędzie. Implementuj custom pipes do sanitization input danych w DTOs. Dodaj whitelist dla HTML content w rich text editorach. Skonfiguruj validation pipes z transform: true.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy CORS blokuje requests z niedozwolonych origins, czy dozwala z whitelisted domains, czy input sanitization usuwa potencjalnie niebezpieczne znaki z form inputs",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:50:38.000Z"
           },
           {
             "id": 4,
@@ -1678,9 +1681,10 @@
               3
             ],
             "details": "Stwórz AuditLog entity z polami: userId, action, resource, resourceId, oldValues, newValues, ipAddress, userAgent, timestamp. Implementuj AuditLogService z metodami do zapisywania action logs. Stwórz AuditLogInterceptor do automatycznego logowania CRUD operations w admin endpoints. Dodaj manual logging dla krytycznych actions (user role changes, system settings). Skonfiguruj log retention policy.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawdź czy wszystkie admin actions są logowane, czy audit logs zawierają kompletne informacje (user, action, timestamp, changes), czy interceptor automatycznie loguje CRUD operations",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:50:38.000Z"
           },
           {
             "id": 5,
@@ -1693,14 +1697,16 @@
               4
             ],
             "details": "Zintegruj wszystkie security middleware w logicznej kolejności w main.ts. Skonfiguruj error handling dla security violations. Dodaj security-specific environment variables do .env. Implementuj health check endpoint z security status. Stwórz comprehensive security tests sprawdzające interakcje między różnymi middleware. Dodaj dokumentację security configuration.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Przeprowadź end-to-end security testing sprawdzając rate limiting + CORS + headers, przetestuj różne attack vectors (XSS, CSRF, rate limiting bypass), sprawdź czy audit logs zapisują się podczas security violations",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T00:50:38.000Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących rate limiting, security headers i audit logging."
+        "expansionPrompt": "Zadanie jest już dobrze podzielone na 5 subtasków obejmujących rate limiting, security headers i audit logging.",
+        "updatedAt": "2025-11-07T00:50:38.000Z"
       },
       {
         "id": "23",
