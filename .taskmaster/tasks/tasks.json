@@ -3001,9 +3001,10 @@
               1
             ],
             "details": "Zainstaluj Prometheus do metrics collection, Grafana do visualization. Skonfiguruj metrics exports z aplikacji (Node.js metrics, custom business metrics). Stw\u00f3rz dashboards dla system metrics, application performance, user activity. Setup alerting rules.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawd\u017a czy metrics s\u0105 zbierane, dashboards wy\u015bwietlaj\u0105 dane, alerting dzia\u0142a przy problemach",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T03:00:00.000Z"
           },
           {
             "id": 7,
