@@ -3,7 +3,53 @@ import { ConfigService as NestConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ConfigService {
-  constructor(private configService: NestConfigService) {}
+  constructor(private configService: NestConfigService) {
+    // Validate critical environment variables on startup
+    this.validateEnvironmentVariables();
+  }
+
+  /**
+   * Validate that all required environment variables are set
+   * Throws error on startup if any critical variable is missing
+   */
+  private validateEnvironmentVariables(): void {
+    const requiredVars = [
+      'DATABASE_URL',
+      'DB_USER',
+      'DB_PASSWORD',
+      'JWT_SECRET',
+    ];
+
+    const missingVars = requiredVars.filter(
+      (varName) => !this.configService.get<string>(varName),
+    );
+
+    if (missingVars.length > 0) {
+      throw new Error(
+        `Missing required environment variables: ${missingVars.join(', ')}. ` +
+          `Please check your .env file and ensure all required variables are set.`,
+      );
+    }
+
+    // Validate JWT secret strength
+    const jwtSecret = this.configService.get<string>('JWT_SECRET');
+    if (jwtSecret && jwtSecret.length < 32) {
+      console.warn(
+        '⚠️  WARNING: JWT_SECRET is shorter than recommended 32 characters. ' +
+          'Generate a strong secret using: openssl rand -base64 64',
+      );
+    }
+
+    // Validate database URL format
+    const dbUrl = this.configService.get<string>('DATABASE_URL');
+    if (dbUrl && !dbUrl.startsWith('postgresql://')) {
+      throw new Error(
+        'DATABASE_URL must be a valid PostgreSQL connection string starting with postgresql://',
+      );
+    }
+
+    console.log('✅ Environment variables validated successfully');
+  }
 
   get isDevelopment(): boolean {
     return this.configService.get<string>('NODE_ENV') === 'development';

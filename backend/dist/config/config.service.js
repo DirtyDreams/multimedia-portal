@@ -16,6 +16,30 @@ let ConfigService = class ConfigService {
     configService;
     constructor(configService) {
         this.configService = configService;
+        this.validateEnvironmentVariables();
+    }
+    validateEnvironmentVariables() {
+        const requiredVars = [
+            'DATABASE_URL',
+            'DB_USER',
+            'DB_PASSWORD',
+            'JWT_SECRET',
+        ];
+        const missingVars = requiredVars.filter((varName) => !this.configService.get(varName));
+        if (missingVars.length > 0) {
+            throw new Error(`Missing required environment variables: ${missingVars.join(', ')}. ` +
+                `Please check your .env file and ensure all required variables are set.`);
+        }
+        const jwtSecret = this.configService.get('JWT_SECRET');
+        if (jwtSecret && jwtSecret.length < 32) {
+            console.warn('⚠️  WARNING: JWT_SECRET is shorter than recommended 32 characters. ' +
+                'Generate a strong secret using: openssl rand -base64 64');
+        }
+        const dbUrl = this.configService.get('DATABASE_URL');
+        if (dbUrl && !dbUrl.startsWith('postgresql://')) {
+            throw new Error('DATABASE_URL must be a valid PostgreSQL connection string starting with postgresql://');
+        }
+        console.log('✅ Environment variables validated successfully');
     }
     get isDevelopment() {
         return this.configService.get('NODE_ENV') === 'development';

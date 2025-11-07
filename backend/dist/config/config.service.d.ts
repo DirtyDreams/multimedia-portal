@@ -2,6 +2,7 @@ import { ConfigService as NestConfigService } from '@nestjs/config';
 export declare class ConfigService {
     private configService;
     constructor(configService: NestConfigService);
+    private validateEnvironmentVariables;
     get isDevelopment(): boolean;
     get isProduction(): boolean;
     get databaseUrl(): string;
