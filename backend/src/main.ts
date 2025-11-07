@@ -84,6 +84,11 @@ async function bootstrap() {
     maxAge: 3600, // Cache preflight requests for 1 hour
   });
 
+  // Global API Prefix with Versioning
+  app.setGlobalPrefix('api/v1', {
+    exclude: ['/', '/health', '/api-docs', '/api-docs-json'], // Exclude root and documentation routes
+  });
+
   // Global Validation Pipe with Enhanced Security
   app.useGlobalPipes(
     new ValidationPipe({
@@ -246,9 +251,9 @@ For API support or questions:
       },
       'JWT',
     )
-    .addServer('http://localhost:4000', 'Local Development')
-    .addServer('https://api.multimedia-portal.com', 'Production')
-    .addServer('https://staging-api.multimedia-portal.com', 'Staging')
+    .addServer('http://localhost:4000/api/v1', 'Local Development (v1)')
+    .addServer('https://api.multimedia-portal.com/api/v1', 'Production (v1)')
+    .addServer('https://staging-api.multimedia-portal.com/api/v1', 'Staging (v1)')
     .addTag('Authentication', 'User authentication and authorization endpoints')
     .addTag('articles', 'Article content management')
     .addTag('blog-posts', 'Blog post content management')
