@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, Page } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { ArticlePage } from '../pages/ArticlePage';
@@ -26,7 +26,7 @@ type PageFixtures = {
  * Authenticated user fixture
  */
 type AuthFixtures = {
-  authenticatedPage: any;
+  authenticatedPage: Page;
 };
 
 export const test = base.extend<PageFixtures & AuthFixtures>({
