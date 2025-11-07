@@ -22,6 +22,7 @@ import { ConfigModule as CustomConfigModule } from './config/config.module';
 import { ContentVersionsModule } from './modules/content-versions/content-versions.module';
 import { AuditLogModule } from './modules/audit-log/audit-log.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { MetricsModule } from './monitoring/metrics.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
     ContentVersionsModule,
     AuditLogModule,
     AnalyticsModule,
+    MetricsModule,
   ],
   controllers: [AppController],
   providers: [
