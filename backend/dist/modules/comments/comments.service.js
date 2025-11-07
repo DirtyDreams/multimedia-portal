@@ -13,6 +13,7 @@ exports.CommentsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const dto_1 = require("./dto");
+const pagination_constants_1 = require("../../common/constants/pagination.constants");
 let CommentsService = class CommentsService {
     prisma;
     constructor(prisma) {
@@ -71,7 +72,8 @@ let CommentsService = class CommentsService {
     }
     async findAll(queryDto) {
         const { page = 1, limit = 20, contentType, contentId, userId, sortBy = 'createdAt', sortOrder = 'desc', } = queryDto;
-        const skip = (page - 1) * limit;
+        const safeLimit = (0, pagination_constants_1.enforcePaginationLimit)(limit);
+        const skip = (page - 1) * safeLimit;
         const where = {
             parentId: null,
         };
@@ -88,7 +90,7 @@ let CommentsService = class CommentsService {
             this.prisma.comment.findMany({
                 where,
                 skip,
-                take: limit,
+                take: safeLimit,
                 orderBy: { [sortBy]: sortOrder },
                 include: {
                     user: {
@@ -130,13 +132,13 @@ let CommentsService = class CommentsService {
             }),
             this.prisma.comment.count({ where }),
         ]);
-        const totalPages = Math.ceil(total / limit);
+        const totalPages = Math.ceil(total / safeLimit);
         return {
             data: comments.map((comment) => this.formatCommentResponse(comment)),
             meta: {
                 total,
                 page,
-                limit,
+                limit: safeLimit,
                 totalPages,
             },
         };

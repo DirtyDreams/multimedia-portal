@@ -36,7 +36,7 @@ async function bootstrap() {
         },
     }));
     app.useGlobalFilters(new http_exception_filter_1.HttpExceptionFilter());
-    app.setGlobalPrefix('api');
+    app.setGlobalPrefix('api/v1');
     if (!configService.isProduction) {
         const config = new swagger_1.DocumentBuilder()
             .setTitle('Multimedia Portal API')
@@ -58,6 +58,7 @@ async function bootstrap() {
     const host = configService.serverHost;
     await app.listen(port, host);
     console.log(`🚀 Application is running on: http://${host}:${port}`);
+    console.log(`📚 API v1: http://${host}:${port}/api/v1`);
     console.log(`📚 API Documentation: http://${host}:${port}/api/docs`);
 }
 bootstrap();

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticlesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const pagination_constants_1 = require("../../common/constants/pagination.constants");
 let ArticlesService = class ArticlesService {
     prisma;
     constructor(prisma) {
@@ -82,7 +83,8 @@ let ArticlesService = class ArticlesService {
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, category, tag, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
-        const skip = (page - 1) * limit;
+        const safeLimit = (0, pagination_constants_1.enforcePaginationLimit)(limit);
+        const skip = (page - 1) * safeLimit;
         const where = {};
         if (search) {
             where.OR = [
@@ -119,7 +121,7 @@ let ArticlesService = class ArticlesService {
             this.prisma.article.findMany({
                 where,
                 skip,
-                take: limit,
+                take: safeLimit,
                 orderBy: { [sortBy]: sortOrder },
                 include: {
                     author: true,
@@ -151,13 +153,13 @@ let ArticlesService = class ArticlesService {
             }),
             this.prisma.article.count({ where }),
         ]);
-        const totalPages = Math.ceil(total / limit);
+        const totalPages = Math.ceil(total / safeLimit);
         return {
             data: articles.map((article) => this.formatArticleResponse(article)),
             meta: {
                 total,
                 page,
-                limit,
+                limit: safeLimit,
                 totalPages,
             },
         };

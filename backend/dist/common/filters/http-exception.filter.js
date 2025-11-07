@@ -9,12 +9,14 @@ var HttpExceptionFilter_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpExceptionFilter = void 0;
 const common_1 = require("@nestjs/common");
+const logger_service_1 = require("../logger/logger.service");
 let HttpExceptionFilter = HttpExceptionFilter_1 = class HttpExceptionFilter {
-    logger = new common_1.Logger(HttpExceptionFilter_1.name);
+    logger = new logger_service_1.LoggerService();
     catch(exception, host) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
+        const requestId = request.id || 'unknown';
         let status = common_1.HttpStatus.INTERNAL_SERVER_ERROR;
         let message = 'Internal server error';
         if (exception instanceof common_1.HttpException) {
@@ -26,20 +28,21 @@ let HttpExceptionFilter = HttpExceptionFilter_1 = class HttpExceptionFilter {
                     : exceptionResponse;
         }
         else if (exception instanceof Error) {
-            this.logger.error(`Unhandled exception: ${exception.message}`, exception.stack);
+            this.logger.error(`Unhandled exception: ${exception.message}`, exception.stack, HttpExceptionFilter_1.name);
             message = 'Internal server error';
         }
         else {
-            this.logger.error('Unknown exception type', exception);
+            this.logger.error('Unknown exception type', JSON.stringify(exception), HttpExceptionFilter_1.name);
         }
         const errorResponse = {
             statusCode: status,
             timestamp: new Date().toISOString(),
             path: request.url,
             method: request.method,
+            requestId,
             message,
         };
-        this.logger.error(`HTTP ${status} Error - ${request.method} ${request.url}`, JSON.stringify(errorResponse));
+        this.logger.error(`HTTP ${status} Error - ${request.method} ${request.url} - Request ID: ${requestId}`, JSON.stringify(errorResponse), HttpExceptionFilter_1.name);
         response.status(status).json(errorResponse);
     }
 };

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StoriesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const pagination_constants_1 = require("../../common/constants/pagination.constants");
 let StoriesService = class StoriesService {
     prisma;
     constructor(prisma) {
@@ -82,7 +83,8 @@ let StoriesService = class StoriesService {
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, series, category, tag, sortBy = 'createdAt', sortOrder = 'desc', } = queryDto;
-        const skip = (page - 1) * limit;
+        const safeLimit = (0, pagination_constants_1.enforcePaginationLimit)(limit);
+        const skip = (page - 1) * safeLimit;
         const where = {};
         if (search) {
             where.OR = [
@@ -122,7 +124,7 @@ let StoriesService = class StoriesService {
             this.prisma.story.findMany({
                 where,
                 skip,
-                take: limit,
+                take: safeLimit,
                 orderBy: { [sortBy]: sortOrder },
                 include: {
                     author: true,
@@ -154,13 +156,13 @@ let StoriesService = class StoriesService {
             }),
             this.prisma.story.count({ where }),
         ]);
-        const totalPages = Math.ceil(total / limit);
+        const totalPages = Math.ceil(total / safeLimit);
         return {
             data: stories.map((story) => this.formatStoryResponse(story)),
             meta: {
                 total,
                 page,
-                limit,
+                limit: safeLimit,
                 totalPages,
             },
         };

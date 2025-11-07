@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogPostsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const pagination_constants_1 = require("../../common/constants/pagination.constants");
 let BlogPostsService = class BlogPostsService {
     prisma;
     constructor(prisma) {
@@ -82,7 +83,8 @@ let BlogPostsService = class BlogPostsService {
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, category, tag, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
-        const skip = (page - 1) * limit;
+        const safeLimit = (0, pagination_constants_1.enforcePaginationLimit)(limit);
+        const skip = (page - 1) * safeLimit;
         const where = {};
         if (search) {
             where.OR = [
@@ -119,7 +121,7 @@ let BlogPostsService = class BlogPostsService {
             this.prisma.blogPost.findMany({
                 where,
                 skip,
-                take: limit,
+                take: safeLimit,
                 orderBy: { [sortBy]: sortOrder },
                 include: {
                     author: true,
@@ -151,13 +153,13 @@ let BlogPostsService = class BlogPostsService {
             }),
             this.prisma.blogPost.count({ where }),
         ]);
-        const totalPages = Math.ceil(total / limit);
+        const totalPages = Math.ceil(total / safeLimit);
         return {
             data: blogPosts.map((blogPost) => this.formatBlogPostResponse(blogPost)),
             meta: {
                 total,
                 page,
-                limit,
+                limit: safeLimit,
                 totalPages,
             },
         };

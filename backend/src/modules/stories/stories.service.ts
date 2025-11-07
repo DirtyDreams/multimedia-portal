@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateStoryDto, UpdateStoryDto, QueryStoryDto } from './dto';
+import { enforcePaginationLimit } from '../../common/constants/pagination.constants';
 
 @Injectable()
 export class StoriesService {
@@ -110,7 +111,9 @@ export class StoriesService {
       sortOrder = 'desc',
     } = queryDto;
 
-    const skip = (page - 1) * limit;
+    // Enforce maximum limit for security
+    const safeLimit = enforcePaginationLimit(limit);
+    const skip = (page - 1) * safeLimit;
 
     // Build where clause
     const where: any = {};
@@ -160,7 +163,7 @@ export class StoriesService {
       this.prisma.story.findMany({
         where,
         skip,
-        take: limit,
+        take: safeLimit,
         orderBy: { [sortBy]: sortOrder },
         include: {
           author: true,
@@ -193,14 +196,14 @@ export class StoriesService {
       this.prisma.story.count({ where }),
     ]);
 
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / safeLimit);
 
     return {
       data: stories.map((story) => this.formatStoryResponse(story)),
       meta: {
         total,
         page,
-        limit,
+        limit: safeLimit,
         totalPages,
       },
     };

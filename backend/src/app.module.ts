@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
@@ -6,6 +6,8 @@ import { ThrottlerGuard } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CsrfController } from './common/controllers/csrf.controller';
+import { HealthController } from './common/controllers/health.controller';
+import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ArticlesModule } from './modules/articles/articles.module';
@@ -53,7 +55,7 @@ import { ContentVersionsModule } from './modules/content-versions/content-versio
     SearchModule,
     ContentVersionsModule,
   ],
-  controllers: [AppController, CsrfController],
+  controllers: [AppController, CsrfController, HealthController],
   providers: [
     AppService,
     {
@@ -67,4 +69,10 @@ import { ContentVersionsModule } from './modules/content-versions/content-versio
     // },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RequestIdMiddleware)
+      .forRoutes('*');
+  }
+}

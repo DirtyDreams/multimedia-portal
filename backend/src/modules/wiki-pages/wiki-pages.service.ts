@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateWikiPageDto, UpdateWikiPageDto, QueryWikiPageDto } from './dto';
+import { enforcePaginationLimit } from '../../common/constants/pagination.constants';
 
 @Injectable()
 export class WikiPagesService {
@@ -124,7 +125,9 @@ export class WikiPagesService {
       sortOrder = 'desc',
     } = queryDto;
 
-    const skip = (page - 1) * limit;
+    // Enforce maximum limit for security
+    const safeLimit = enforcePaginationLimit(limit);
+    const skip = (page - 1) * safeLimit;
 
     // Build where clause
     const where: any = {};
@@ -173,7 +176,7 @@ export class WikiPagesService {
       this.prisma.wikiPage.findMany({
         where,
         skip,
-        take: limit,
+        take: safeLimit,
         orderBy: { [sortBy]: sortOrder },
         include: {
           author: true,
@@ -209,14 +212,14 @@ export class WikiPagesService {
       this.prisma.wikiPage.count({ where }),
     ]);
 
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / safeLimit);
 
     return {
       data: wikiPages.map((wikiPage) => this.formatWikiPageResponse(wikiPage)),
       meta: {
         total,
         page,
-        limit,
+        limit: safeLimit,
         totalPages,
       },
     };

@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateBlogPostDto, UpdateBlogPostDto, QueryBlogPostDto } from './dto';
+import { enforcePaginationLimit } from '../../common/constants/pagination.constants';
 
 @Injectable()
 export class BlogPostsService {
@@ -99,7 +100,9 @@ export class BlogPostsService {
   async findAll(queryDto: QueryBlogPostDto) {
     const { page = 1, limit = 10, search, status, authorId, category, tag, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
 
-    const skip = (page - 1) * limit;
+    // Enforce maximum limit for security
+    const safeLimit = enforcePaginationLimit(limit);
+    const skip = (page - 1) * safeLimit;
 
     // Build where clause
     const where: any = {};
@@ -145,7 +148,7 @@ export class BlogPostsService {
       this.prisma.blogPost.findMany({
         where,
         skip,
-        take: limit,
+        take: safeLimit,
         orderBy: { [sortBy]: sortOrder },
         include: {
           author: true,
@@ -178,14 +181,14 @@ export class BlogPostsService {
       this.prisma.blogPost.count({ where }),
     ]);
 
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / safeLimit);
 
     return {
       data: blogPosts.map((blogPost) => this.formatBlogPostResponse(blogPost)),
       meta: {
         total,
         page,
-        limit,
+        limit: safeLimit,
         totalPages,
       },
     };

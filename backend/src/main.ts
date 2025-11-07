@@ -45,8 +45,8 @@ async function bootstrap() {
   // Global exception filter for consistent error handling
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // API prefix
-  app.setGlobalPrefix('api');
+  // API prefix with versioning
+  app.setGlobalPrefix('api/v1');
 
   // Swagger documentation (only in development)
   if (!configService.isProduction) {
@@ -75,6 +75,7 @@ async function bootstrap() {
 
   await app.listen(port, host);
   console.log(`🚀 Application is running on: http://${host}:${port}`);
+  console.log(`📚 API v1: http://${host}:${port}/api/v1`);
   console.log(`📚 API Documentation: http://${host}:${port}/api/docs`);
 }
 bootstrap();

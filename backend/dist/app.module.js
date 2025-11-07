@@ -15,6 +15,8 @@ const throttler_2 = require("@nestjs/throttler");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const csrf_controller_1 = require("./common/controllers/csrf.controller");
+const health_controller_1 = require("./common/controllers/health.controller");
+const request_id_middleware_1 = require("./common/middleware/request-id.middleware");
 const prisma_module_1 = require("./prisma/prisma.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const articles_module_1 = require("./modules/articles/articles.module");
@@ -32,6 +34,11 @@ const cache_module_1 = require("./cache/cache.module");
 const config_module_1 = require("./config/config.module");
 const content_versions_module_1 = require("./modules/content-versions/content-versions.module");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(request_id_middleware_1.RequestIdMiddleware)
+            .forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -64,7 +71,7 @@ exports.AppModule = AppModule = __decorate([
             search_module_1.SearchModule,
             content_versions_module_1.ContentVersionsModule,
         ],
-        controllers: [app_controller_1.AppController, csrf_controller_1.CsrfController],
+        controllers: [app_controller_1.AppController, csrf_controller_1.CsrfController, health_controller_1.HealthController],
         providers: [
             app_service_1.AppService,
             {
