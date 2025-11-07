@@ -2988,9 +2988,10 @@
               2
             ],
             "details": "Stw\u00f3rz automated backup script dla PostgreSQL (pg_dump). Skonfiguruj daily/weekly/monthly retention policy. Setup backup storage (S3/external storage). Dodaj backup verification, restore procedure documentation. Skonfiguruj cron jobs i monitoring backups.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Sprawd\u017a czy backupy s\u0105 tworzone regularnie, restore process dzia\u0142a, backup files s\u0105 przechowywane bezpiecznie",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-11-07T01:00:00.000Z"
           },
           {
             "id": 6,
