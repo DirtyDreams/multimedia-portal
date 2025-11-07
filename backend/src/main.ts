@@ -63,6 +63,7 @@ async function bootstrap() {
     .addTag('Ratings', 'Rating and review system endpoints')
     .addTag('Notifications', 'User notification system')
     .addTag('Search', 'Content search and filtering')
+    .addTag('Analytics', 'Privacy-friendly analytics and tracking system')
     .addBearerAuth(
       {
         type: 'http',

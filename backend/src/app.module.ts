@@ -21,6 +21,7 @@ import { QueuesModule } from './queues/queues.module';
 import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 import { ContentVersionsModule } from './modules/content-versions/content-versions.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { ContentVersionsModule } from './modules/content-versions/content-versio
     NotificationsModule,
     SearchModule,
     ContentVersionsModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [
