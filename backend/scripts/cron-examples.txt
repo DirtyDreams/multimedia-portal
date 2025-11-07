@@ -1,0 +1,93 @@
+###############################################################################
+# Cron Job Examples for Database Backups
+#
+# Add these to your crontab using: crontab -e
+#
+# Cron format: minute hour day month day_of_week command
+#
+###############################################################################
+
+# Daily backup at 2:00 AM
+0 2 * * * /path/to/multimedia-portal/backend/scripts/backup-database.sh --type daily >> /var/log/multimedia-backup.log 2>&1
+
+# Weekly backup every Sunday at 3:00 AM
+0 3 * * 0 /path/to/multimedia-portal/backend/scripts/backup-database.sh --type weekly >> /var/log/multimedia-backup.log 2>&1
+
+# Monthly backup on the 1st of each month at 4:00 AM
+0 4 1 * * /path/to/multimedia-portal/backend/scripts/backup-database.sh --type monthly >> /var/log/multimedia-backup.log 2>&1
+
+# Automated backup (script determines type based on date) at 2:00 AM
+0 2 * * * /path/to/multimedia-portal/backend/scripts/backup-database.sh >> /var/log/multimedia-backup.log 2>&1
+
+###############################################################################
+# Backup Verification - Daily at 6:00 AM
+###############################################################################
+
+0 6 * * * /path/to/multimedia-portal/backend/scripts/verify-backups.sh >> /var/log/multimedia-verify.log 2>&1
+
+###############################################################################
+# Cleanup Old Logs - Weekly on Sunday at 5:00 AM
+###############################################################################
+
+0 5 * * 0 find /path/to/multimedia-portal/logs/backups -name "*.log" -mtime +30 -delete
+
+###############################################################################
+# Production Recommended Schedule
+###############################################################################
+
+# Full backup daily at 2:00 AM
+0 2 * * * cd /path/to/multimedia-portal/backend && ./scripts/backup-database.sh >> /var/log/multimedia-backup.log 2>&1
+
+# Verify latest backup at 3:00 AM
+0 3 * * * cd /path/to/multimedia-portal/backend && ./scripts/verify-backups.sh >> /var/log/multimedia-verify.log 2>&1
+
+# Upload to S3 at 4:00 AM (if enabled)
+0 4 * * * cd /path/to/multimedia-portal/backend && ./scripts/sync-to-s3.sh >> /var/log/multimedia-s3-sync.log 2>&1
+
+# Cleanup old backups at 5:00 AM
+0 5 * * * cd /path/to/multimedia-portal/backend && find backups/postgres/daily -name "*.sql.gz" -mtime +7 -delete
+
+###############################################################################
+# Docker Cron Job Examples
+###############################################################################
+
+# Backup from Docker container - daily at 2:00 AM
+0 2 * * * docker exec multimedia-postgres-prod pg_dump -U multimedia_user multimedia_db | gzip > /backups/multimedia_db_$(date +\%Y\%m\%d).sql.gz
+
+# Backup using docker-compose
+0 2 * * * cd /path/to/multimedia-portal && docker-compose exec -T postgres pg_dump -U multimedia_user multimedia_db | gzip > /backups/multimedia_db_$(date +\%Y\%m\%d).sql.gz
+
+###############################################################################
+# High Availability Setup - Multiple Daily Backups
+###############################################################################
+
+# Backup every 6 hours
+0 */6 * * * /path/to/multimedia-portal/backend/scripts/backup-database.sh --type hourly >> /var/log/multimedia-backup.log 2>&1
+
+# Full backup once daily
+0 2 * * * /path/to/multimedia-portal/backend/scripts/backup-database.sh --type daily >> /var/log/multimedia-backup.log 2>&1
+
+###############################################################################
+# Backup to Multiple Locations
+###############################################################################
+
+# Backup to local storage
+0 2 * * * /path/to/multimedia-portal/backend/scripts/backup-database.sh --type daily --dest local
+
+# Backup to S3
+15 2 * * * /path/to/multimedia-portal/backend/scripts/backup-database.sh --type daily --dest s3
+
+# Backup to external server via rsync
+30 2 * * * rsync -avz /backups/postgres/ user@backup-server:/remote/backups/multimedia/
+
+###############################################################################
+# Notes
+###############################################################################
+
+# 1. Adjust paths to match your installation directory
+# 2. Ensure scripts have execute permissions: chmod +x script.sh
+# 3. Test cron jobs manually before scheduling
+# 4. Monitor cron logs: tail -f /var/log/cron or journalctl -u cron
+# 5. Email notifications: ensure mail utility is configured
+# 6. Consider using logrotate for backup logs
+# 7. Always test restore procedures regularly

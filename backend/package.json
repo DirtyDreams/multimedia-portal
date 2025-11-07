@@ -19,7 +19,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docs:generate": "ts-node scripts/generate-postman-collection.ts",
-    "docs:open": "open http://localhost:4000/api-docs"
+    "docs:open": "open http://localhost:4000/api-docs",
+    "backup:create": "bash scripts/backup-database.sh",
+    "backup:restore": "bash scripts/restore-database.sh",
+    "backup:verify": "bash scripts/verify-backups.sh",
+    "backup:docker": "bash scripts/docker-backup.sh"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
