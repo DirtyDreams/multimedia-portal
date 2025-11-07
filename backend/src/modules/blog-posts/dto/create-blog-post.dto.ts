@@ -9,6 +9,11 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import {
+  SanitizeHtml,
+  SanitizeHtmlStrict,
+  StripHtml,
+} from '../../../common/decorators';
 
 enum ContentStatus {
   DRAFT = 'DRAFT',
@@ -18,6 +23,8 @@ enum ContentStatus {
 
 export class CreateBlogPostDto {
   @ApiProperty({ description: 'Blog post title', example: 'Getting Started with React' })
+  // Remove all HTML tags from title - titles should be plain text only
+  @StripHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -25,12 +32,16 @@ export class CreateBlogPostDto {
   title: string;
 
   @ApiProperty({ description: 'Blog post content in HTML or Markdown' })
+  // Allow safe HTML content (paragraphs, bold, italic, links, etc.)
+  @SanitizeHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(10)
   content: string;
 
   @ApiPropertyOptional({ description: 'Short excerpt or summary' })
+  // Allow only basic HTML formatting (bold, italic) in excerpts
+  @SanitizeHtmlStrict()
   @IsString()
   @IsOptional()
   @MaxLength(500)

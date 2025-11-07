@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateWikiPageDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const decorators_1 = require("../../../common/decorators");
 var ContentStatus;
 (function (ContentStatus) {
     ContentStatus["DRAFT"] = "DRAFT";
@@ -30,6 +31,7 @@ class CreateWikiPageDto {
 exports.CreateWikiPageDto = CreateWikiPageDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Wiki page title', example: 'Getting Started Guide' }),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(3),
@@ -38,6 +40,7 @@ __decorate([
 ], CreateWikiPageDto.prototype, "title", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Wiki page content in HTML or Markdown' }),
+    (0, decorators_1.SanitizeHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(10),

@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ConfigService } from './config/config.service';
@@ -9,6 +10,9 @@ import { ConfigService } from './config/config.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+
+  // Enable cookie parser (required for CSRF protection)
+  app.use(cookieParser());
 
   // Security: Helmet for security headers
   app.use(helmet());
@@ -18,7 +22,12 @@ async function bootstrap() {
     origin: configService.corsOrigin,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'X-CSRF-Token', // Allow CSRF token header
+    ],
   });
 
   // Global validation pipe with security settings

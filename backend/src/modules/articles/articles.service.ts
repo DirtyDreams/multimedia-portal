@@ -20,74 +20,77 @@ export class ArticlesService {
     // Generate slug from title
     const slug = this.generateSlug(articleData.title);
 
-    // Check if slug already exists
-    const existingArticle = await this.prisma.article.findUnique({
-      where: { slug },
-    });
+    // Use transaction to ensure atomicity of article creation with categories and tags
+    return this.prisma.$transaction(async (tx) => {
+      // Check if slug already exists
+      const existingArticle = await tx.article.findUnique({
+        where: { slug },
+      });
 
-    if (existingArticle) {
-      throw new ConflictException(`Article with slug "${slug}" already exists`);
-    }
+      if (existingArticle) {
+        throw new ConflictException(`Article with slug "${slug}" already exists`);
+      }
 
-    // Verify author exists
-    const author = await this.prisma.author.findUnique({
-      where: { id: articleData.authorId },
-    });
+      // Verify author exists
+      const author = await tx.author.findUnique({
+        where: { id: articleData.authorId },
+      });
 
-    if (!author) {
-      throw new NotFoundException(`Author with ID "${articleData.authorId}" not found`);
-    }
+      if (!author) {
+        throw new NotFoundException(`Author with ID "${articleData.authorId}" not found`);
+      }
 
-    // Set publishedAt if status is PUBLISHED
-    const publishedAt =
-      articleData.status === 'PUBLISHED' ? new Date() : null;
+      // Set publishedAt if status is PUBLISHED
+      const publishedAt =
+        articleData.status === 'PUBLISHED' ? new Date() : null;
 
-    // Create article with relations
-    const article = await this.prisma.article.create({
-      data: {
-        ...articleData,
-        slug,
-        userId,
-        publishedAt,
-        categories: categoryIds
-          ? {
-              create: categoryIds.map((categoryId) => ({
-                category: { connect: { id: categoryId } },
-              })),
-            }
-          : undefined,
-        tags: tagIds
-          ? {
-              create: tagIds.map((tagId) => ({
-                tag: { connect: { id: tagId } },
-              })),
-            }
-          : undefined,
-      },
-      include: {
-        author: true,
-        user: {
-          select: {
-            id: true,
-            email: true,
-            username: true,
-            name: true,
+      // Create article with relations
+      const article = await tx.article.create({
+        data: {
+          ...articleData,
+          slug,
+          userId,
+          publishedAt,
+          categories: categoryIds
+            ? {
+                create: categoryIds.map((categoryId) => ({
+                  category: { connect: { id: categoryId } },
+                })),
+              }
+            : undefined,
+          tags: tagIds
+            ? {
+                create: tagIds.map((tagId) => ({
+                  tag: { connect: { id: tagId } },
+                })),
+              }
+            : undefined,
+        },
+        include: {
+          author: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              username: true,
+              name: true,
+            },
+          },
+          categories: {
+            include: {
+              category: true,
+            },
+          },
+          tags: {
+            include: {
+              tag: true,
+            },
           },
         },
-        categories: {
-          include: {
-            category: true,
-          },
-        },
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-      },
-    });
+      });
 
-    return this.formatArticleResponse(article);
+      return this.formatArticleResponse(article);
+    });
   }
 
   /**
@@ -276,90 +279,93 @@ export class ArticlesService {
    * Update an article
    */
   async update(id: string, updateArticleDto: UpdateArticleDto) {
-    // Check if article exists
-    const existingArticle = await this.prisma.article.findUnique({
-      where: { id },
-    });
+    // Use transaction to ensure atomicity of article update with categories and tags
+    return this.prisma.$transaction(async (tx) => {
+      // Check if article exists
+      const existingArticle = await tx.article.findUnique({
+        where: { id },
+      });
 
-    if (!existingArticle) {
-      throw new NotFoundException(`Article with ID "${id}" not found`);
-    }
+      if (!existingArticle) {
+        throw new NotFoundException(`Article with ID "${id}" not found`);
+      }
 
-    const { categoryIds, tagIds, title, ...articleData } = updateArticleDto;
+      const { categoryIds, tagIds, title, ...articleData } = updateArticleDto;
 
-    // If title is being updated, generate new slug
-    let slug = existingArticle.slug;
-    if (title && title !== existingArticle.title) {
-      slug = this.generateSlug(title);
+      // If title is being updated, generate new slug
+      let slug = existingArticle.slug;
+      if (title && title !== existingArticle.title) {
+        slug = this.generateSlug(title);
 
-      // Check if new slug conflicts
-      const slugConflict = await this.prisma.article.findFirst({
-        where: {
+        // Check if new slug conflicts
+        const slugConflict = await tx.article.findFirst({
+          where: {
+            slug,
+            NOT: { id },
+          },
+        });
+
+        if (slugConflict) {
+          throw new ConflictException(`Article with slug "${slug}" already exists`);
+        }
+      }
+
+      // Update publishedAt if status changes to PUBLISHED
+      let publishedAt = existingArticle.publishedAt;
+      if (articleData.status === 'PUBLISHED' && !existingArticle.publishedAt) {
+        publishedAt = new Date();
+      }
+
+      // Update article
+      const article = await tx.article.update({
+        where: { id },
+        data: {
+          ...articleData,
+          title,
           slug,
-          NOT: { id },
+          publishedAt,
+          ...(categoryIds !== undefined && {
+            categories: {
+              deleteMany: {},
+              create: categoryIds.map((categoryId) => ({
+                category: { connect: { id: categoryId } },
+              })),
+            },
+          }),
+          ...(tagIds !== undefined && {
+            tags: {
+              deleteMany: {},
+              create: tagIds.map((tagId) => ({
+                tag: { connect: { id: tagId } },
+              })),
+            },
+          }),
+        },
+        include: {
+          author: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              username: true,
+              name: true,
+            },
+          },
+          categories: {
+            include: {
+              category: true,
+            },
+          },
+          tags: {
+            include: {
+              tag: true,
+            },
+          },
         },
       });
 
-      if (slugConflict) {
-        throw new ConflictException(`Article with slug "${slug}" already exists`);
-      }
-    }
-
-    // Update publishedAt if status changes to PUBLISHED
-    let publishedAt = existingArticle.publishedAt;
-    if (articleData.status === 'PUBLISHED' && !existingArticle.publishedAt) {
-      publishedAt = new Date();
-    }
-
-    // Update article
-    const article = await this.prisma.article.update({
-      where: { id },
-      data: {
-        ...articleData,
-        title,
-        slug,
-        publishedAt,
-        ...(categoryIds !== undefined && {
-          categories: {
-            deleteMany: {},
-            create: categoryIds.map((categoryId) => ({
-              category: { connect: { id: categoryId } },
-            })),
-          },
-        }),
-        ...(tagIds !== undefined && {
-          tags: {
-            deleteMany: {},
-            create: tagIds.map((tagId) => ({
-              tag: { connect: { id: tagId } },
-            })),
-          },
-        }),
-      },
-      include: {
-        author: true,
-        user: {
-          select: {
-            id: true,
-            email: true,
-            username: true,
-            name: true,
-          },
-        },
-        categories: {
-          include: {
-            category: true,
-          },
-        },
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-      },
+      return this.formatArticleResponse(article);
     });
-
-    return this.formatArticleResponse(article);
   }
 
   /**

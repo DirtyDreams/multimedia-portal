@@ -9,6 +9,11 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import {
+  SanitizeHtml,
+  SanitizeHtmlStrict,
+  StripHtml,
+} from '../../../common/decorators';
 
 enum ContentStatus {
   DRAFT = 'DRAFT',
@@ -18,6 +23,8 @@ enum ContentStatus {
 
 export class CreateStoryDto {
   @ApiProperty({ description: 'Story title', example: 'The Dragon Quest - Part 1' })
+  // Remove all HTML tags from title - titles should be plain text only
+  @StripHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -25,12 +32,16 @@ export class CreateStoryDto {
   title: string;
 
   @ApiProperty({ description: 'Story content in HTML or Markdown' })
+  // Allow safe HTML content (paragraphs, bold, italic, links, etc.)
+  @SanitizeHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(10)
   content: string;
 
   @ApiPropertyOptional({ description: 'Short excerpt or summary' })
+  // Allow only basic HTML formatting (bold, italic) in excerpts
+  @SanitizeHtmlStrict()
   @IsString()
   @IsOptional()
   @MaxLength(500)
@@ -42,6 +53,8 @@ export class CreateStoryDto {
   featuredImage?: string;
 
   @ApiPropertyOptional({ description: 'Series name for grouping related stories' })
+  // Remove all HTML tags from series name - should be plain text only
+  @StripHtml()
   @IsString()
   @IsOptional()
   @MaxLength(100)

@@ -14,6 +14,7 @@ const core_1 = require("@nestjs/core");
 const throttler_2 = require("@nestjs/throttler");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const csrf_controller_1 = require("./common/controllers/csrf.controller");
 const prisma_module_1 = require("./prisma/prisma.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const articles_module_1 = require("./modules/articles/articles.module");
@@ -63,7 +64,7 @@ exports.AppModule = AppModule = __decorate([
             search_module_1.SearchModule,
             content_versions_module_1.ContentVersionsModule,
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, csrf_controller_1.CsrfController],
         providers: [
             app_service_1.AppService,
             {

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateGalleryItemDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const decorators_1 = require("../../../common/decorators");
 var ContentStatus;
 (function (ContentStatus) {
     ContentStatus["DRAFT"] = "DRAFT";
@@ -29,6 +30,7 @@ class CreateGalleryItemDto {
 exports.CreateGalleryItemDto = CreateGalleryItemDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Gallery item title', example: 'Sunset Beach Photo' }),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(3),
@@ -37,6 +39,7 @@ __decorate([
 ], CreateGalleryItemDto.prototype, "title", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Gallery item description' }),
+    (0, decorators_1.SanitizeHtmlStrict)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.MaxLength)(1000),

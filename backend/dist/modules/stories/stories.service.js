@@ -20,63 +20,65 @@ let StoriesService = class StoriesService {
     async create(userId, createStoryDto) {
         const { categoryIds, tagIds, ...storyData } = createStoryDto;
         const slug = this.generateSlug(storyData.title);
-        const existingStory = await this.prisma.story.findUnique({
-            where: { slug },
-        });
-        if (existingStory) {
-            throw new common_1.ConflictException(`Story with slug "${slug}" already exists`);
-        }
-        const author = await this.prisma.author.findUnique({
-            where: { id: storyData.authorId },
-        });
-        if (!author) {
-            throw new common_1.NotFoundException(`Author with ID "${storyData.authorId}" not found`);
-        }
-        const publishedAt = storyData.status === 'PUBLISHED' ? new Date() : null;
-        const story = await this.prisma.story.create({
-            data: {
-                ...storyData,
-                slug,
-                userId,
-                publishedAt,
-                categories: categoryIds
-                    ? {
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    }
-                    : undefined,
-                tags: tagIds
-                    ? {
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    }
-                    : undefined,
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
+        return this.prisma.$transaction(async (tx) => {
+            const existingStory = await tx.story.findUnique({
+                where: { slug },
+            });
+            if (existingStory) {
+                throw new common_1.ConflictException(`Story with slug "${slug}" already exists`);
+            }
+            const author = await tx.author.findUnique({
+                where: { id: storyData.authorId },
+            });
+            if (!author) {
+                throw new common_1.NotFoundException(`Author with ID "${storyData.authorId}" not found`);
+            }
+            const publishedAt = storyData.status === 'PUBLISHED' ? new Date() : null;
+            const story = await tx.story.create({
+                data: {
+                    ...storyData,
+                    slug,
+                    userId,
+                    publishedAt,
+                    categories: categoryIds
+                        ? {
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        }
+                        : undefined,
+                    tags: tagIds
+                        ? {
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        }
+                        : undefined,
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
                     },
                 },
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            });
+            return this.formatStoryResponse(story);
         });
-        return this.formatStoryResponse(story);
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, series, category, tag, sortBy = 'createdAt', sortOrder = 'desc', } = queryDto;
@@ -254,77 +256,79 @@ let StoriesService = class StoriesService {
         return this.formatStoryResponse(story);
     }
     async update(id, updateStoryDto) {
-        const existingStory = await this.prisma.story.findUnique({
-            where: { id },
-        });
-        if (!existingStory) {
-            throw new common_1.NotFoundException(`Story with ID "${id}" not found`);
-        }
-        const { categoryIds, tagIds, title, ...storyData } = updateStoryDto;
-        let slug = existingStory.slug;
-        if (title && title !== existingStory.title) {
-            slug = this.generateSlug(title);
-            const slugConflict = await this.prisma.story.findFirst({
-                where: {
+        return this.prisma.$transaction(async (tx) => {
+            const existingStory = await tx.story.findUnique({
+                where: { id },
+            });
+            if (!existingStory) {
+                throw new common_1.NotFoundException(`Story with ID "${id}" not found`);
+            }
+            const { categoryIds, tagIds, title, ...storyData } = updateStoryDto;
+            let slug = existingStory.slug;
+            if (title && title !== existingStory.title) {
+                slug = this.generateSlug(title);
+                const slugConflict = await tx.story.findFirst({
+                    where: {
+                        slug,
+                        NOT: { id },
+                    },
+                });
+                if (slugConflict) {
+                    throw new common_1.ConflictException(`Story with slug "${slug}" already exists`);
+                }
+            }
+            let publishedAt = existingStory.publishedAt;
+            if (storyData.status === 'PUBLISHED' && !existingStory.publishedAt) {
+                publishedAt = new Date();
+            }
+            const story = await tx.story.update({
+                where: { id },
+                data: {
+                    ...storyData,
+                    title,
                     slug,
-                    NOT: { id },
+                    publishedAt,
+                    ...(categoryIds !== undefined && {
+                        categories: {
+                            deleteMany: {},
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        },
+                    }),
+                    ...(tagIds !== undefined && {
+                        tags: {
+                            deleteMany: {},
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        },
+                    }),
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
+                    },
                 },
             });
-            if (slugConflict) {
-                throw new common_1.ConflictException(`Story with slug "${slug}" already exists`);
-            }
-        }
-        let publishedAt = existingStory.publishedAt;
-        if (storyData.status === 'PUBLISHED' && !existingStory.publishedAt) {
-            publishedAt = new Date();
-        }
-        const story = await this.prisma.story.update({
-            where: { id },
-            data: {
-                ...storyData,
-                title,
-                slug,
-                publishedAt,
-                ...(categoryIds !== undefined && {
-                    categories: {
-                        deleteMany: {},
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    },
-                }),
-                ...(tagIds !== undefined && {
-                    tags: {
-                        deleteMany: {},
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    },
-                }),
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
-                    },
-                },
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            return this.formatStoryResponse(story);
         });
-        return this.formatStoryResponse(story);
     }
     async remove(id) {
         const story = await this.prisma.story.findUnique({

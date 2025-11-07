@@ -20,63 +20,65 @@ let BlogPostsService = class BlogPostsService {
     async create(userId, createBlogPostDto) {
         const { categoryIds, tagIds, ...blogPostData } = createBlogPostDto;
         const slug = this.generateSlug(blogPostData.title);
-        const existingBlogPost = await this.prisma.blogPost.findUnique({
-            where: { slug },
-        });
-        if (existingBlogPost) {
-            throw new common_1.ConflictException(`Blog post with slug "${slug}" already exists`);
-        }
-        const author = await this.prisma.author.findUnique({
-            where: { id: blogPostData.authorId },
-        });
-        if (!author) {
-            throw new common_1.NotFoundException(`Author with ID "${blogPostData.authorId}" not found`);
-        }
-        const publishedAt = blogPostData.status === 'PUBLISHED' ? new Date() : null;
-        const blogPost = await this.prisma.blogPost.create({
-            data: {
-                ...blogPostData,
-                slug,
-                userId,
-                publishedAt,
-                categories: categoryIds
-                    ? {
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    }
-                    : undefined,
-                tags: tagIds
-                    ? {
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    }
-                    : undefined,
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
+        return this.prisma.$transaction(async (tx) => {
+            const existingBlogPost = await tx.blogPost.findUnique({
+                where: { slug },
+            });
+            if (existingBlogPost) {
+                throw new common_1.ConflictException(`Blog post with slug "${slug}" already exists`);
+            }
+            const author = await tx.author.findUnique({
+                where: { id: blogPostData.authorId },
+            });
+            if (!author) {
+                throw new common_1.NotFoundException(`Author with ID "${blogPostData.authorId}" not found`);
+            }
+            const publishedAt = blogPostData.status === 'PUBLISHED' ? new Date() : null;
+            const blogPost = await tx.blogPost.create({
+                data: {
+                    ...blogPostData,
+                    slug,
+                    userId,
+                    publishedAt,
+                    categories: categoryIds
+                        ? {
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        }
+                        : undefined,
+                    tags: tagIds
+                        ? {
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        }
+                        : undefined,
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
                     },
                 },
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            });
+            return this.formatBlogPostResponse(blogPost);
         });
-        return this.formatBlogPostResponse(blogPost);
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, category, tag, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
@@ -233,77 +235,79 @@ let BlogPostsService = class BlogPostsService {
         return this.formatBlogPostResponse(blogPost);
     }
     async update(id, updateBlogPostDto) {
-        const existingBlogPost = await this.prisma.blogPost.findUnique({
-            where: { id },
-        });
-        if (!existingBlogPost) {
-            throw new common_1.NotFoundException(`Blog post with ID "${id}" not found`);
-        }
-        const { categoryIds, tagIds, title, ...blogPostData } = updateBlogPostDto;
-        let slug = existingBlogPost.slug;
-        if (title && title !== existingBlogPost.title) {
-            slug = this.generateSlug(title);
-            const slugConflict = await this.prisma.blogPost.findFirst({
-                where: {
+        return this.prisma.$transaction(async (tx) => {
+            const existingBlogPost = await tx.blogPost.findUnique({
+                where: { id },
+            });
+            if (!existingBlogPost) {
+                throw new common_1.NotFoundException(`Blog post with ID "${id}" not found`);
+            }
+            const { categoryIds, tagIds, title, ...blogPostData } = updateBlogPostDto;
+            let slug = existingBlogPost.slug;
+            if (title && title !== existingBlogPost.title) {
+                slug = this.generateSlug(title);
+                const slugConflict = await tx.blogPost.findFirst({
+                    where: {
+                        slug,
+                        NOT: { id },
+                    },
+                });
+                if (slugConflict) {
+                    throw new common_1.ConflictException(`Blog post with slug "${slug}" already exists`);
+                }
+            }
+            let publishedAt = existingBlogPost.publishedAt;
+            if (blogPostData.status === 'PUBLISHED' && !existingBlogPost.publishedAt) {
+                publishedAt = new Date();
+            }
+            const blogPost = await tx.blogPost.update({
+                where: { id },
+                data: {
+                    ...blogPostData,
+                    title,
                     slug,
-                    NOT: { id },
+                    publishedAt,
+                    ...(categoryIds !== undefined && {
+                        categories: {
+                            deleteMany: {},
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        },
+                    }),
+                    ...(tagIds !== undefined && {
+                        tags: {
+                            deleteMany: {},
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        },
+                    }),
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
+                    },
                 },
             });
-            if (slugConflict) {
-                throw new common_1.ConflictException(`Blog post with slug "${slug}" already exists`);
-            }
-        }
-        let publishedAt = existingBlogPost.publishedAt;
-        if (blogPostData.status === 'PUBLISHED' && !existingBlogPost.publishedAt) {
-            publishedAt = new Date();
-        }
-        const blogPost = await this.prisma.blogPost.update({
-            where: { id },
-            data: {
-                ...blogPostData,
-                title,
-                slug,
-                publishedAt,
-                ...(categoryIds !== undefined && {
-                    categories: {
-                        deleteMany: {},
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    },
-                }),
-                ...(tagIds !== undefined && {
-                    tags: {
-                        deleteMany: {},
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    },
-                }),
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
-                    },
-                },
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            return this.formatBlogPostResponse(blogPost);
         });
-        return this.formatBlogPostResponse(blogPost);
     }
     async remove(id) {
         const blogPost = await this.prisma.blogPost.findUnique({

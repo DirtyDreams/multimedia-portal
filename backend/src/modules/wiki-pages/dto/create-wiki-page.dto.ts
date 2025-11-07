@@ -9,6 +9,10 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import {
+  SanitizeHtml,
+  StripHtml,
+} from '../../../common/decorators';
 
 enum ContentStatus {
   DRAFT = 'DRAFT',
@@ -18,6 +22,8 @@ enum ContentStatus {
 
 export class CreateWikiPageDto {
   @ApiProperty({ description: 'Wiki page title', example: 'Getting Started Guide' })
+  // Remove all HTML tags from title - titles should be plain text only
+  @StripHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -25,6 +31,8 @@ export class CreateWikiPageDto {
   title: string;
 
   @ApiProperty({ description: 'Wiki page content in HTML or Markdown' })
+  // Allow safe HTML content (paragraphs, bold, italic, links, etc.)
+  @SanitizeHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(10)

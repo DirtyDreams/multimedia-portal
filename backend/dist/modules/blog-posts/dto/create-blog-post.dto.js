@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateBlogPostDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const decorators_1 = require("../../../common/decorators");
 var ContentStatus;
 (function (ContentStatus) {
     ContentStatus["DRAFT"] = "DRAFT";
@@ -31,6 +32,7 @@ class CreateBlogPostDto {
 exports.CreateBlogPostDto = CreateBlogPostDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Blog post title', example: 'Getting Started with React' }),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(3),
@@ -39,6 +41,7 @@ __decorate([
 ], CreateBlogPostDto.prototype, "title", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Blog post content in HTML or Markdown' }),
+    (0, decorators_1.SanitizeHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(10),
@@ -46,6 +49,7 @@ __decorate([
 ], CreateBlogPostDto.prototype, "content", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Short excerpt or summary' }),
+    (0, decorators_1.SanitizeHtmlStrict)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.MaxLength)(500),

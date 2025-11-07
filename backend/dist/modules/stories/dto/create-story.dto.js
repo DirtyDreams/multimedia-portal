@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateStoryDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const decorators_1 = require("../../../common/decorators");
 var ContentStatus;
 (function (ContentStatus) {
     ContentStatus["DRAFT"] = "DRAFT";
@@ -32,6 +33,7 @@ class CreateStoryDto {
 exports.CreateStoryDto = CreateStoryDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Story title', example: 'The Dragon Quest - Part 1' }),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(3),
@@ -40,6 +42,7 @@ __decorate([
 ], CreateStoryDto.prototype, "title", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Story content in HTML or Markdown' }),
+    (0, decorators_1.SanitizeHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(10),
@@ -47,6 +50,7 @@ __decorate([
 ], CreateStoryDto.prototype, "content", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Short excerpt or summary' }),
+    (0, decorators_1.SanitizeHtmlStrict)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.MaxLength)(500),
@@ -60,6 +64,7 @@ __decorate([
 ], CreateStoryDto.prototype, "featuredImage", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Series name for grouping related stories' }),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.MaxLength)(100),

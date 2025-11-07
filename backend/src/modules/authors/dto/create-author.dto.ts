@@ -8,9 +8,15 @@ import {
   IsOptional,
   IsUrl,
 } from 'class-validator';
+import {
+  SanitizeHtmlStrict,
+  StripHtml,
+} from '../../../common/decorators';
 
 export class CreateAuthorDto {
   @ApiProperty({ description: 'Author name', example: 'John Doe' })
+  // Remove all HTML tags from name - names should be plain text only
+  @StripHtml()
   @IsString()
   @IsNotEmpty()
   @MinLength(2)
@@ -21,6 +27,8 @@ export class CreateAuthorDto {
     description: 'Author biography',
     example: 'John Doe is an experienced writer...',
   })
+  // Allow only basic HTML formatting (bold, italic) in biography
+  @SanitizeHtmlStrict()
   @IsString()
   @IsOptional()
   bio?: string;

@@ -5,6 +5,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CsrfController } from './common/controllers/csrf.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ArticlesModule } from './modules/articles/articles.module';
@@ -21,6 +22,7 @@ import { QueuesModule } from './queues/queues.module';
 import { CacheModule } from './cache/cache.module';
 import { ConfigModule as CustomConfigModule } from './config/config.module';
 import { ContentVersionsModule } from './modules/content-versions/content-versions.module';
+// import { CsrfGuard } from './common/guards/csrf.guard'; // Uncomment to enable CSRF protection globally
 
 @Module({
   imports: [
@@ -51,13 +53,18 @@ import { ContentVersionsModule } from './modules/content-versions/content-versio
     SearchModule,
     ContentVersionsModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, CsrfController],
   providers: [
     AppService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    // Uncomment to enable CSRF protection globally (recommended for production)
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: CsrfGuard,
+    // },
   ],
 })
 export class AppModule {}

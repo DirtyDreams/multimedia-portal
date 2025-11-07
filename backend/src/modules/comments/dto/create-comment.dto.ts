@@ -8,6 +8,7 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import { SanitizeHtmlStrict } from '../../../common/decorators';
 
 export enum CommentableType {
   ARTICLE = 'ARTICLE',
@@ -24,6 +25,8 @@ export class CreateCommentDto {
     minLength: 1,
     maxLength: 5000,
   })
+  // Allow only basic HTML formatting (bold, italic) in comments
+  @SanitizeHtmlStrict()
   @IsString()
   @IsNotEmpty()
   @MinLength(1)

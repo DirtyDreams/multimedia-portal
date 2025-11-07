@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
+const decorators_1 = require("../../../common/decorators");
 class RegisterDto {
     email;
     username;
@@ -37,6 +38,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(3),
     (0, class_validator_1.MaxLength)(30),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.Matches)(/^[a-zA-Z0-9_-]+$/, {
         message: 'Username can only contain letters, numbers, hyphens and underscores',
     }),
@@ -45,13 +47,19 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: 'SecurePassword123!',
-        description: 'User password',
-        minLength: 6,
+        description: 'User password (8-128 characters, must include uppercase, lowercase, number, and special character)',
+        minLength: 8,
+        maxLength: 128,
     }),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(6),
-    (0, class_validator_1.Matches)(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
-        message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number',
+    (0, class_validator_1.MinLength)(8, {
+        message: 'Password must be at least 8 characters long',
+    }),
+    (0, class_validator_1.MaxLength)(128, {
+        message: 'Password must not exceed 128 characters',
+    }),
+    (0, class_validator_1.Matches)(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, {
+        message: 'Password must contain at least 8 characters, including uppercase, lowercase, number, and special character (@$!%*?&)',
     }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "password", void 0);
@@ -64,6 +72,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(100),
+    (0, decorators_1.StripHtml)(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "name", void 0);
 //# sourceMappingURL=register.dto.js.map

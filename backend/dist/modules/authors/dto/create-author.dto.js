@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAuthorDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const decorators_1 = require("../../../common/decorators");
 class CreateAuthorDto {
     name;
     bio;
@@ -22,6 +23,7 @@ class CreateAuthorDto {
 exports.CreateAuthorDto = CreateAuthorDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Author name', example: 'John Doe' }),
+    (0, decorators_1.StripHtml)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(2),
@@ -33,6 +35,7 @@ __decorate([
         description: 'Author biography',
         example: 'John Doe is an experienced writer...',
     }),
+    (0, decorators_1.SanitizeHtmlStrict)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

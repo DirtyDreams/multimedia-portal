@@ -20,73 +20,75 @@ let WikiPagesService = class WikiPagesService {
     async create(userId, createWikiPageDto) {
         const { categoryIds, tagIds, parentId, ...wikiPageData } = createWikiPageDto;
         const slug = this.generateSlug(wikiPageData.title);
-        const existingWikiPage = await this.prisma.wikiPage.findUnique({
-            where: { slug },
-        });
-        if (existingWikiPage) {
-            throw new common_1.ConflictException(`Wiki page with slug "${slug}" already exists`);
-        }
-        const author = await this.prisma.author.findUnique({
-            where: { id: wikiPageData.authorId },
-        });
-        if (!author) {
-            throw new common_1.NotFoundException(`Author with ID "${wikiPageData.authorId}" not found`);
-        }
-        if (parentId) {
-            const parent = await this.prisma.wikiPage.findUnique({
-                where: { id: parentId },
+        return this.prisma.$transaction(async (tx) => {
+            const existingWikiPage = await tx.wikiPage.findUnique({
+                where: { slug },
             });
-            if (!parent) {
-                throw new common_1.NotFoundException(`Parent wiki page with ID "${parentId}" not found`);
+            if (existingWikiPage) {
+                throw new common_1.ConflictException(`Wiki page with slug "${slug}" already exists`);
             }
-        }
-        const publishedAt = wikiPageData.status === 'PUBLISHED' ? new Date() : null;
-        const wikiPage = await this.prisma.wikiPage.create({
-            data: {
-                ...wikiPageData,
-                slug,
-                userId,
-                parentId,
-                publishedAt,
-                categories: categoryIds
-                    ? {
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    }
-                    : undefined,
-                tags: tagIds
-                    ? {
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    }
-                    : undefined,
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
+            const author = await tx.author.findUnique({
+                where: { id: wikiPageData.authorId },
+            });
+            if (!author) {
+                throw new common_1.NotFoundException(`Author with ID "${wikiPageData.authorId}" not found`);
+            }
+            if (parentId) {
+                const parent = await tx.wikiPage.findUnique({
+                    where: { id: parentId },
+                });
+                if (!parent) {
+                    throw new common_1.NotFoundException(`Parent wiki page with ID "${parentId}" not found`);
+                }
+            }
+            const publishedAt = wikiPageData.status === 'PUBLISHED' ? new Date() : null;
+            const wikiPage = await tx.wikiPage.create({
+                data: {
+                    ...wikiPageData,
+                    slug,
+                    userId,
+                    parentId,
+                    publishedAt,
+                    categories: categoryIds
+                        ? {
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        }
+                        : undefined,
+                    tags: tagIds
+                        ? {
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        }
+                        : undefined,
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    parent: true,
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
                     },
                 },
-                parent: true,
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            });
+            return this.formatWikiPageResponse(wikiPage);
         });
-        return this.formatWikiPageResponse(wikiPage);
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, parentId, category, tag, includeChildren = false, sortBy = 'createdAt', sortOrder = 'desc', } = queryDto;
@@ -318,89 +320,91 @@ let WikiPagesService = class WikiPagesService {
         return this.formatWikiPageResponse(wikiPage);
     }
     async update(id, updateWikiPageDto) {
-        const existingWikiPage = await this.prisma.wikiPage.findUnique({
-            where: { id },
-        });
-        if (!existingWikiPage) {
-            throw new common_1.NotFoundException(`Wiki page with ID "${id}" not found`);
-        }
-        const { categoryIds, tagIds, title, parentId, ...wikiPageData } = updateWikiPageDto;
-        if (parentId && parentId === id) {
-            throw new common_1.BadRequestException('Wiki page cannot be its own parent');
-        }
-        if (parentId) {
-            const wouldCreateCycle = await this.wouldCreateCircularReference(id, parentId);
-            if (wouldCreateCycle) {
-                throw new common_1.BadRequestException('Cannot set parent: would create circular reference');
+        return this.prisma.$transaction(async (tx) => {
+            const existingWikiPage = await tx.wikiPage.findUnique({
+                where: { id },
+            });
+            if (!existingWikiPage) {
+                throw new common_1.NotFoundException(`Wiki page with ID "${id}" not found`);
             }
-        }
-        let slug = existingWikiPage.slug;
-        if (title && title !== existingWikiPage.title) {
-            slug = this.generateSlug(title);
-            const slugConflict = await this.prisma.wikiPage.findFirst({
-                where: {
+            const { categoryIds, tagIds, title, parentId, ...wikiPageData } = updateWikiPageDto;
+            if (parentId && parentId === id) {
+                throw new common_1.BadRequestException('Wiki page cannot be its own parent');
+            }
+            if (parentId) {
+                const wouldCreateCycle = await this.wouldCreateCircularReference(id, parentId, tx);
+                if (wouldCreateCycle) {
+                    throw new common_1.BadRequestException('Cannot set parent: would create circular reference');
+                }
+            }
+            let slug = existingWikiPage.slug;
+            if (title && title !== existingWikiPage.title) {
+                slug = this.generateSlug(title);
+                const slugConflict = await tx.wikiPage.findFirst({
+                    where: {
+                        slug,
+                        NOT: { id },
+                    },
+                });
+                if (slugConflict) {
+                    throw new common_1.ConflictException(`Wiki page with slug "${slug}" already exists`);
+                }
+            }
+            let publishedAt = existingWikiPage.publishedAt;
+            if (wikiPageData.status === 'PUBLISHED' && !existingWikiPage.publishedAt) {
+                publishedAt = new Date();
+            }
+            const wikiPage = await tx.wikiPage.update({
+                where: { id },
+                data: {
+                    ...wikiPageData,
+                    title,
                     slug,
-                    NOT: { id },
+                    publishedAt,
+                    ...(parentId !== undefined && { parentId }),
+                    ...(categoryIds !== undefined && {
+                        categories: {
+                            deleteMany: {},
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        },
+                    }),
+                    ...(tagIds !== undefined && {
+                        tags: {
+                            deleteMany: {},
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        },
+                    }),
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    parent: true,
+                    children: true,
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
+                    },
                 },
             });
-            if (slugConflict) {
-                throw new common_1.ConflictException(`Wiki page with slug "${slug}" already exists`);
-            }
-        }
-        let publishedAt = existingWikiPage.publishedAt;
-        if (wikiPageData.status === 'PUBLISHED' && !existingWikiPage.publishedAt) {
-            publishedAt = new Date();
-        }
-        const wikiPage = await this.prisma.wikiPage.update({
-            where: { id },
-            data: {
-                ...wikiPageData,
-                title,
-                slug,
-                publishedAt,
-                ...(parentId !== undefined && { parentId }),
-                ...(categoryIds !== undefined && {
-                    categories: {
-                        deleteMany: {},
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    },
-                }),
-                ...(tagIds !== undefined && {
-                    tags: {
-                        deleteMany: {},
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    },
-                }),
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
-                    },
-                },
-                parent: true,
-                children: true,
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            return this.formatWikiPageResponse(wikiPage);
         });
-        return this.formatWikiPageResponse(wikiPage);
     }
     async remove(id) {
         const wikiPage = await this.prisma.wikiPage.findUnique({
@@ -446,13 +450,14 @@ let WikiPagesService = class WikiPagesService {
             children: childrenWithSubtree,
         };
     }
-    async wouldCreateCircularReference(pageId, newParentId) {
+    async wouldCreateCircularReference(pageId, newParentId, tx) {
+        const prisma = tx || this.prisma;
         let currentParentId = newParentId;
         while (currentParentId) {
             if (currentParentId === pageId) {
                 return true;
             }
-            const parent = await this.prisma.wikiPage.findUnique({
+            const parent = await prisma.wikiPage.findUnique({
                 where: { id: currentParentId },
                 select: { parentId: true },
             });

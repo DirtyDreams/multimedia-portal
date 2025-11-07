@@ -20,63 +20,65 @@ let ArticlesService = class ArticlesService {
     async create(userId, createArticleDto) {
         const { categoryIds, tagIds, ...articleData } = createArticleDto;
         const slug = this.generateSlug(articleData.title);
-        const existingArticle = await this.prisma.article.findUnique({
-            where: { slug },
-        });
-        if (existingArticle) {
-            throw new common_1.ConflictException(`Article with slug "${slug}" already exists`);
-        }
-        const author = await this.prisma.author.findUnique({
-            where: { id: articleData.authorId },
-        });
-        if (!author) {
-            throw new common_1.NotFoundException(`Author with ID "${articleData.authorId}" not found`);
-        }
-        const publishedAt = articleData.status === 'PUBLISHED' ? new Date() : null;
-        const article = await this.prisma.article.create({
-            data: {
-                ...articleData,
-                slug,
-                userId,
-                publishedAt,
-                categories: categoryIds
-                    ? {
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    }
-                    : undefined,
-                tags: tagIds
-                    ? {
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    }
-                    : undefined,
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
+        return this.prisma.$transaction(async (tx) => {
+            const existingArticle = await tx.article.findUnique({
+                where: { slug },
+            });
+            if (existingArticle) {
+                throw new common_1.ConflictException(`Article with slug "${slug}" already exists`);
+            }
+            const author = await tx.author.findUnique({
+                where: { id: articleData.authorId },
+            });
+            if (!author) {
+                throw new common_1.NotFoundException(`Author with ID "${articleData.authorId}" not found`);
+            }
+            const publishedAt = articleData.status === 'PUBLISHED' ? new Date() : null;
+            const article = await tx.article.create({
+                data: {
+                    ...articleData,
+                    slug,
+                    userId,
+                    publishedAt,
+                    categories: categoryIds
+                        ? {
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        }
+                        : undefined,
+                    tags: tagIds
+                        ? {
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        }
+                        : undefined,
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
                     },
                 },
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            });
+            return this.formatArticleResponse(article);
         });
-        return this.formatArticleResponse(article);
     }
     async findAll(queryDto) {
         const { page = 1, limit = 10, search, status, authorId, category, tag, sortBy = 'createdAt', sortOrder = 'desc' } = queryDto;
@@ -233,77 +235,79 @@ let ArticlesService = class ArticlesService {
         return this.formatArticleResponse(article);
     }
     async update(id, updateArticleDto) {
-        const existingArticle = await this.prisma.article.findUnique({
-            where: { id },
-        });
-        if (!existingArticle) {
-            throw new common_1.NotFoundException(`Article with ID "${id}" not found`);
-        }
-        const { categoryIds, tagIds, title, ...articleData } = updateArticleDto;
-        let slug = existingArticle.slug;
-        if (title && title !== existingArticle.title) {
-            slug = this.generateSlug(title);
-            const slugConflict = await this.prisma.article.findFirst({
-                where: {
+        return this.prisma.$transaction(async (tx) => {
+            const existingArticle = await tx.article.findUnique({
+                where: { id },
+            });
+            if (!existingArticle) {
+                throw new common_1.NotFoundException(`Article with ID "${id}" not found`);
+            }
+            const { categoryIds, tagIds, title, ...articleData } = updateArticleDto;
+            let slug = existingArticle.slug;
+            if (title && title !== existingArticle.title) {
+                slug = this.generateSlug(title);
+                const slugConflict = await tx.article.findFirst({
+                    where: {
+                        slug,
+                        NOT: { id },
+                    },
+                });
+                if (slugConflict) {
+                    throw new common_1.ConflictException(`Article with slug "${slug}" already exists`);
+                }
+            }
+            let publishedAt = existingArticle.publishedAt;
+            if (articleData.status === 'PUBLISHED' && !existingArticle.publishedAt) {
+                publishedAt = new Date();
+            }
+            const article = await tx.article.update({
+                where: { id },
+                data: {
+                    ...articleData,
+                    title,
                     slug,
-                    NOT: { id },
+                    publishedAt,
+                    ...(categoryIds !== undefined && {
+                        categories: {
+                            deleteMany: {},
+                            create: categoryIds.map((categoryId) => ({
+                                category: { connect: { id: categoryId } },
+                            })),
+                        },
+                    }),
+                    ...(tagIds !== undefined && {
+                        tags: {
+                            deleteMany: {},
+                            create: tagIds.map((tagId) => ({
+                                tag: { connect: { id: tagId } },
+                            })),
+                        },
+                    }),
+                },
+                include: {
+                    author: true,
+                    user: {
+                        select: {
+                            id: true,
+                            email: true,
+                            username: true,
+                            name: true,
+                        },
+                    },
+                    categories: {
+                        include: {
+                            category: true,
+                        },
+                    },
+                    tags: {
+                        include: {
+                            tag: true,
+                        },
+                    },
                 },
             });
-            if (slugConflict) {
-                throw new common_1.ConflictException(`Article with slug "${slug}" already exists`);
-            }
-        }
-        let publishedAt = existingArticle.publishedAt;
-        if (articleData.status === 'PUBLISHED' && !existingArticle.publishedAt) {
-            publishedAt = new Date();
-        }
-        const article = await this.prisma.article.update({
-            where: { id },
-            data: {
-                ...articleData,
-                title,
-                slug,
-                publishedAt,
-                ...(categoryIds !== undefined && {
-                    categories: {
-                        deleteMany: {},
-                        create: categoryIds.map((categoryId) => ({
-                            category: { connect: { id: categoryId } },
-                        })),
-                    },
-                }),
-                ...(tagIds !== undefined && {
-                    tags: {
-                        deleteMany: {},
-                        create: tagIds.map((tagId) => ({
-                            tag: { connect: { id: tagId } },
-                        })),
-                    },
-                }),
-            },
-            include: {
-                author: true,
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true,
-                        name: true,
-                    },
-                },
-                categories: {
-                    include: {
-                        category: true,
-                    },
-                },
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-            },
+            return this.formatArticleResponse(article);
         });
-        return this.formatArticleResponse(article);
     }
     async remove(id) {
         const article = await this.prisma.article.findUnique({

@@ -9,6 +9,11 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import {
+  SanitizeHtml,
+  SanitizeHtmlStrict,
+  StripHtml,
+} from '../../../common/decorators';
 
 enum ContentStatus {
   DRAFT = 'DRAFT',
@@ -22,18 +27,21 @@ export class CreateArticleDto {
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(200)
+  @StripHtml() // Remove all HTML from titles
   title: string;
 
   @ApiProperty({ description: 'Article content in HTML or Markdown' })
   @IsString()
   @IsNotEmpty()
   @MinLength(10)
+  @SanitizeHtml() // Allow safe HTML tags, remove dangerous content
   content: string;
 
   @ApiPropertyOptional({ description: 'Short excerpt or summary' })
   @IsString()
   @IsOptional()
   @MaxLength(500)
+  @SanitizeHtmlStrict() // Allow only basic formatting
   excerpt?: string;
 
   @ApiPropertyOptional({ description: 'Featured image URL' })

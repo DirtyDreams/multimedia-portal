@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCommentDto = exports.CommentableType = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const decorators_1 = require("../../../common/decorators");
 var CommentableType;
 (function (CommentableType) {
     CommentableType["ARTICLE"] = "ARTICLE";
@@ -34,6 +35,7 @@ __decorate([
         minLength: 1,
         maxLength: 5000,
     }),
+    (0, decorators_1.SanitizeHtmlStrict)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(1),
