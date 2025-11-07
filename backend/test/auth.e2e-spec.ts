@@ -196,10 +196,10 @@ describe('Auth API (e2e)', () => {
     });
   });
 
-  describe('/auth/profile (GET)', () => {
+  describe('/auth/me (GET)', () => {
     it('should get user profile with valid token', () => {
       return request(app.getHttpServer())
-        .get('/auth/profile')
+        .get('/auth/me')
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
         .expect((res) => {
@@ -212,20 +212,20 @@ describe('Auth API (e2e)', () => {
 
     it('should fail without authentication token', () => {
       return request(app.getHttpServer())
-        .get('/auth/profile')
+        .get('/auth/me')
         .expect(401);
     });
 
     it('should fail with invalid token', () => {
       return request(app.getHttpServer())
-        .get('/auth/profile')
+        .get('/auth/me')
         .set('Authorization', 'Bearer invalid_token')
         .expect(401);
     });
 
     it('should fail with malformed authorization header', () => {
       return request(app.getHttpServer())
-        .get('/auth/profile')
+        .get('/auth/me')
         .set('Authorization', 'InvalidFormat')
         .expect(401);
     });
@@ -271,14 +271,15 @@ describe('Auth API (e2e)', () => {
       return request(app.getHttpServer())
         .post('/auth/logout')
         .set('Authorization', `Bearer ${accessToken}`)
-        .send({ refreshToken })
-        .expect(200);
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toHaveProperty('message', 'Successfully logged out');
+        });
     });
 
     it('should fail logout without authentication', () => {
       return request(app.getHttpServer())
         .post('/auth/logout')
-        .send({ refreshToken })
         .expect(401);
     });
   });
@@ -306,7 +307,7 @@ describe('Auth API (e2e)', () => {
 
       // 2. Get Profile
       await request(app.getHttpServer())
-        .get('/auth/profile')
+        .get('/auth/me')
         .set('Authorization', `Bearer ${tokens1.access}`)
         .expect(200)
         .expect((res) => {
@@ -326,7 +327,7 @@ describe('Auth API (e2e)', () => {
 
       // 4. Use new access token
       await request(app.getHttpServer())
-        .get('/auth/profile')
+        .get('/auth/me')
         .set('Authorization', `Bearer ${tokens2.access}`)
         .expect(200);
 
@@ -334,7 +335,6 @@ describe('Auth API (e2e)', () => {
       await request(app.getHttpServer())
         .post('/auth/logout')
         .set('Authorization', `Bearer ${tokens2.access}`)
-        .send({ refreshToken: tokens2.refresh })
         .expect(200);
 
       // Cleanup
