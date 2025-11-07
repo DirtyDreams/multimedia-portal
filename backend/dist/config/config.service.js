@@ -58,6 +58,28 @@ let ConfigService = class ConfigService {
         if (!secret) {
             throw new Error('JWT_SECRET is not defined in environment variables');
         }
+        const minLength = 32;
+        if (secret.length < minLength) {
+            throw new Error(`JWT_SECRET must be at least ${minLength} characters long. Current length: ${secret.length}. ` +
+                `Generate a strong secret using: openssl rand -base64 64`);
+        }
+        const weakPatterns = [
+            'secret',
+            'password',
+            'change-in-production',
+            'your-secret',
+            'jwt-secret',
+            '123456',
+            'test',
+        ];
+        const lowerSecret = secret.toLowerCase();
+        for (const pattern of weakPatterns) {
+            if (lowerSecret.includes(pattern)) {
+                console.warn(`⚠️  WARNING: JWT_SECRET appears to contain a weak pattern ('${pattern}'). ` +
+                    `Please use a cryptographically random secret: openssl rand -base64 64`);
+                break;
+            }
+        }
         return secret;
     }
     get jwtExpiration() {

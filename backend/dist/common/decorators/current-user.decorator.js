@@ -5,6 +5,15 @@ const common_1 = require("@nestjs/common");
 exports.CurrentUser = (0, common_1.createParamDecorator)((data, ctx) => {
     const request = ctx.switchToHttp().getRequest();
     const user = request.user;
-    return data ? user?.[data] : user;
+    if (!user) {
+        throw new common_1.UnauthorizedException('User not authenticated. Please ensure you are using proper authentication guards.');
+    }
+    if (data) {
+        if (!(data in user)) {
+            throw new common_1.BadRequestException(`User property '${data}' does not exist. Available properties: ${Object.keys(user).join(', ')}`);
+        }
+        return user[data];
+    }
+    return user;
 });
 //# sourceMappingURL=current-user.decorator.js.map
